@@ -1,0 +1,17 @@
+# Videos (too large for git)
+Videos/
+
+# Backup files
+*.backup
+*.html.html
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Old versions
+v2.html
+v3.html
+
+# Claude config
+.claude/

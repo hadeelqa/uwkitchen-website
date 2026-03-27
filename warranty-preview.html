@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warranty Section — 3 Options</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Arabic',sans-serif;background:#0a0a0a;color:#fff}
+a{text-decoration:none;color:inherit}
+
+.option-label{
+  text-align:center;padding:48px 24px 0;
+  font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:#edac6e;
+}
+.option-label span{
+  display:inline-block;padding:8px 24px;border:1px solid rgba(237,172,110,.3);border-radius:100px;
+}
+.divider{
+  max-width:1100px;margin:80px auto;height:1px;background:rgba(255,255,255,.06);
+}
+
+/* ═══════════════════════════════════════
+   OPTION A — Editorial Split
+   بسيط، نص كبير، بدون أي تزيين
+   ═══════════════════════════════════════ */
+.wa{padding:80px 24px;background:#0a0a0a}
+@media(min-width:1024px){.wa{padding:120px 64px}}
+.wa-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:48px}
+@media(min-width:768px){.wa-inner{grid-template-columns:1fr 1fr;gap:80px;align-items:start}}
+
+.wa-right{display:flex;flex-direction:column;gap:24px}
+.wa-num-block{display:flex;align-items:baseline;gap:8px}
+.wa-num{font-size:88px;font-weight:700;color:#edac6e;line-height:1;letter-spacing:-3px}
+.wa-num-label{font-size:20px;font-weight:400;color:rgba(255,255,255,.4)}
+.wa-title{font-size:28px;font-weight:600;line-height:1.4}
+.wa-desc{font-weight:300;color:rgba(255,255,255,.45);font-size:15px;line-height:1.9}
+
+.wa-left{display:flex;flex-direction:column;gap:0;border-top:1px solid rgba(255,255,255,.08)}
+.wa-row{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.wa-row-name{font-size:15px;font-weight:500;color:rgba(255,255,255,.8)}
+.wa-row-years{font-size:14px;font-weight:400;color:#edac6e}
+
+/* ═══════════════════════════════════════
+   OPTION B — Centered Minimal
+   رقم كبير + نص تحته + صف عناصر
+   ═══════════════════════════════════════ */
+.wb{padding:100px 24px;background:#0a0a0a;text-align:center}
+@media(min-width:1024px){.wb{padding:140px 64px}}
+.wb-inner{max-width:700px;margin:0 auto}
+.wb-num{font-size:clamp(100px,16vw,160px);font-weight:700;color:#edac6e;line-height:.85;letter-spacing:-6px}
+.wb-sub{font-size:18px;font-weight:400;color:rgba(255,255,255,.35);margin-top:8px}
+.wb-title{font-size:clamp(22px,3vw,30px);font-weight:600;margin-top:32px;line-height:1.4}
+.wb-desc{font-weight:300;color:rgba(255,255,255,.4);font-size:15px;line-height:1.9;margin-top:16px;max-width:500px;margin-left:auto;margin-right:auto}
+.wb-items{display:flex;justify-content:center;flex-wrap:wrap;gap:32px;margin-top:48px}
+.wb-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+.wb-item-name{font-size:14px;font-weight:500;color:rgba(255,255,255,.7)}
+.wb-item-val{font-size:13px;font-weight:400;color:rgba(255,255,255,.3)}
+.wb-line{width:1px;height:40px;background:rgba(255,255,255,.08);align-self:center}
+
+/* ═══════════════════════════════════════
+   OPTION C — Horizontal Strip
+   شريط أفقي: رقم | نص | عناصر
+   ═══════════════════════════════════════ */
+.wc{padding:0 24px;background:#0a0a0a}
+@media(min-width:1024px){.wc{padding:0 64px}}
+.wc-inner{max-width:1100px;margin:0 auto;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding:64px 0;display:grid;grid-template-columns:1fr;gap:40px}
+@media(min-width:768px){.wc-inner{grid-template-columns:auto 1px 1fr 1px auto;gap:40px;align-items:center}}
+
+.wc-number{text-align:center}
+.wc-num{font-size:72px;font-weight:700;color:#edac6e;line-height:1;letter-spacing:-2px}
+.wc-num-sub{font-size:14px;font-weight:400;color:rgba(255,255,255,.35);margin-top:4px}
+
+.wc-sep{display:none;width:1px;background:rgba(255,255,255,.08);align-self:stretch}
+@media(min-width:768px){.wc-sep{display:block}}
+
+.wc-text{display:flex;flex-direction:column;gap:8px}
+.wc-title{font-size:22px;font-weight:600}
+.wc-desc{font-weight:300;color:rgba(255,255,255,.4);font-size:14px;line-height:1.8}
+
+.wc-details{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wc-detail{padding:12px 0;text-align:center}
+.wc-detail-name{font-size:13px;font-weight:500;color:rgba(255,255,255,.6)}
+.wc-detail-val{font-size:12px;font-weight:400;color:rgba(255,255,255,.25);margin-top:2px}
+</style>
+</head>
+<body>
+
+<!-- ══════ OPTION A ══════ -->
+<p class="option-label"><span>OPTION A</span></p>
+
+<section class="wa">
+  <div class="wa-inner">
+    <div class="wa-right">
+      <div class="wa-num-block">
+        <span class="wa-num">15</span>
+        <span class="wa-num-label">سنة</span>
+      </div>
+      <h2 class="wa-title">ضمان شامل على كل قطعة</h2>
+      <p class="wa-desc">من الهيكل إلى المفصلات، كل شي مضمون لـ 15 سنة كاملة بدون استثناء. مكتوب في العقد قبل ما تدفع ريال.</p>
+    </div>
+    <div class="wa-left">
+      <div class="wa-row">
+        <span class="wa-row-name">هيكل المطبخ</span>
+        <span class="wa-row-years">15 سنة</span>
+      </div>
+      <div class="wa-row">
+        <span class="wa-row-name">الأدراج والمفصلات</span>
+        <span class="wa-row-years">15 سنة</span>
+      </div>
+      <div class="wa-row">
+        <span class="wa-row-name">الأسطح والكلادينج</span>
+        <span class="wa-row-years">15 سنة</span>
+      </div>
+      <div class="wa-row">
+        <span class="wa-row-name">صيانة مجانية</span>
+        <span class="wa-row-years">مدى الحياة</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════ OPTION B ══════ -->
+<p class="option-label"><span>OPTION B</span></p>
+
+<section class="wb">
+  <div class="wb-inner">
+    <div class="wb-num">15</div>
+    <p class="wb-sub">سنة ضمان</p>
+    <h2 class="wb-title">ضمان شامل على كل قطعة في مطبخك</h2>
+    <p class="wb-desc">من الهيكل إلى المفصلات، كل شي مضمون بدون استثناء. مكتوب في العقد قبل ما تدفع ريال.</p>
+    <div class="wb-items">
+      <div class="wb-item">
+        <span class="wb-item-name">هيكل المطبخ</span>
+        <span class="wb-item-val">15 سنة</span>
+      </div>
+      <div class="wb-line"></div>
+      <div class="wb-item">
+        <span class="wb-item-name">الأدراج والمفصلات</span>
+        <span class="wb-item-val">15 سنة</span>
+      </div>
+      <div class="wb-line"></div>
+      <div class="wb-item">
+        <span class="wb-item-name">الأسطح والكلادينج</span>
+        <span class="wb-item-val">15 سنة</span>
+      </div>
+      <div class="wb-line"></div>
+      <div class="wb-item">
+        <span class="wb-item-name">صيانة مجانية</span>
+        <span class="wb-item-val">مدى الحياة</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════ OPTION C ══════ -->
+<p class="option-label"><span>OPTION C</span></p>
+
+<div style="height:60px"></div>
+<section class="wc">
+  <div class="wc-inner">
+    <div class="wc-number">
+      <div class="wc-num">15</div>
+      <div class="wc-num-sub">سنة ضمان</div>
+    </div>
+    <div class="wc-sep"></div>
+    <div class="wc-text">
+      <h2 class="wc-title">ضمان شامل على كل قطعة</h2>
+      <p class="wc-desc">من الهيكل إلى المفصلات، كل شي مضمون بدون استثناء. مكتوب في العقد قبل ما تدفع ريال.</p>
+    </div>
+    <div class="wc-sep"></div>
+    <div class="wc-details">
+      <div class="wc-detail">
+        <div class="wc-detail-name">هيكل المطبخ</div>
+        <div class="wc-detail-val">15 سنة</div>
+      </div>
+      <div class="wc-detail">
+        <div class="wc-detail-name">الأدراج</div>
+        <div class="wc-detail-val">15 سنة</div>
+      </div>
+      <div class="wc-detail">
+        <div class="wc-detail-name">الأسطح</div>
+        <div class="wc-detail-val">15 سنة</div>
+      </div>
+      <div class="wc-detail">
+        <div class="wc-detail-name">صيانة</div>
+        <div class="wc-detail-val">مدى الحياة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height:120px"></div>
+</body>
+</html>

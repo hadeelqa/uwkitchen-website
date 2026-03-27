@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مطابخ الأبيض المتحدة | United White Kitchens</title>
+<meta name="description" content="مطابخ الأبيض المتحدة، ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة. ضمان 15 سنة، تركيب في 20 يوم، +17,500 مطبخ منفّذ. احجز قياسك المجاني الآن.">
+<meta property="og:title" content="مطابخ الأبيض المتحدة | ثلاثة عقود من الخبرة في تصميم المطابخ">
+<meta property="og:description" content="ضمان 15 سنة، تركيب في 20 يوم، +17,500 مطبخ منفّذ. احجز قياسك المجاني.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/img_2.jpeg">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="images/img_1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ═══ 1. ANNOUNCEMENT BAR ═══ -->
+<div class="announce" id="announce">
+  <button class="announce-close" onclick="closeAnnounce()" aria-label="إغلاق">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض رمضان: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض رمضان: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 2. NAVIGATION ═══ -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <a href="#hero"><img src="images/img_1.png" alt="مطابخ الأبيض المتحدة" class="logo-img"></a>
+  </div>
+  <button class="btn-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">تواصل معنا</button>
+</nav>
+<!-- ═══ 3. HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-text">
+    <div class="hero-text-inner">
+      <div class="hero-badge">منذ ١٩٩٤</div>
+      <h1 class="hero-title">
+        <span class="line1">ثلاثة عقود من الخبرة</span>
+        <span class="line2">في تصميم المطابخ</span>
+      </h1>
+      <p class="hero-desc">نصمم ونصنع ونركّب مطبخك في 20 يوم أو نعوّضك</p>
+      <div class="hero-cta-wrap">
+        <a href="#contact" class="btn-hero">
+          احجز قياسك المجاني
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </a>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-proof-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>ضمان 15 سنة</span>
+        </div>
+        <div class="hero-proof-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          <span>+17,500 مطبخ</span>
+        </div>
+        <div class="hero-proof-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+          <span>4.8 تقييم</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="images/img_2.jpeg" alt="مطابخ الأبيض المتحدة - تصميم عصري" id="heroImg">
+    <div class="hero-img-overlay"></div>
+  </div>
+</section>
+<!-- ═══ 7.9 FROM DESIGN TO REALITY (3D to Real) ═══ -->
+<section class="reality-section" id="gallery">
+  <div class="reality-inner" data-animate="fade-up">
+    <div class="reality-videos">
+      <div class="reality-video-card reality-video-main">
+        <video
+          id="realityVideo"
+          src="Videos/snaptik_7484152625647209735_v3.mp4"
+          muted loop playsinline preload="metadata"
+          poster="images/img_2.jpeg">
+        </video>
+        <div class="reality-video-play" onclick="this.parentElement.querySelector('video').play();this.style.display='none'">
+          <svg viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+      </div>
+      <div class="reality-video-card reality-video-second">
+        <video
+          id="realityVideo2"
+          src="Videos/snaptik_7613647879017729287_v3.mp4"
+          muted loop playsinline preload="metadata"
+          poster="images/img_4.jpeg">
+        </video>
+        <div class="reality-video-play" onclick="this.parentElement.querySelector('video').play();this.style.display='none'">
+          <svg viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="reality-text">
+      <h2 class="section-title">من الآيباد إلى الواقع</h2>
+      <p class="reality-desc">شاهد تصميمك ينتقل إلى مطبخك — من التصميم ثلاثي الأبعاد إلى التنفيذ الفعلي بأدق التفاصيل.</p>
+      <a href="https://www.tiktok.com/@uwkitchens" target="_blank" rel="noopener" class="reality-cta">
+        شاهد أكثر على تيك توك
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ═══ 4. STATS V2 — Cards with background ═══ -->
+<section class="stats-v2">
+  <img class="stats-v2-bg" src="images/img_3.jpeg" alt="">
+  <div class="stats-v2-overlay"></div>
+  <div class="stats-v2-inner">
+    <div class="stats-v2-grid">
+      <div class="stats-v2-card" data-animate="fade-up" data-delay="1">
+        <span class="stats-v2-num"><span class="counter" data-target="4.8" data-decimal="true">0</span></span>
+        <span class="stats-v2-label">تقييم عملائنا</span>
+      </div>
+      <div class="stats-v2-card" data-animate="fade-up" data-delay="2">
+        <span class="stats-v2-num">+<span class="counter" data-target="17500" data-separator="true">0</span></span>
+        <span class="stats-v2-label">مطبخ منفّذ</span>
+      </div>
+      <div class="stats-v2-card" data-animate="fade-up" data-delay="3">
+        <span class="stats-v2-num"><span class="counter" data-target="25">0</span></span>
+        <span class="stats-v2-label">قطاع</span>
+      </div>
+      <div class="stats-v2-card" data-animate="fade-up" data-delay="4">
+        <span class="stats-v2-num"><span class="counter" data-target="7">0</span></span>
+        <span class="stats-v2-label">مدن</span>
+      </div>
+      <div class="stats-v2-card" data-animate="fade-up" data-delay="5">
+        <span class="stats-v2-num"><span class="counter" data-target="20">0</span></span>
+        <span class="stats-v2-label">يوم فقط</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══ 6. WARRANTY SECTION — Option C Strip ═══ -->
+<section class="warranty-strip" id="features" data-animate="fade-up">
+  <div class="warranty-strip-inner">
+    <div class="warranty-strip-num">
+      <span class="counter" data-target="15">0</span>
+      <span class="warranty-strip-num-sub">سنة ضمان</span>
+    </div>
+    <div class="warranty-strip-sep"></div>
+    <div class="warranty-strip-text">
+      <h2 class="warranty-strip-title">ضمان شامل على كل قطعة</h2>
+      <p class="warranty-strip-desc">من الهيكل إلى المفصلات، كل شي مضمون بدون استثناء.</p>
+    </div>
+    <div class="warranty-strip-sep"></div>
+    <div class="warranty-strip-details">
+      <div class="warranty-strip-detail">
+        <span class="warranty-strip-detail-name">هيكل المطبخ</span>
+        <span class="warranty-strip-detail-val">15 سنة</span>
+      </div>
+      <div class="warranty-strip-detail">
+        <span class="warranty-strip-detail-name">الأدراج</span>
+        <span class="warranty-strip-detail-val">15 سنة</span>
+      </div>
+      <div class="warranty-strip-detail">
+        <span class="warranty-strip-detail-name">الأسطح</span>
+        <span class="warranty-strip-detail-val">15 سنة</span>
+      </div>
+      <div class="warranty-strip-detail">
+        <span class="warranty-strip-detail-name">صيانة</span>
+        <span class="warranty-strip-detail-val">مدى الحياة</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══ 6.2 CERTIFICATIONS — Legora-inspired ═══ -->
+<section class="certs-section" id="certifications">
+  <div class="cert-inner">
+    <div class="section-header" data-animate="fade-up">
+      <span class="section-eyebrow">معتمدون ومرخّصون</span>
+      <h2 class="section-title">نلتزم بأعلى معايير الجودة والسلامة العالمية</h2>
+    </div>
+    <div class="cert-grid" data-animate="fade-up" data-delay="2">
+      <div class="cert-card">
+        <div class="cert-card-top">
+          <h3 class="cert-name">ISO 9001:2015</h3>
+          <p class="cert-org">نظام إدارة الجودة المعتمد دولياً يضمن أعلى معايير التصنيع والتنفيذ في كل مشروع.</p>
+        </div>
+        <div class="cert-card-bottom">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-top">
+          <h3 class="cert-name">ISO 14001</h3>
+          <p class="cert-org">نظام إدارة بيئية يضمن التزامنا بالاستدامة وتقليل الأثر البيئي في عمليات التصنيع.</p>
+        </div>
+        <div class="cert-card-bottom">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-top">
+          <h3 class="cert-name">SASO</h3>
+          <p class="cert-org">مطابقون للمواصفات القياسية السعودية في جميع المواد والخامات المستخدمة.</p>
+        </div>
+        <div class="cert-card-bottom">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-card-top">
+          <h3 class="cert-name">الغرفة التجارية</h3>
+          <p class="cert-org">عضوية فعّالة في الغرفة التجارية تؤكد التزامنا بأعلى معايير السوق السعودي.</p>
+        </div>
+        <div class="cert-card-bottom">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6.5 PROCESS / HOW WE WORK ═══ -->
+<section class="process">
+  <div class="process-inner">
+    <div class="section-header" data-animate="fade-up">
+      <h2 class="section-title">كيف نشتغل</h2>
+    </div>
+    <div class="steps">
+      <div class="step active" data-animate="fade-up" data-delay="1">
+        <div class="step-num">1</div>
+        <div class="step-info">
+          <div class="step-title">الاستشارة المجانية</div>
+          <div class="step-desc">نزورك في موقعك ونأخذ القياسات بدقة عالية</div>
+        </div>
+      </div>
+      <div class="step-line filled"></div>
+      <div class="step active" data-animate="fade-up" data-delay="2">
+        <div class="step-num">2</div>
+        <div class="step-info">
+          <div class="step-title">التصميم ثلاثي الأبعاد</div>
+          <div class="step-desc">نصمم مطبخك بتقنية 3D على آيباد وتشوفه قبل ما يتصنع</div>
+        </div>
+      </div>
+      <div class="step-line filled"></div>
+      <div class="step active" data-animate="fade-up" data-delay="3">
+        <div class="step-num">3</div>
+        <div class="step-info">
+          <div class="step-title">التصنيع والمتابعة</div>
+          <div class="step-desc">تابع كل خطوة عبر نظام التتبع المباشر بشفافية كاملة</div>
+        </div>
+      </div>
+      <div class="step-line filled"></div>
+      <div class="step active" data-animate="fade-up" data-delay="4">
+        <div class="step-num">4</div>
+        <div class="step-info">
+          <div class="step-title">التركيب في 20 يوم</div>
+          <div class="step-desc">فريق فلبيني متخصص يركّب مطبخك وإلا نعوضك 100 ريال/يوم</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══ 7.95 LIVE INSTALLATIONS (بث حي) ═══ -->
+<section class="live-install" id="live-install">
+  <div class="live-install-inner">
+    <div class="section-header" data-animate="fade-up">
+      <h2 class="section-title">تركيبات مباشرة</h2>
+    </div>
+    <div class="live-grid" data-animate="fade-up" data-delay="1">
+      <div class="live-card">
+        <div class="live-card-visual">
+          <img src="images/img_3.jpeg" alt="تركيب مطبخ مباشر">
+        </div>
+      </div>
+      <div class="live-card">
+        <div class="live-card-visual">
+          <img src="images/img_8.jpeg" alt="فريق التركيب">
+        </div>
+      </div>
+    </div>
+    <div class="live-social-links" data-animate="fade-up" data-delay="2">
+      <a href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTA5MjY3Nzg3MDgzNjkw?story_media_id=3373546026108622496&igsh=MXR2cGgwbWY5cDkzcQ==" target="_blank" rel="noopener" class="live-social-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        تابع البث على انستقرام
+      </a>
+      <a href="https://www.tiktok.com/@uwkitchens" target="_blank" rel="noopener" class="live-social-btn live-social-btn--tiktok">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width:20px;height:20px"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.24 8.24 0 0 0 4.76 1.51V6.75a4.83 4.83 0 0 1-1-.06z"/></svg>
+        شاهد على تيك توك
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ═══ 7.96 COMPLETED PROJECTS (المشاريع المنفذة) ═══ -->
+<section class="projects" id="projects">
+  <div class="projects-header" data-animate="fade-up">
+    <h2 class="section-title">مشاريعنا</h2>
+  </div>
+  <div class="projects-ticker">
+    <div class="projects-ticker-track" id="projectsTrack"></div>
+  </div>
+</section>
+<!-- ═══ 7.5 MATERIALS & TECHNOLOGY ═══ -->
+<section class="materials" id="materials">
+  <div class="materials-inner">
+    <div class="section-header" data-animate="fade-up" style="text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center">
+      <h2 class="section-title">كلادينج بلس بتقنية النانو</h2>
+      <p class="section-subtitle">المصنع الوحيد في المملكة المعتمد لتصنيع هذه الخامة</p>
+    </div>
+    <div class="mat-grid" data-animate="fade-up">
+      <div class="mat-item">
+        <span class="mat-stat">230kg</span>
+        <span class="mat-label">قوة التحمل</span>
+        <span class="mat-desc">متانة استثنائية تتحمل الاستخدام اليومي المكثف</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-stat">10nm</span>
+        <span class="mat-label">تقنية النانو</span>
+        <span class="mat-desc">طبقة حماية متقدمة تمنع الخدوش والبقع</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-stat">5X</span>
+        <span class="mat-label">صلابة الهيكل</span>
+        <span class="mat-desc">أقوى من الهياكل التقليدية بخمس مرات</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-stat">+90</span>
+        <span class="mat-label">فني متخصص</span>
+        <span class="mat-desc">فريق مدرّب على أعلى المعايير العالمية</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-stat">6,000m²</span>
+        <span class="mat-label">مساحة التصنيع</span>
+        <span class="mat-desc">خطوط إنتاج متطورة بمعدات أوروبية</span>
+      </div>
+      <div class="mat-item">
+        <span class="mat-stat">0.1mm</span>
+        <span class="mat-label">دقة الليزر</span>
+        <span class="mat-desc">قص وتشكيل بدقة متناهية لكل قطعة</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ═══ 8. TESTIMONIALS ═══ -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-header" data-animate="fade-up">
+    <h2 class="section-title">يتكلمون عن تجربتهم</h2>
+  </div>
+  <div class="test-marquee">
+    <div class="test-marquee-row test-marquee-rtl" id="testRow1"></div>
+    <div class="test-marquee-row test-marquee-ltr" id="testRow2"></div>
+  </div>
+  <div class="testimonials-footer" data-animate="fade-up">
+    <a href="https://maps.app.goo.gl/AcM6F4wgarnTKvQ99" target="_blank" rel="noopener noreferrer" class="google-review-link">
+      شاهد جميع التقييمات على خرائط قوقل ←
+    </a>
+  </div>
+</section>
+<!-- ═══ 5. PARTNERS ═══ -->
+<section class="partners" data-animate="fade-up">
+  <span class="partners-title">يثقون في جودتنا</span>
+  <div class="partners-grid" id="partnersTrack"></div>
+</section>
+<!-- ═══ 9. CONTACT ═══ -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div><img class="contact-bg-img" src="images/img_6.jpeg" alt="">
+  <div class="contact-inner">
+    <div class="contact-info" data-animate="fade-start">
+      <h2>احجز جلستك المجانية</h2>
+      <div class="contact-checks">
+        <div class="contact-check" data-animate="fade-start" data-delay="1"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>قياس احترافي في موقعك</span></div>
+        <div class="contact-check" data-animate="fade-start" data-delay="2"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>تصميم 3D مخصص لمطبخك</span></div>
+        <div class="contact-check" data-animate="fade-start" data-delay="3"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>مجاني قبل أي التزام</span></div>
+      </div>
+    </div>
+    <div class="form-card" data-animate="fade-end" data-delay="2">
+      <form onsubmit="event.preventDefault()">
+        <div class="form-field"><input type="text" id="fn" placeholder=" " required><label for="fn">الاسم الكامل</label></div>
+        <div class="form-field"><input type="tel" id="ph" placeholder=" " required><label for="ph">رقم الجوال</label></div>
+        <button type="submit" class="btn-submit">احجز قياسك المجاني<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+      </form>
+      <p class="form-note">لا عربون · سيتصل بك فريقنا خلال ساعة</p>
+    </div>
+  </div>
+</section>
+<!-- ═══ 8.5 GOOGLE MAPS ═══ -->
+<section class="maps-section" data-animate="fade-up">
+  <div class="maps-inner">
+    <div class="maps-text" data-animate="fade-start">
+      <h2 class="section-title maps-title">زورونا</h2>
+      <p class="section-subtitle">طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض</p>
+      <div class="maps-contact-wrap">
+        <a href="tel:920031000" class="maps-contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span dir="ltr">920031000</span></a>
+        <a href="https://wa.me/920031000" target="_blank" class="maps-contact-link maps-wa"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>تواصل واتساب</span></a>
+      </div>
+    </div>
+    <div class="maps-embed" data-animate="scale-up" data-delay="1">
+      <iframe src="https://maps.google.com/maps?q=24.767927,46.709579&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;min-height:350px" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col" data-animate="fade-up">
+        <img src="images/img_1.png" alt="مطابخ الأبيض المتحدة" class="footer-logo">
+        <span class="footer-brand-text">الاسم الأول في صناعة المطابخ بالسعودية</span>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/uwkitchens/" target="_blank" rel="noopener" aria-label="انستقرام"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="https://www.tiktok.com/@uwkitchens" target="_blank" rel="noopener" aria-label="تيك توك"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.24 8.24 0 0 0 4.76 1.51V6.75a4.83 4.83 0 0 1-1-.06z"/></svg></a>
+          <a href="https://x.com/uwkitchens" target="_blank" rel="noopener" aria-label="إكس"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="https://www.snapchat.com/add/uwkitchens" target="_blank" rel="noopener" aria-label="سناب شات"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.003.06c-.012.18-.022.345-.03.51.075.045.203.09.401.09.3-.016.659-.12.979-.323a.758.758 0 0 1 .42-.129c.135 0 .27.04.399.12.254.16.39.404.39.666 0 .539-.728.803-1.127.946l-.075.03c-.12.04-.24.09-.36.15-.36.18-.54.39-.54.63 0 .12.03.24.09.36.45.81 1.05 1.5 1.77 2.01.63.45 1.35.72 2.16.93a.753.753 0 0 1 .54.81c-.03.21-.15.39-.33.51-.45.33-1.17.54-2.16.69-.12.015-.21.06-.27.18-.06.12-.09.27-.15.45l-.03.12c-.045.18-.12.39-.27.54-.21.21-.51.27-.87.27-.18 0-.39-.03-.63-.06-.36-.06-.81-.12-1.38-.12-.27 0-.54.015-.81.045-.54.06-1.02.27-1.56.51-.78.36-1.56.75-2.79.75s-2.01-.39-2.79-.75c-.54-.24-1.02-.45-1.56-.51-.27-.03-.54-.045-.81-.045-.57 0-1.02.06-1.38.12-.24.03-.45.06-.63.06-.36 0-.66-.06-.87-.27-.15-.15-.225-.36-.27-.54l-.03-.12c-.06-.18-.09-.33-.15-.45-.06-.12-.15-.165-.27-.18-.99-.15-1.71-.36-2.16-.69a.773.773 0 0 1-.33-.51.753.753 0 0 1 .54-.81c.81-.21 1.53-.48 2.16-.93.72-.51 1.32-1.2 1.77-2.01.06-.12.09-.24.09-.36 0-.24-.18-.45-.54-.63-.12-.06-.24-.12-.36-.15l-.075-.03c-.399-.143-1.127-.407-1.127-.946 0-.262.136-.506.39-.666a.768.768 0 0 1 .42-.12c.135 0 .27.04.399.12.32.2.679.307.979.323.198 0 .326-.045.401-.09a35.68 35.68 0 0 1-.033-.57c-.104-1.628-.23-3.654.299-4.847C7.86 1.069 11.216.793 12.206.793z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col" data-animate="fade-up" data-delay="1">
+        <span class="footer-col-title">روابط سريعة</span>
+        <div class="footer-links">
+          <a href="#hero">الرئيسية</a>
+          <a href="#gallery">أعمالنا</a>
+          <a href="#contact">تواصل معنا</a>
+          <a href="https://profile.uwkitchens.com/books/gkfi/#p=6" target="_blank" rel="noopener">بروفايل الشركة</a>
+        </div>
+      </div>
+      <div class="footer-col" data-animate="fade-up" data-delay="2">
+        <span class="footer-col-title">تواصل معنا</span>
+        <div class="footer-contact-list">
+          <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:920031000" dir="ltr">920031000</a></div>
+          <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span dir="ltr">info@uwkitchens.com</span></div>
+          <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="footer-address">طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 شركة الأبيض المتحدة التجارية. جميع الحقوق محفوظة.</p></div>
+  </div>
+</footer>
+<!-- ═══ 11.5 SCROLL TO TOP ═══ -->
+<button class="scroll-top" id="scrollTop" aria-label="العودة للأعلى" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+<!-- ═══ WHATSAPP FAB ═══ -->
+<a href="https://wa.me/966920031000" target="_blank" rel="noopener" class="wa-fab" id="waFab" aria-label="تواصل واتساب">
+  <span class="wa-fab-icon">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </span>
+  <span class="wa-fab-text">تواصل معنا</span>
+</a>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر" onclick="toggleTheme()">
+  <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+</button>
+
+<script src="scripts.js"></script>
+<script>
+// Auto-play videos when scrolled into view
+(function(){
+  var videos = [document.getElementById('realityVideo'), document.getElementById('realityVideo2')];
+  videos.forEach(function(video){
+    if(!video) return;
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          video.play();
+          // Hide play button when auto-playing
+          var playBtn = video.parentElement.querySelector('.reality-video-play');
+          if(playBtn) playBtn.style.display = 'none';
+        } else {
+          video.pause();
+        }
+      });
+    }, {threshold: 0.3});
+    observer.observe(video);
+  });
+})();
+</script>
+</body>
+</html>
