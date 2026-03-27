@@ -185,8 +185,8 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 .nav{position:fixed;top:44px;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px var(--space-5);background:rgba(255,255,255,.03);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);transition:top .3s ease,background .3s,padding .3s}
 .nav.no-announce{top:0}
 @media(min-width:1024px){.nav{padding:16px 64px}}
-.nav-logo img{width:auto;height:36px;object-fit:contain}
-@media(min-width:1024px){.nav-logo img{width:auto;height:48px}}
+.nav-logo img{width:auto;height:44px;object-fit:contain}
+@media(min-width:1024px){.nav-logo img{width:auto;height:52px}}
 .footer-logo{width:auto;height:40px;object-fit:contain}
 @media(min-width:1024px){.footer-logo{height:48px}}
 /* Hamburger button — mobile only */
@@ -683,7 +683,7 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 /* Nav: more compact on mobile */
 @media(max-width:767px){
   .nav{padding:8px 16px}
-  .nav-logo img{height:30px}
+  .nav-logo img{height:40px}
 }
 
 /* WhatsApp FAB: safe area so it doesn't overlap footer content */
