@@ -27,8 +27,8 @@
   </button>
   <div class="marquee-wrap">
     <div class="marquee-track">
-      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض رمضان: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
-      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض رمضان: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
     </div>
   </div>
 </div>
@@ -88,7 +88,7 @@
           muted loop playsinline preload="metadata"
           poster="images/img_2.jpeg">
         </video>
-        <div class="reality-video-play" onclick="this.parentElement.querySelector('video').play();this.style.display='none'">
+        <div class="reality-video-play">
           <svg viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
       </div>
@@ -99,7 +99,7 @@
           muted loop playsinline preload="metadata"
           poster="images/img_4.jpeg">
         </video>
-        <div class="reality-video-play" onclick="this.parentElement.querySelector('video').play();this.style.display='none'">
+        <div class="reality-video-play">
           <svg viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
       </div>
@@ -455,6 +455,14 @@
   <span class="wa-fab-text">تواصل معنا</span>
 </a>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="إغلاق">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
 <script src="scripts.js"></script>
 <script>
 // Auto-play videos when scrolled into view
@@ -462,18 +470,28 @@
   var videos = [document.getElementById('realityVideo'), document.getElementById('realityVideo2')];
   videos.forEach(function(video){
     if(!video) return;
+    var playBtn = video.parentElement.querySelector('.reality-video-play');
+    // Manual play button click
+    if(playBtn){
+      playBtn.addEventListener('click', function(){
+        video.play().then(function(){ playBtn.style.display = 'none'; }).catch(function(){});
+      });
+    }
+    // Auto-play on scroll
     var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
-          video.play();
-          // Hide play button when auto-playing
-          var playBtn = video.parentElement.querySelector('.reality-video-play');
-          if(playBtn) playBtn.style.display = 'none';
+          video.play().then(function(){
+            if(playBtn) playBtn.style.display = 'none';
+          }).catch(function(){
+            // Auto-play blocked, show play button
+            if(playBtn) playBtn.style.display = 'flex';
+          });
         } else {
           video.pause();
         }
       });
-    }, {threshold: 0.3});
+    }, {threshold: 0.2});
     observer.observe(video);
   });
 })();

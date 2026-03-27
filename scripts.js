@@ -222,4 +222,30 @@ if(scrollTopBtn || waFab){
   }, {passive:true});
 })();
 
-/* Theme toggle removed */
+/* ═══════ KITCHEN LIGHTBOX ═══════ */
+function openLightbox(src, alt){
+  var lb = document.getElementById('lightbox');
+  var img = document.getElementById('lightboxImg');
+  if(!lb || !img) return;
+  img.src = src;
+  img.alt = alt || '';
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  var lb = document.getElementById('lightbox');
+  if(!lb) return;
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+}
+// Close on Escape key
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeLightbox();
+});
+// Attach click to kitchen items
+document.addEventListener('click', function(e){
+  var item = e.target.closest('.kitchen-item');
+  if(!item) return;
+  var img = item.querySelector('img');
+  if(img) openLightbox(img.src, img.alt);
+});
