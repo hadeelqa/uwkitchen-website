@@ -23,16 +23,20 @@ function closeAnnounce(){
 }
 
 /* ═══════ SCROLL ANIMATION ENGINE ═══════ */
-const animObs = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('in-view');
-      // Don't unobserve — allows re-triggering if needed, but for performance:
-      animObs.unobserve(e.target);
+function checkVisible(){
+  document.querySelectorAll('[data-animate]:not(.in-view)').forEach(function(el){
+    var rect = el.getBoundingClientRect();
+    if(rect.top < window.innerHeight * 1.15 && rect.bottom > -50){
+      el.classList.add('in-view');
     }
   });
-},{threshold:0.12, rootMargin:'-30px 0px'});
-document.querySelectorAll('[data-animate]').forEach(el=>animObs.observe(el));
+}
+// Run on scroll
+window.addEventListener('scroll', checkVisible, {passive:true});
+// Run on load and shortly after
+checkVisible();
+setTimeout(checkVisible, 300);
+setTimeout(checkVisible, 800);
 
 /* ═══════ ANIMATED COUNTERS ═══════ */
 function animateCounter(el){
@@ -85,9 +89,7 @@ if(heroImg && window.innerWidth >= 768){
 const pTrack = document.getElementById('partnersTrack');
 if(pTrack){
   const partners = [
-    {name:'أرامكو', logo:'images/partners/Property 1=Aramco.svg'},
     {name:'سابك', logo:'images/partners/Property 1=Sabic.svg'},
-    {name:'إعمار', logo:'images/partners/شركة-اعمار-العقارية.png'},
     {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
     {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
     {name:'رتال', logo:'images/partners/Property 1=Retal.svg'},
@@ -97,7 +99,6 @@ if(pTrack){
     {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
     {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
     {name:'أساس مكين', logo:'images/partners/makeen.webp'},
-    {name:'العجلان', logo:'images/partners/Ajlanlogo.png'},
     {name:'الهيئة السعودية للمقاولين', logo:'images/partners/20220513231301!شعار_الهيئة_السعودية_للمقاولين.png'}
   ];
   partners.forEach(p => {
@@ -128,6 +129,8 @@ const row2Data = [
   {name:'خالد المطيري',initials:'خم',quote:'خدمة التتبع المباشر شيء مميز جداً. تابعت كل مرحلة من موبايلي وكان الموعد دقيق. تجربة ممتازة.'},
   {name:'نورة الحربي',initials:'نح',quote:'التركيب خلص بالضبط في 20 يوم زي ما قالوا. الفريق كان محترف ونظيف ويحترم البيت. شغل راقي.'},
   {name:'فهد العتيبي',initials:'فع',quote:'أخذت عروض من 5 شركات وكان عرضهم الأفضل من ناحية الجودة والسعر. الضمان 15 سنة أعطاني ثقة كاملة.'},
+  {name:'عبدالرحمن السبيعي',initials:'عس',quote:'تعاملت معهم مرتين والمرتين نفس المستوى. ما يتغير شي لا بالجودة ولا بالخدمة. ناس محترمين.'},
+  {name:'هند الشمري',initials:'هش',quote:'أجمل شي إنهم يسمعونك ويفهمون احتياجك. طلعت بمطبخ فوق توقعاتي والتسليم كان قبل الموعد.'},
 ];
 function buildCard(t){
   return '<div class="test-card"><div class="test-rating">'+starSvg.repeat(5)+'</div><p class="test-quote">'+t.quote+'</p><div class="test-author"><div class="test-avatar">'+t.initials+'</div><span class="test-name">'+t.name+'</span></div></div>';
@@ -136,7 +139,7 @@ function fillRow(id, data){
   var el = document.getElementById(id);
   if(!el) return;
   var html = data.map(buildCard).join('');
-  el.innerHTML = html + html;
+  el.innerHTML = html + html + html;
 }
 fillRow('testRow1', row1Data);
 fillRow('testRow2', row2Data);
@@ -161,8 +164,7 @@ if(kitchensGrid){
   kitchenPhotos.forEach(function(p, i){
     var div = document.createElement('div');
     div.className = 'kitchen-item';
-    div.setAttribute('data-animate','fade-up');
-    div.setAttribute('data-delay', String((i % 4) + 1));
+    div.style.transitionDelay = (i * 0.1) + 's';
     var img = document.createElement('img');
     img.src = p.src;
     img.alt = p.alt;
@@ -171,8 +173,16 @@ if(kitchensGrid){
     div.appendChild(img);
     kitchensGrid.appendChild(div);
   });
-  // Re-observe new elements for animation
-  kitchensGrid.querySelectorAll('[data-animate]').forEach(function(el){animObs.observe(el)});
+  // Staggered scroll-triggered animation
+  var kitchenObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('in-view');
+        kitchenObs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.15,rootMargin:'-20px 0px'});
+  kitchensGrid.querySelectorAll('.kitchen-item').forEach(function(el){kitchenObs.observe(el)});
 }
 
 /* ═══════ SCROLL TOP + WHATSAPP FAB ═══════ */
