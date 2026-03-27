@@ -108,6 +108,7 @@ if(pTrack){
     img.src = p.logo;
     img.alt = p.name;
     img.loading = 'lazy';
+    img.decoding = 'async';
     cell.appendChild(img);
     pTrack.appendChild(cell);
   });
@@ -140,14 +141,14 @@ function fillRow(id, data){
 fillRow('testRow1', row1Data);
 fillRow('testRow2', row2Data);
 
-/* ═══════ PROJECTS TICKER ═══════ */
-const projTrack = document.getElementById('projectsTrack');
-if(projTrack){
-  const projImages = [
+/* ═══════ KITCHENS GALLERY ═══════ */
+const kitchensGrid = document.getElementById('kitchensGrid');
+if(kitchensGrid){
+  const kitchenPhotos = [
     {src:'images/20250826_203824000_iOS.jpg', alt:'مطبخ عصري - إضاءة مدمجة'},
     {src:'images/20250823_174436000_iOS.jpg', alt:'مطبخ رمادي - تصميم حديث'},
-    {src:'images/20250817_173820000_iOS.jpg', alt:'مطبخ خشبي - أسطح بيضاء'},
     {src:'images/20250813_202444000_iOS.jpg', alt:'مطبخ بني - رفوف مضيئة'},
+    {src:'images/20250817_173820000_iOS.jpg', alt:'مطبخ خشبي - أسطح بيضاء'},
     {src:'images/20240318_232707000_iOS.jpg', alt:'مطبخ كلاسيكي أبيض مع جزيرة'},
     {src:'images/20230812_170209000_iOS.jpg', alt:'مطبخ خشب فاتح - تشطيب رخام'},
     {src:'images/20230726_172206000_iOS.jpg', alt:'مطبخ كلاسيكي - خشب وأبيض'},
@@ -156,18 +157,22 @@ if(projTrack){
     {src:'images/20250119_162350160_iOS.jpg', alt:'مطبخ رمادي أنيق'},
     {src:'images/20250122_163006800_iOS.jpg', alt:'مطبخ داكن - خزائن زجاجية'},
     {src:'images/20250128_165614880_iOS.jpg', alt:'مطبخ واسع - تصميم L'},
-    {src:'images/img_2.jpeg', alt:'مشروع سكني - الرياض'},
-    {src:'images/img_6.jpeg', alt:'مشروع تجاري'},
-    {src:'images/img_8.jpeg', alt:'مشروع فندقي'},
-    {src:'images/img_10.png', alt:'مطبخ فاخر'},
   ];
-  function buildProjItems(list){
-    return list.map(function(p){
-      return '<div class="proj-item"><img src="'+p.src+'" alt="'+p.alt+'" loading="lazy"></div>';
-    }).join('');
-  }
-  var projHTML = buildProjItems(projImages);
-  projTrack.innerHTML = projHTML + projHTML;
+  kitchenPhotos.forEach(function(p, i){
+    var div = document.createElement('div');
+    div.className = 'kitchen-item';
+    div.setAttribute('data-animate','fade-up');
+    div.setAttribute('data-delay', String((i % 4) + 1));
+    var img = document.createElement('img');
+    img.src = p.src;
+    img.alt = p.alt;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    div.appendChild(img);
+    kitchensGrid.appendChild(div);
+  });
+  // Re-observe new elements for animation
+  kitchensGrid.querySelectorAll('[data-animate]').forEach(function(el){animObs.observe(el)});
 }
 
 /* ═══════ SCROLL TOP + WHATSAPP FAB ═══════ */
@@ -217,25 +222,4 @@ if(scrollTopBtn || waFab){
   }, {passive:true});
 })();
 
-/* ═══════ THEME TOGGLE ═══════ */
-function toggleTheme(){
-  var body = document.body;
-  body.classList.toggle('light-mode');
-  var isLight = body.classList.contains('light-mode');
-  localStorage.setItem('uwk-theme', isLight ? 'light' : 'dark');
-  var icon = document.getElementById('themeIcon');
-  if(icon){
-    icon.innerHTML = isLight
-      ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
-      : '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-  }
-}
-// Restore saved theme
-(function(){
-  var saved = localStorage.getItem('uwk-theme');
-  if(saved === 'light'){
-    document.body.classList.add('light-mode');
-    var icon = document.getElementById('themeIcon');
-    if(icon) icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-  }
-})();
+/* Theme toggle removed */
