@@ -167,7 +167,6 @@ if(kitchensGrid){
     var img = document.createElement('img');
     img.src = p.src;
     img.alt = p.alt;
-    img.loading = 'lazy';
     img.decoding = 'async';
     div.appendChild(img);
     return div;
