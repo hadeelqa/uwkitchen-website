@@ -161,36 +161,22 @@ if(kitchensGrid){
     {src:'images/20250122_163006800_iOS.jpg', alt:'مطبخ داكن - خزائن زجاجية'},
     {src:'images/20250128_165614880_iOS.jpg', alt:'مطبخ واسع - تصميم L'},
   ];
-  kitchenPhotos.forEach(function(p, i){
+  function buildItem(p){
     var div = document.createElement('div');
     div.className = 'kitchen-item';
-    div.style.transitionDelay = (i * 0.1) + 's';
     var img = document.createElement('img');
     img.src = p.src;
     img.alt = p.alt;
     img.loading = 'lazy';
     img.decoding = 'async';
     div.appendChild(img);
-    kitchensGrid.appendChild(div);
-  });
-  // Staggered scroll-triggered animation
-  var kitchenObs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.classList.add('in-view');
-        kitchenObs.unobserve(e.target);
-      }
+    return div;
+  }
+  // Build 2 copies for seamless loop
+  for(var c = 0; c < 2; c++){
+    kitchenPhotos.forEach(function(p){
+      kitchensGrid.appendChild(buildItem(p));
     });
-  },{threshold:0.15,rootMargin:'-20px 0px'});
-  kitchensGrid.querySelectorAll('.kitchen-item').forEach(function(el){kitchenObs.observe(el)});
-  // Scroll progress bar
-  var progressBar = document.querySelector('.scroll-progress-bar');
-  if(progressBar){
-    kitchensGrid.addEventListener('scroll', function(){
-      var maxScroll = kitchensGrid.scrollWidth - kitchensGrid.clientWidth;
-      var pct = maxScroll > 0 ? (kitchensGrid.scrollLeft / maxScroll) * 100 : 0;
-      progressBar.style.width = Math.max(10, pct) + '%';
-    }, {passive:true});
   }
 }
 
