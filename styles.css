@@ -636,10 +636,8 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 .kitchens-gallery{padding:64px 0;background:var(--white);overflow:hidden}
 @media(min-width:1024px){.kitchens-gallery{padding:80px 0}}
 .kitchens-header{max-width:1200px;margin:0 auto 32px;text-align:center;padding:0 24px}
-.scroll-hint{display:inline-flex;align-items:center;gap:6px;margin-top:12px;color:rgba(255,255,255,.4);font-size:13px;font-weight:400;animation:scrollHintPulse 2s ease-in-out infinite}
-.scroll-hint svg{animation:scrollHintArrow 2s ease-in-out infinite}
-@keyframes scrollHintPulse{0%,100%{opacity:.4}50%{opacity:.8}}
-@keyframes scrollHintArrow{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}
+.scroll-progress{width:60px;height:3px;background:rgba(255,255,255,.1);border-radius:3px;margin-top:16px;overflow:hidden}
+.scroll-progress-bar{height:100%;width:30%;background:var(--gold);border-radius:3px;transition:width .15s ease-out}
 .kitchens-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 24px 16px;scrollbar-width:none;scroll-behavior:smooth}
 .kitchens-grid::-webkit-scrollbar{display:none}
 @media(min-width:1024px){.kitchens-grid{gap:16px;padding:0 64px 20px}}

@@ -183,6 +183,15 @@ if(kitchensGrid){
     });
   },{threshold:0.15,rootMargin:'-20px 0px'});
   kitchensGrid.querySelectorAll('.kitchen-item').forEach(function(el){kitchenObs.observe(el)});
+  // Scroll progress bar
+  var progressBar = document.querySelector('.scroll-progress-bar');
+  if(progressBar){
+    kitchensGrid.addEventListener('scroll', function(){
+      var maxScroll = kitchensGrid.scrollWidth - kitchensGrid.clientWidth;
+      var pct = maxScroll > 0 ? (kitchensGrid.scrollLeft / maxScroll) * 100 : 0;
+      progressBar.style.width = Math.max(10, pct) + '%';
+    }, {passive:true});
+  }
 }
 
 /* ═══════ SCROLL TOP + WHATSAPP FAB ═══════ */
