@@ -636,10 +636,10 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 .kitchens-gallery{padding:64px 0;background:var(--white);overflow:hidden}
 @media(min-width:1024px){.kitchens-gallery{padding:80px 0}}
 .kitchens-header{max-width:1200px;margin:0 auto 32px;text-align:center;padding:0 24px}
-.kitchens-marquee{width:100%;overflow:hidden}
-.kitchens-track{display:flex;gap:12px;width:max-content;animation:kitchensScroll 50s linear infinite}
+.kitchens-marquee{width:100%;overflow:hidden;direction:rtl}
+.kitchens-track{display:flex;gap:12px;width:max-content;animation:kitchensScroll 50s linear infinite;direction:ltr}
 .kitchens-track:hover{animation-play-state:paused}
-@keyframes kitchensScroll{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+@keyframes kitchensScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @media(min-width:1024px){.kitchens-track{gap:16px}}
 .kitchen-item{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/5;flex:0 0 240px}
 @media(min-width:768px){.kitchen-item{flex:0 0 280px}}
