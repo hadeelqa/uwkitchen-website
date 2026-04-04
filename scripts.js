@@ -101,18 +101,19 @@ if(pTrack){
     {name:'أساس مكين', logo:'images/partners/makeen.webp'},
     {name:'الهيئة السعودية للمقاولين', logo:'images/partners/20220513231301!شعار_الهيئة_السعودية_للمقاولين.png'}
   ];
-  partners.forEach(p => {
-    const cell = document.createElement('div');
-    cell.className = 'partner-cell';
-    const img = document.createElement('img');
-    img.className = 'partner-logo';
-    img.src = p.logo;
-    img.alt = p.name;
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    cell.appendChild(img);
-    pTrack.appendChild(cell);
-  });
+  for(var c=0;c<2;c++){
+    partners.forEach(function(p){
+      var cell = document.createElement('div');
+      cell.className = 'partner-cell';
+      var img = document.createElement('img');
+      img.className = 'partner-logo';
+      img.src = p.logo;
+      img.alt = p.name;
+      img.decoding = 'async';
+      cell.appendChild(img);
+      pTrack.appendChild(cell);
+    });
+  }
 }
 
 
@@ -148,33 +149,44 @@ fillRow('testRow2', row2Data);
 const kitchensGrid = document.getElementById('kitchensGrid');
 if(kitchensGrid){
   const kitchenPhotos = [
-    {src:'images/20250826_203824000_iOS.jpg', alt:'مطبخ عصري - إضاءة مدمجة'},
-    {src:'images/20250823_174436000_iOS.jpg', alt:'مطبخ رمادي - تصميم حديث'},
-    {src:'images/20250813_202444000_iOS.jpg', alt:'مطبخ بني - رفوف مضيئة'},
-    {src:'images/20250817_173820000_iOS.jpg', alt:'مطبخ خشبي - أسطح بيضاء'},
-    {src:'images/20240318_232707000_iOS.jpg', alt:'مطبخ كلاسيكي أبيض مع جزيرة'},
-    {src:'images/20230812_170209000_iOS.jpg', alt:'مطبخ خشب فاتح - تشطيب رخام'},
-    {src:'images/20230726_172206000_iOS.jpg', alt:'مطبخ كلاسيكي - خشب وأبيض'},
-    {src:'images/20250127_170907920_iOS.jpg', alt:'مطبخ مودرن - إنارة سقف'},
-    {src:'images/20250127_171041700_iOS.jpg', alt:'مطبخ عملي - خشب ورمادي'},
-    {src:'images/20250119_162350160_iOS.jpg', alt:'مطبخ رمادي أنيق'},
-    {src:'images/20250122_163006800_iOS.jpg', alt:'مطبخ داكن - خزائن زجاجية'},
-    {src:'images/20250128_165614880_iOS.jpg', alt:'مطبخ واسع - تصميم L'},
+    {src:'images/20250826_203824000_iOS.webp', alt:'مطبخ عصري - إضاءة مدمجة'},
+    {src:'images/20250823_174436000_iOS.webp', alt:'مطبخ رمادي - تصميم حديث'},
+    {src:'images/20250813_202444000_iOS.webp', alt:'مطبخ بني - رفوف مضيئة'},
+    {src:'images/20250817_173820000_iOS.webp', alt:'مطبخ خشبي - أسطح بيضاء'},
+    {src:'images/20240318_232707000_iOS.webp', alt:'مطبخ كلاسيكي أبيض مع جزيرة'},
+    {src:'images/20230812_170209000_iOS.webp', alt:'مطبخ خشب فاتح - تشطيب رخام'},
+    {src:'images/20230726_172206000_iOS.webp', alt:'مطبخ كلاسيكي - خشب وأبيض'},
+    {src:'images/20250127_170907920_iOS.webp', alt:'مطبخ مودرن - إنارة سقف'},
+    {src:'images/20250127_171041700_iOS.webp', alt:'مطبخ عملي - خشب ورمادي'},
+    {src:'images/20250119_162350160_iOS.webp', alt:'مطبخ رمادي أنيق'},
+    {src:'images/20250122_163006800_iOS.webp', alt:'مطبخ داكن - خزائن زجاجية'},
+    {src:'images/20250128_165614880_iOS.webp', alt:'مطبخ واسع - تصميم L'},
   ];
-  function buildItem(p){
+  var initialCount = 6;
+  function buildItem(p, idx){
     var div = document.createElement('div');
     div.className = 'kitchen-item';
+    if(idx >= initialCount) div.classList.add('kitchen-item--hidden');
     var img = document.createElement('img');
     img.src = p.src;
     img.alt = p.alt;
     img.decoding = 'async';
     div.appendChild(img);
+    div.addEventListener('click', function(){ openLightbox(p.src) });
     return div;
   }
-  // Build 2 copies for seamless loop
-  for(var c = 0; c < 2; c++){
-    kitchenPhotos.forEach(function(p){
-      kitchensGrid.appendChild(buildItem(p));
+  kitchenPhotos.forEach(function(p, i){
+    kitchensGrid.appendChild(buildItem(p, i));
+  });
+  var showAllBtn = document.getElementById('kitchensShowAll');
+  if(showAllBtn && kitchenPhotos.length <= initialCount){
+    showAllBtn.parentElement.style.display = 'none';
+  }
+  if(showAllBtn){
+    showAllBtn.addEventListener('click', function(){
+      var hidden = kitchensGrid.querySelectorAll('.kitchen-item--hidden');
+      hidden.forEach(function(el){ el.classList.remove('kitchen-item--hidden') });
+      showAllBtn.parentElement.style.display = 'none';
     });
   }
 }
@@ -195,17 +207,17 @@ if(scrollTopBtn || waFab){
   const f1=document.getElementById('fac-img-1');
   const f2=document.getElementById('fac-img-2');
   const f3=document.getElementById('fac-img-3');
-  if(f1) f1.src='images/20250128_165614880_iOS.jpg';
-  if(f2) f2.src='images/20250121_170225560_iOS.jpg';
-  if(f3) f3.src='images/20250128_165626190_iOS.jpg';
+  if(f1) f1.src='images/20250128_165614880_iOS.webp';
+  if(f2) f2.src='images/20250121_170225560_iOS.webp';
+  if(f3) f3.src='images/20250128_165626190_iOS.webp';
   const matImg=document.getElementById('mat-visual-img');
-  if(matImg) matImg.src='images/20250823_174436000_iOS.jpg';
+  if(matImg) matImg.src='images/20250823_174436000_iOS.webp';
   const g1=document.getElementById('gallery-img-1');
   const g2=document.getElementById('gallery-img-2');
   const g3=document.getElementById('gallery-img-3');
-  if(g1) g1.src='images/20250826_203824000_iOS.jpg';
-  if(g2) g2.src='images/20240318_232707000_iOS.jpg';
-  if(g3) g3.src='images/20250813_202444000_iOS.jpg';
+  if(g1) g1.src='images/20250826_203824000_iOS.webp';
+  if(g2) g2.src='images/20240318_232707000_iOS.webp';
+  if(g3) g3.src='images/20250813_202444000_iOS.webp';
 })();
 
 /* ═══════ AUTO-HIDE ANNOUNCEMENT ON SCROLL ═══════ */

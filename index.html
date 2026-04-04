@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=11">
+<link rel="stylesheet" href="styles.css?v=21">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 </head>
 <body>
@@ -38,7 +38,10 @@
   <div class="nav-logo">
     <a href="#hero"><img src="images/Logo-white.png" alt="مطابخ الأبيض المتحدة" class="logo-img"></a>
   </div>
-  <button class="btn-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">تواصل معنا</button>
+  <a href="tel:920031000" class="btn-cta btn-cta--call">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    تحدث مع المصمم
+  </a>
 </nav>
 <!-- ═══ 3. HERO ═══ -->
 <section class="hero" id="hero">
@@ -50,6 +53,17 @@
         <span class="line2">في تصميم المطابخ</span>
       </h1>
       <p class="hero-desc">نصمم ونصنع ونركّب مطبخك في 20 يوم أو نعوّضك</p>
+      <div class="hero-badges">
+        <div class="hero-promise-card">
+          <div class="hero-promise-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(99,179,165,.15)" stroke="#63b3a5"/><polyline points="9 12 11 14 15 10" stroke="#63b3a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hero-promise-text">
+            <span class="hero-promise-line1">تركيب 20 يوم أو تعويض</span>
+            <span class="hero-promise-line2">ر.س / يوم – بالعقد 100</span>
+          </div>
+        </div>
+      </div>
       <div class="hero-proof">
         <div class="hero-proof-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -65,9 +79,9 @@
         </div>
       </div>
       <div class="hero-cta-wrap">
-        <a href="#contact" class="btn-hero">
-          احجز قياسك المجاني
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        <a href="tel:920031000" class="btn-hero btn-hero--call">
+          <span class="pulse-dot"></span>
+          استشاري المبيعات متاح الآن
         </a>
       </div>
     </div>
@@ -110,8 +124,8 @@
     </div>
     <div class="reality-cta-wrap">
       <a href="https://www.tiktok.com/@uwkitchens" target="_blank" rel="noopener" class="reality-cta">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.24 8.24 0 0 0 4.76 1.51V6.75a4.83 4.83 0 0 1-1-.06z"/></svg>
         شاهد أكثر على تيك توك
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
     </div>
   </div>
@@ -176,6 +190,7 @@
         <span class="warranty-strip-detail-val">مدى الحياة</span>
       </div>
     </div>
+    <p class="warranty-terms">تنطبق الشروط والأحكام</p>
   </div>
 </section>
 <!-- ═══ 6.5 PROCESS / HOW WE WORK ═══ -->
@@ -255,14 +270,22 @@
   <div class="kitchens-header" data-animate="fade-up">
     <h2 class="section-title">مطابخنا</h2>
   </div>
-  <div class="kitchens-marquee"><div class="kitchens-track" id="kitchensGrid"></div></div>
+  <div class="kitchens-grid-wrap">
+    <div class="kitchens-grid" id="kitchensGrid"></div>
+  </div>
+  <div class="kitchens-cta-wrap" data-animate="fade-up">
+    <button class="btn-kitchens-all" id="kitchensShowAll">
+      عرض الكل
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+  </div>
 </section>
 <!-- ═══ 7.5 MATERIALS & TECHNOLOGY ═══ -->
 <section class="materials" id="materials">
   <div class="materials-inner">
     <div class="section-header" data-animate="fade-up" style="text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center">
       <h2 class="section-title">كلادينج بلس بتقنية النانو</h2>
-      <p class="section-subtitle">المصنع الوحيد في المملكة المعتمد لتصنيع هذه الخامة</p>
+      <p class="section-subtitle">المصنع الوحيد في المملكة المعتمد لتصنيع هذه الخامة · متوفر بألوان متعددة</p>
     </div>
     <div class="mat-grid" data-animate="fade-up">
       <div class="mat-item">
@@ -316,7 +339,9 @@
 <!-- ═══ 5. PARTNERS ═══ -->
 <section class="partners" data-animate="fade-up">
   <span class="partners-title">يثقون في جودتنا</span>
-  <div class="partners-grid" id="partnersTrack"></div>
+  <div class="partners-marquee">
+    <div class="partners-grid" id="partnersTrack"></div>
+  </div>
 </section>
 <!-- ═══ 6.2 CERTIFICATIONS — Logo Grid ═══ -->
 <section class="certs-section" id="certifications">
@@ -340,7 +365,7 @@
   <div class="contact-bg"></div><img class="contact-bg-img" src="images/img_6.jpeg" alt="" loading="lazy">
   <div class="contact-inner">
     <div class="contact-info" data-animate="fade-start">
-      <h2>احجز جلستك المجانية</h2>
+      <h2>اطلب زيارة قياس مجانية</h2>
       <div class="contact-checks">
         <div class="contact-check" data-animate="fade-start" data-delay="1"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>قياس احترافي في موقعك</span></div>
         <div class="contact-check" data-animate="fade-start" data-delay="2"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>تصميم 3D مخصص لمطبخك</span></div>
@@ -349,27 +374,57 @@
     </div>
     <div class="form-card" data-animate="fade-end" data-delay="2">
       <form onsubmit="event.preventDefault()">
-        <div class="form-field"><input type="text" id="fn" placeholder=" " required><label for="fn">الاسم الكامل</label></div>
+        <div class="form-field"><input type="text" id="fn" placeholder=" " required><label for="fn">الاسم</label></div>
         <div class="form-field"><input type="tel" id="ph" placeholder=" " required><label for="ph">رقم الجوال</label></div>
-        <button type="submit" class="btn-submit">احجز قياسك المجاني<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+        <div class="form-row">
+          <div class="form-field"><input type="text" id="city" placeholder=" " required><label for="city">المدينة</label></div>
+          <div class="form-field"><input type="text" id="district" placeholder=" " required><label for="district">الحي</label></div>
+        </div>
+        <button type="submit" class="btn-submit">اطلب زيارة قياس<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
       </form>
       <p class="form-note">لا عربون · سيتصل بك فريقنا في اقرب وقت</p>
     </div>
   </div>
 </section>
 <!-- ═══ 8.5 GOOGLE MAPS ═══ -->
-<section class="maps-section" data-animate="fade-up">
-  <div class="maps-inner">
-    <div class="maps-text" data-animate="fade-start">
-      <h2 class="section-title maps-title">زورونا</h2>
-      <p class="section-subtitle">طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض</p>
-      <div class="maps-contact-wrap">
-        <a href="tel:920031000" class="maps-contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;flex-shrink:0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span dir="ltr">920031000</span></a>
-        <a href="https://wa.me/920031000" target="_blank" class="maps-contact-link maps-wa"><svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>تواصل واتساب</span></a>
+<section class="maps-section" id="branches" data-animate="fade-up">
+  <div class="maps-header">
+    <span class="section-eyebrow">فروعنا</span>
+    <h2 class="section-title maps-title">زورونا</h2>
+    <a href="https://maps.app.goo.gl/AcM6F4wgarnTKvQ99" target="_blank" rel="noopener" class="branches-cta-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      اعرف أقرب معرض لك
+    </a>
+  </div>
+  <div class="branches-grid">
+    <!-- Riyadh - Active -->
+    <div class="branch-card branch-card--active" data-animate="fade-up">
+      <div class="branch-badge">المعرض الرئيسي</div>
+      <h3 class="branch-city">الرياض</h3>
+      <p class="branch-address">طريق الإمام سعود بن عبدالعزيز، حي التعاون</p>
+      <div class="branch-contacts">
+        <a href="tel:920031000" class="branch-contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span dir="ltr">920031000</span></a>
+        <a href="https://wa.me/920031000" target="_blank" class="branch-contact-link"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>واتساب</span></a>
+      </div>
+      <a href="https://maps.app.goo.gl/AcM6F4wgarnTKvQ99" target="_blank" rel="noopener" class="branch-directions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        احصل على الاتجاهات
+      </a>
+      <div class="branch-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.5!2d46.709579!3d24.767927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQ2JzA0LjUiTiA0NsKwNDInMzQuNSJF!5e0!3m2!1sar!2ssa!4v1" width="100%" height="200" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
-    <div class="maps-embed" data-animate="scale-up" data-delay="1">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3624.5!2d46.709579!3d24.767927!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDQ2JzA0LjUiTiA0NsKwNDInMzQuNSJF!5e0!3m2!1sar!2ssa!4v1" width="100%" height="100%" style="border:0;min-height:350px" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div class="branches-coming" data-animate="fade-up">
+    <span class="branches-coming-label">فروع قادمة قريباً</span>
+    <div class="branches-coming-list">
+      <span class="branches-coming-city">جدة</span>
+      <span class="branches-coming-city">الدمام</span>
+      <span class="branches-coming-city">حائل</span>
+      <span class="branches-coming-city">القصيم</span>
+      <span class="branches-coming-city">خميس مشيط</span>
+      <span class="branches-coming-city">حفر الباطن</span>
+      <span class="branches-coming-city">تبوك</span>
     </div>
   </div>
 </section>
@@ -427,7 +482,7 @@
   <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
 </div>
 
-<script src="scripts.js?v=10"></script>
+<script src="scripts.js?v=15"></script>
 <script>
 // Auto-play videos when scrolled into view
 (function(){
