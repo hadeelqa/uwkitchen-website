@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=29">
+<link rel="stylesheet" href="styles.css?v=33">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 </head>
 <body>
@@ -91,7 +91,7 @@
           autoplay muted loop playsinline preload="none"
           poster="images/img_2.jpeg">
         </video>
-        <div class="reality-video-play">
+        <div class="reality-video-play" role="button" aria-label="تشغيل الفيديو" tabindex="0">
           <svg viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
       </div>
@@ -102,7 +102,7 @@
           autoplay muted loop playsinline preload="none"
           poster="images/img_4.jpeg">
         </video>
-        <div class="reality-video-play">
+        <div class="reality-video-play" role="button" aria-label="تشغيل الفيديو" tabindex="0">
           <svg viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         </div>
       </div>
@@ -117,7 +117,7 @@
 </section>
 <!-- ═══ 4. STATS V2 — Cards with background ═══ -->
 <section class="stats-v2">
-  <video class="stats-v2-bg" src="Videos/Taking Notes in the factory.mp4" autoplay muted loop playsinline></video>
+  <video class="stats-v2-bg" src="Videos/Taking Notes in the factory.mp4" autoplay muted loop playsinline preload="metadata"></video>
   <div class="stats-v2-overlay"></div>
   <div class="stats-v2-inner">
     <div class="stats-v2-grid">
@@ -269,7 +269,7 @@
     <div class="cladding-colors" data-animate="fade-up">
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front white.png" alt="كلادينج أبيض">
+          <img src="Cladding Photos/front/front white.png" alt="كلادينج أبيض" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">أبيض</span>
@@ -278,7 +278,7 @@
       </div>
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front cappuccino.png" alt="كلادينج كابتشينو">
+          <img src="Cladding Photos/front/front cappuccino.png" alt="كلادينج كابتشينو" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">كابتشينو</span>
@@ -287,7 +287,7 @@
       </div>
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front grey.png" alt="كلادينج رمادي">
+          <img src="Cladding Photos/front/front grey.png" alt="كلادينج رمادي" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">رمادي</span>
@@ -296,7 +296,7 @@
       </div>
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front titanium.png" alt="كلادينج تيتانيوم">
+          <img src="Cladding Photos/front/front titanium.png" alt="كلادينج تيتانيوم" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">تيتانيوم</span>
@@ -499,7 +499,7 @@
   <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
 </div>
 
-<script src="scripts.js?v=15"></script>
+<script src="scripts.js?v=17"></script>
 <script>
 // Auto-play videos when scrolled into view
 (function(){
