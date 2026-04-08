@@ -15,14 +15,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=33">
+<link rel="stylesheet" href="styles.css?v=35">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 </head>
 <body>
+<a href="#hero" class="skip-link">تخطي إلى المحتوى</a>
 
 <!-- ═══ 1. ANNOUNCEMENT BAR ═══ -->
-<div class="announce" id="announce">
-  <button class="announce-close" onclick="closeAnnounce()" aria-label="إغلاق">
+<div class="announce" id="announce" role="banner">
+  <button class="announce-close" id="announceClose" aria-label="إغلاق">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
   <div class="marquee-wrap">
@@ -34,7 +35,8 @@
 </div>
 
 <!-- ═══ 2. NAVIGATION ═══ -->
-<nav class="nav" id="nav">
+<header>
+<nav class="nav" id="nav" aria-label="القائمة الرئيسية">
   <div class="nav-logo">
     <a href="#hero"><img src="images/Logo-white.png" alt="مطابخ الأبيض المتحدة" class="logo-img"></a>
   </div>
@@ -43,6 +45,8 @@
     تحدث مع المصمم
   </a>
 </nav>
+</header>
+<main id="main-content">
 <!-- ═══ 3. HERO ═══ -->
 <section class="hero" id="hero">
   <div class="hero-text">
@@ -269,7 +273,7 @@
     <div class="cladding-colors" data-animate="fade-up">
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front white.png" alt="كلادينج أبيض" loading="lazy">
+          <img src="Cladding Photos/front/front white.webp" alt="كلادينج أبيض" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">أبيض</span>
@@ -278,7 +282,7 @@
       </div>
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front cappuccino.png" alt="كلادينج كابتشينو" loading="lazy">
+          <img src="Cladding Photos/front/front cappuccino.webp" alt="كلادينج كابتشينو" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">كابتشينو</span>
@@ -287,7 +291,7 @@
       </div>
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front grey.png" alt="كلادينج رمادي" loading="lazy">
+          <img src="Cladding Photos/front/front grey.webp" alt="كلادينج رمادي" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">رمادي</span>
@@ -296,7 +300,7 @@
       </div>
       <div class="cladding-color-card">
         <div class="cladding-color-img">
-          <img src="Cladding Photos/front/front titanium.png" alt="كلادينج تيتانيوم" loading="lazy">
+          <img src="Cladding Photos/front/front titanium.webp" alt="كلادينج تيتانيوم" loading="lazy">
         </div>
         <div class="cladding-color-info">
           <span class="cladding-color-name">تيتانيوم</span>
@@ -390,14 +394,18 @@
       </div>
     </div>
     <div class="form-card" data-animate="fade-end" data-delay="2">
-      <form onsubmit="event.preventDefault()">
-        <div class="form-field"><input type="text" id="fn" placeholder=" " required><label for="fn">الاسم</label></div>
-        <div class="form-field"><input type="tel" id="ph" placeholder=" " required><label for="ph">رقم الجوال</label></div>
+      <form id="contactForm" novalidate>
+        <div class="form-field"><input type="text" id="fn" placeholder=" " required aria-required="true" minlength="2" maxlength="80"><label for="fn">الاسم</label><span class="form-error" aria-live="polite"></span></div>
+        <div class="form-field"><input type="tel" id="ph" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="ph">رقم الجوال</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-row">
-          <div class="form-field"><input type="text" id="city" placeholder=" " required><label for="city">المدينة</label></div>
-          <div class="form-field"><input type="text" id="district" placeholder=" " required><label for="district">الحي</label></div>
+          <div class="form-field"><input type="text" id="city" placeholder=" " required aria-required="true"><label for="city">المدينة</label><span class="form-error" aria-live="polite"></span></div>
+          <div class="form-field"><input type="text" id="district" placeholder=" " required aria-required="true"><label for="district">الحي</label><span class="form-error" aria-live="polite"></span></div>
         </div>
-        <button type="submit" class="btn-submit">اطلب زيارة قياس<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+        <button type="submit" class="btn-submit" id="submitBtn">اطلب زيارة قياس<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+        <div class="form-success" id="formSuccess" role="alert" aria-live="polite" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>تم إرسال طلبك بنجاح! سيتواصل معك فريقنا قريباً</span>
+        </div>
       </form>
       <p class="form-note">لا عربون · سيتصل بك فريقنا في اقرب وقت</p>
     </div>
@@ -471,7 +479,7 @@
         <span class="footer-col-title">تواصل معنا</span>
         <div class="footer-contact-list">
           <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:920031000" dir="ltr">920031000</a></div>
-          <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span dir="ltr">info@uwkitchens.com</span></div>
+          <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:info@uwkitchens.com" dir="ltr">info@uwkitchens.com</a></div>
           <div class="footer-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span class="footer-address">طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض</span></div>
         </div>
       </div>
@@ -479,8 +487,9 @@
     <div class="footer-bottom"><p>© 2026 شركة الأبيض المتحدة التجارية. جميع الحقوق محفوظة.</p></div>
   </div>
 </footer>
+</main>
 <!-- ═══ 11.5 SCROLL TO TOP ═══ -->
-<button class="scroll-top" id="scrollTop" aria-label="العودة للأعلى" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+<button class="scroll-top" id="scrollTop" aria-label="العودة للأعلى">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 <!-- ═══ WHATSAPP FAB ═══ -->
@@ -492,14 +501,14 @@
 </a>
 
 <!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()" aria-label="إغلاق">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="عرض الصورة">
+  <button class="lightbox-close" id="lightboxClose" aria-label="إغلاق">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
-  <img id="lightboxImg" src="" alt="" onclick="event.stopPropagation()">
+  <img id="lightboxImg" src="" alt="">
 </div>
 
-<script src="scripts.js?v=17"></script>
+<script src="scripts.js?v=19"></script>
 <script>
 // Auto-play videos when scrolled into view
 (function(){

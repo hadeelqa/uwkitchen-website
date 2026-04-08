@@ -14,13 +14,26 @@ function openNav(){
   document.body.classList.toggle('nav-open', nl && nl.classList.contains('open'));
 }
 
+/* ═══════ ANNOUNCEMENT CLOSE (no inline handler) ═══════ */
+(function(){
+  var btn = document.getElementById('announceClose');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    document.getElementById('announce').classList.add('hidden');
+    document.getElementById('nav').classList.add('no-announce');
+    document.querySelector('.hero').style.marginTop='0';
+  });
+})();
 
-/* ═══════ ANNOUNCEMENT CLOSE ═══════ */
-function closeAnnounce(){
-  document.getElementById('announce').classList.add('hidden');
-  document.getElementById('nav').classList.add('no-announce');
-  document.querySelector('.hero').style.marginTop='0';
-}
+/* ═══════ SCROLL TOP (no inline handler) ═══════ */
+(function(){
+  var btn = document.getElementById('scrollTop');
+  if(btn){
+    btn.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  }
+})();
 
 /* ═══════ SCROLL ANIMATION ENGINE ═══════ */
 function checkVisible(){
@@ -31,9 +44,7 @@ function checkVisible(){
     }
   });
 }
-// Run on scroll
 window.addEventListener('scroll', checkVisible, {passive:true});
-// Run on load and shortly after
 checkVisible();
 setTimeout(checkVisible, 300);
 setTimeout(checkVisible, 800);
@@ -67,7 +78,6 @@ const counterObs = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(!e.isIntersecting) return;
     const el = e.target;
-    // Wait for fade-in animation to complete before counting
     setTimeout(()=>animateCounter(el), 400);
     counterObs.unobserve(el);
   });
@@ -85,7 +95,7 @@ if(heroImg && window.innerWidth >= 768){
   },{passive:true});
 }
 
-/* ═══════ PARTNERS ═══════ */
+/* ═══════ PARTNERS (lazy loaded) ═══════ */
 const pTrack = document.getElementById('partnersTrack');
 if(pTrack){
   const partners = [
@@ -107,25 +117,24 @@ if(pTrack){
       cell.className = 'partner-cell';
       var img = document.createElement('img');
       img.className = 'partner-logo';
-      img.src = p.logo;
       img.alt = p.name;
+      img.loading = 'lazy';
       img.decoding = 'async';
+      img.src = p.logo;
       cell.appendChild(img);
       pTrack.appendChild(cell);
     });
   }
 }
 
-
-/* ═══════ TESTIMONIALS MARQUEE ═══════ */
-const starSvg = '<svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="var(--gold)" stroke="none"/></svg>';
-const row1Data = [
+/* ═══════ TESTIMONIALS MARQUEE (DOM-safe, no innerHTML) ═══════ */
+var row1Data = [
   {name:'أبو عبدالله',initials:'أع',quote:'من أفضل الشركات اللي تعاملت معهم. التصميم طلع أحلى من اللي تخيلته والتركيب كان سريع واحترافي.'},
   {name:'ليلى عبدالكريم',initials:'لع',quote:'اليوم تم انجاز المطبخ من شركة المطابخ الابيض المتحدة. سعدت جداً بالعمل مع المهندس المتميز عبد الله.'},
   {name:'ماجد الدويش',initials:'مد',quote:'أحب أشكر المهندس فتح الله على شغله المميز في تصميم المطبخ. من أول اجتماع كان واضح حرصه على التفاصيل.'},
   {name:'سارة أبوزيد',initials:'سأ',quote:'مش عارفة أبدأ من فين عشان اشكرهم من اول المعاينة المجانية اللي شجعتنا نكمل معاهم ولا التصميم الجميل.'},
 ];
-const row2Data = [
+var row2Data = [
   {name:'أم سارة',initials:'أس',quote:'مطبخي صار تحفة! الخامات ممتازة والضمان أعطاني راحة بال. أنصح الكل يتعاملون معهم بدون تردد.'},
   {name:'خالد المطيري',initials:'خم',quote:'خدمة التتبع المباشر شيء مميز جداً. تابعت كل مرحلة من موبايلي وكان الموعد دقيق. تجربة ممتازة.'},
   {name:'نورة الحربي',initials:'نح',quote:'التركيب خلص بالضبط في 20 يوم زي ما قالوا. الفريق كان محترف ونظيف ويحترم البيت. شغل راقي.'},
@@ -133,17 +142,52 @@ const row2Data = [
   {name:'عبدالرحمن السبيعي',initials:'عس',quote:'تعاملت معهم مرتين والمرتين نفس المستوى. ما يتغير شي لا بالجودة ولا بالخدمة. ناس محترمين.'},
   {name:'هند الشمري',initials:'هش',quote:'أجمل شي إنهم يسمعونك ويفهمون احتياجك. طلعت بمطبخ فوق توقعاتي والتسليم كان قبل الموعد.'},
 ];
-function buildCard(t){
-  return '<div class="test-card"><div class="test-rating">'+starSvg.repeat(5)+'</div><p class="test-quote">'+t.quote+'</p><div class="test-author"><div class="test-avatar">'+t.initials+'</div><span class="test-name">'+t.name+'</span></div></div>';
+function buildCardDOM(t){
+  var card = document.createElement('div');
+  card.className = 'test-card';
+  // Stars
+  var rating = document.createElement('div');
+  rating.className = 'test-rating';
+  for(var s=0;s<5;s++){
+    var star = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    star.setAttribute('viewBox','0 0 24 24');
+    var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d','M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z');
+    path.setAttribute('fill','var(--gold)');
+    path.setAttribute('stroke','none');
+    star.appendChild(path);
+    rating.appendChild(star);
+  }
+  card.appendChild(rating);
+  // Quote
+  var quote = document.createElement('p');
+  quote.className = 'test-quote';
+  quote.textContent = t.quote;
+  card.appendChild(quote);
+  // Author
+  var author = document.createElement('div');
+  author.className = 'test-author';
+  var avatar = document.createElement('div');
+  avatar.className = 'test-avatar';
+  avatar.textContent = t.initials;
+  author.appendChild(avatar);
+  var name = document.createElement('span');
+  name.className = 'test-name';
+  name.textContent = t.name;
+  author.appendChild(name);
+  card.appendChild(author);
+  return card;
 }
-function fillRow(id, data){
+function fillRowDOM(id, data){
   var el = document.getElementById(id);
   if(!el) return;
-  var html = data.map(buildCard).join('');
-  el.innerHTML = html + html + html;
+  // Triple the cards for marquee effect
+  for(var r=0;r<3;r++){
+    data.forEach(function(t){ el.appendChild(buildCardDOM(t)); });
+  }
 }
-fillRow('testRow1', row1Data);
-fillRow('testRow2', row2Data);
+fillRowDOM('testRow1', row1Data);
+fillRowDOM('testRow2', row2Data);
 
 /* ═══════ KITCHENS GALLERY ═══════ */
 const kitchensGrid = document.getElementById('kitchensGrid');
@@ -215,7 +259,6 @@ if(kitchensGrid){
       img.src = p.src;
     }
     div.appendChild(img);
-    div.addEventListener('click', function(){ openLightbox(p.src) });
     return div;
   }
   kitchenPhotos.forEach(function(p, i){
@@ -277,7 +320,6 @@ if(scrollTopBtn || waFab){
 (function(){
   var announce = document.getElementById('announce');
   if(!announce) return;
-  var lastY = 0;
   window.addEventListener('scroll', function(){
     var y = window.scrollY;
     if(y > 200){
@@ -287,34 +329,130 @@ if(scrollTopBtn || waFab){
       announce.classList.remove('scrolled');
       document.getElementById('nav').classList.remove('no-announce');
     }
-    lastY = y;
   }, {passive:true});
 })();
 
-/* ═══════ KITCHEN LIGHTBOX ═══════ */
+/* ═══════ KITCHEN LIGHTBOX — with focus trap ═══════ */
+var _lastFocused = null;
 function openLightbox(src, alt){
   var lb = document.getElementById('lightbox');
   var img = document.getElementById('lightboxImg');
   if(!lb || !img) return;
+  _lastFocused = document.activeElement;
   img.src = src;
   img.alt = alt || '';
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
+  // Focus close button for keyboard accessibility
+  var closeBtn = document.getElementById('lightboxClose');
+  if(closeBtn) setTimeout(function(){ closeBtn.focus(); }, 100);
 }
 function closeLightbox(){
   var lb = document.getElementById('lightbox');
   if(!lb) return;
   lb.classList.remove('active');
   document.body.style.overflow = '';
+  // Restore focus to the element that opened the lightbox
+  if(_lastFocused) _lastFocused.focus();
 }
-// Close on Escape key
-document.addEventListener('keydown', function(e){
-  if(e.key === 'Escape') closeLightbox();
-});
-// Attach click to kitchen items
+// Lightbox event listeners (no inline handlers)
+(function(){
+  var lb = document.getElementById('lightbox');
+  var closeBtn = document.getElementById('lightboxClose');
+  var lbImg = document.getElementById('lightboxImg');
+  if(!lb) return;
+  // Close on background click
+  lb.addEventListener('click', function(e){
+    if(e.target === lb) closeLightbox();
+  });
+  // Close button click
+  if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  // Prevent close when clicking image
+  if(lbImg) lbImg.addEventListener('click', function(e){ e.stopPropagation(); });
+  // Focus trap inside lightbox
+  lb.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('active')) return;
+    if(e.key === 'Escape'){ closeLightbox(); return; }
+    if(e.key === 'Tab'){
+      // Trap focus to the close button only
+      e.preventDefault();
+      if(closeBtn) closeBtn.focus();
+    }
+  });
+})();
+// Attach click to kitchen items (delegated)
 document.addEventListener('click', function(e){
   var item = e.target.closest('.kitchen-item');
   if(!item) return;
   var img = item.querySelector('img');
   if(img) openLightbox(img.src, img.alt);
 });
+
+/* ═══════ FORM VALIDATION ═══════ */
+(function(){
+  var form = document.getElementById('contactForm');
+  if(!form) return;
+  var submitBtn = document.getElementById('submitBtn');
+  var successMsg = document.getElementById('formSuccess');
+  var errorMsgs = {
+    fn: 'الرجاء إدخال الاسم',
+    ph: 'الرجاء إدخال رقم جوال صحيح',
+    city: 'الرجاء إدخال المدينة',
+    district: 'الرجاء إدخال الحي'
+  };
+  function showError(field, msg){
+    field.classList.add('form-field--error');
+    field.setAttribute('aria-invalid','true');
+    var err = field.parentElement.querySelector('.form-error');
+    if(err) err.textContent = msg;
+  }
+  function clearError(field){
+    field.classList.remove('form-field--error');
+    field.removeAttribute('aria-invalid');
+    var err = field.parentElement.querySelector('.form-error');
+    if(err) err.textContent = '';
+  }
+  // Clear errors on input
+  form.querySelectorAll('input').forEach(function(input){
+    input.addEventListener('input', function(){ clearError(input); });
+  });
+  // Prevent double submit
+  var submitting = false;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(submitting) return;
+    var valid = true;
+    var fields = ['fn','ph','city','district'];
+    fields.forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      clearError(el);
+      if(!el.value.trim()){
+        showError(el, errorMsgs[id]);
+        valid = false;
+      } else if(id === 'ph' && !/^[\d\s\+\-]{7,15}$/.test(el.value.trim())){
+        showError(el, 'الرجاء إدخال رقم جوال صحيح');
+        valid = false;
+      }
+    });
+    if(!valid){
+      // Focus first error
+      var firstErr = form.querySelector('.form-field--error');
+      if(firstErr) firstErr.focus();
+      return;
+    }
+    // Disable button to prevent double submit
+    submitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'جاري الإرسال...';
+    // Simulate submission (replace with real API call)
+    setTimeout(function(){
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'اطلب زيارة قياس<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+      submitting = false;
+      if(successMsg) successMsg.hidden = false;
+      setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
+    }, 1000);
+  });
+})();

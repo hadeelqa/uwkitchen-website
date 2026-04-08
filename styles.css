@@ -20,7 +20,8 @@ body.nav-open{overflow:hidden}
   --bg-secondary:#160b15;
   --bg-elevated:rgba(255,255,255,.04);
   --bg-section-alt:#130a12;
-  --white:#0e040d;
+  --white:#0e040d; /* legacy alias — dark theme bg */
+  --bg-dark:#0e040d;
 
   /* ── Text Colors ── */
   --text-main:#f0eaef;
@@ -134,8 +135,8 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
    ═══════════════════════════════════════════ */
 
 /* Base: all animated elements start hidden */
-[data-animate]{opacity:0;transition:opacity .8s var(--ease-out),transform .8s var(--ease-out);will-change:transform,opacity}
-[data-animate].in-view{opacity:1;transform:translate(0,0) scale(1)!important}
+[data-animate]{opacity:0;transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
+[data-animate].in-view{opacity:1;transform:translate(0,0) scale(1)}
 
 /* Fade up */
 [data-animate="fade-up"]{transform:translateY(48px)}
@@ -452,8 +453,8 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 /* ═══════ VIDEO/TRACKING HERO SECTION ═══════ */
 
 .vid-play-float{position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);width:88px;height:88px;border-radius:50%;background:rgba(255,255,255,.1);backdrop-filter:blur(16px);border:1.5px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .4s cubic-bezier(.4,0,.2,1);z-index:4}
-.vid-play-float::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(255,255,255,.08);animation:pulse-ring 2.5s ease-out infinite}
-@keyframes pulse-ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.4);opacity:0}}
+.vid-play-float::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(255,255,255,.08);animation:vid-pulse-ring 2.5s ease-out infinite}
+@keyframes vid-pulse-ring{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.4);opacity:0}}
 @media(min-width:1024px){.vid-play-float{width:110px;height:110px}}
 .vid-play-float:hover{background:rgba(255,255,255,.2);transform:translate(-50%,-50%) scale(1.08);border-color:rgba(255,255,255,.35)}
 .vid-play-float svg{width:32px;height:32px;color:#fff;fill:#fff;margin-right:-3px}
@@ -496,7 +497,7 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .cladding-color-card:hover .cladding-color-img img{transform:scale(1.05);filter:brightness(1.15) contrast(1.10) saturate(0.93) drop-shadow(0 8px 30px rgba(0,0,0,.5))}
 .cladding-color-info{padding:16px;text-align:center;display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.03)}
 .cladding-color-name{font-weight:600;font-size:15px;color:#fff}
-.cladding-color-eng{font-size:12px;color:var(--gold);font-weight:500;letter-spacing:.5px;text-transform:uppercase}
+.cladding-color-eng{font-size:12px;color:var(--gold);font-weight:500;text-transform:uppercase}
 
 .mat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:48px;background:rgba(255,255,255,.06);border-radius:var(--radius-xl);overflow:hidden}
 @media(min-width:768px){.mat-grid{grid-template-columns:repeat(3,1fr)}}
@@ -621,7 +622,7 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
   [data-animate]{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important}
   .marquee-track,.partners-grid,.test-marquee-row{animation:none!important}
   .wa-fab::before{animation:none!important}
-  .live-chip,.live-dot,.pulse-dot::after{animation:none!important}
+  .live-chip,.live-chip-dot,.live-dot,.pulse-dot::after{animation:none!important}
 }
 
 /* ═══════════════════════════════════════════
@@ -644,8 +645,8 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .live-hero-visual{position:relative;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9}
 .live-hero-visual img{width:100%;height:100%;object-fit:cover}
 .live-chip{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--radius-full);background:rgba(220,38,38,.85);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:10px;z-index:2;animation:liveGlow 2s ease-in-out infinite}
-.live-chip-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:livePulse 1.4s ease-in-out infinite}
-@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.live-chip-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:liveChipPulse 1.4s ease-in-out infinite}
+@keyframes liveChipPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 @keyframes liveGlow{0%,100%{box-shadow:0 0 12px rgba(220,38,38,.4)}50%{box-shadow:0 0 24px rgba(220,38,38,.7)}}
 .live-social-links{display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap}
 .live-social-btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;text-decoration:none;transition:all var(--duration-normal) var(--ease-out);background:rgba(237,172,110,.08);border:1px solid rgba(237,172,110,.2);color:var(--gold)}
@@ -781,5 +782,17 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .btn-kitchens-all svg{transition:transform .3s}
 .btn-kitchens-all:hover svg{transform:translateY(3px)}
 
+
+/* ═══════ SKIP LINK (Accessibility) ═══════ */
+.skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);padding:12px 24px;background:var(--gold);color:#fff;font-weight:600;font-size:14px;border-radius:0 0 var(--radius-md) var(--radius-md);z-index:100;transition:top .2s}
+.skip-link:focus{top:0}
+
+/* ═══════ FORM VALIDATION STATES ═══════ */
+.form-field--error{border-color:rgba(239,68,68,.6)!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)!important}
+.form-error{display:block;font-size:12px;color:#ef4444;margin-top:4px;min-height:0;transition:all .2s}
+.form-success{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:var(--radius-md);color:#22c55e;font-size:14px;font-weight:500;margin-top:12px;animation:fadeInUp .4s ease}
+.form-success[hidden]{display:none}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 
 /* ═══════ MAPS CTA BUTTON ═══════ */
