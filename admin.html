@@ -32,79 +32,154 @@ input,textarea,select{font-family:var(--font)}
 
 /* ── DASHBOARD ── */
 .dash{display:none;min-height:100vh}
-.dash-header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.dash-header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
 .dash-header-right{display:flex;align-items:center;gap:16px}
-.dash-logo{height:36px}
-.dash-title{font-size:15px;font-weight:600;color:var(--text2)}
+.dash-logo{height:32px}
+.dash-title{font-size:14px;font-weight:600;color:var(--text2)}
 .dash-user{font-size:13px;color:var(--text3)}
-.btn-logout{padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:13px;transition:all .2s}
+.btn-logout{padding:6px 14px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:12px;transition:all .2s}
 .btn-logout:hover{background:rgba(255,255,255,.1);color:#fff}
+.btn-view-site{padding:6px 14px;background:rgba(212,136,74,.1);border:1px solid rgba(212,136,74,.2);border-radius:999px;color:var(--gold);font-size:12px;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.btn-view-site:hover{background:rgba(212,136,74,.2)}
+.btn-view-site svg{width:14px;height:14px}
+.btn-menu{display:none;padding:6px;background:none;color:var(--text2)}
+.btn-menu svg{width:24px;height:24px}
 
-.dash-body{display:flex;min-height:calc(100vh - 65px)}
+.dash-body{display:flex;min-height:calc(100vh - 57px)}
 
 /* Sidebar */
-.dash-nav{width:220px;background:var(--bg2);border-left:1px solid var(--border);padding:16px 0;flex-shrink:0;position:sticky;top:65px;height:calc(100vh - 65px);overflow-y:auto}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;color:var(--text2);cursor:pointer;transition:all .2s;border-right:3px solid transparent}
+.dash-nav{width:200px;background:var(--bg2);border-left:1px solid var(--border);padding:12px 0;flex-shrink:0;position:sticky;top:57px;height:calc(100vh - 57px);overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:8px;padding:9px 16px;font-size:13px;color:var(--text2);cursor:pointer;transition:all .2s;border-right:3px solid transparent}
 .nav-item:hover{background:rgba(255,255,255,.03);color:#fff}
 .nav-item.active{background:rgba(212,136,74,.06);color:var(--gold);border-right-color:var(--gold)}
-.nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.6}
+.nav-item svg{width:16px;height:16px;flex-shrink:0;opacity:.6}
 .nav-item.active svg{opacity:1}
 
 /* Content */
-.dash-content{flex:1;padding:32px;max-width:900px}
+.dash-content{flex:1;padding:28px 32px;max-width:960px}
 .section-panel{display:none}
 .section-panel.active{display:block}
-.panel-title{font-size:22px;font-weight:700;margin-bottom:8px}
-.panel-desc{font-size:14px;color:var(--text2);margin-bottom:32px}
+.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.panel-header-text{}
+.panel-title{font-size:20px;font-weight:700;margin-bottom:4px}
+.panel-desc{font-size:13px;color:var(--text2)}
+.panel-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15);border-radius:999px;font-size:11px;color:#22c55e}
+.panel-badge-dot{width:6px;height:6px;border-radius:50%;background:#22c55e}
+
+/* Preview */
+.preview-wrap{margin-bottom:28px;border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.preview-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border)}
+.preview-label{font-size:12px;font-weight:500;color:var(--text3);display:flex;align-items:center;gap:6px}
+.preview-label svg{width:14px;height:14px;opacity:.5}
+.preview-body{padding:20px;background:var(--bg3)}
+
+/* Preview: Announce */
+.pv-announce{background:var(--gold);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Preview: Hero */
+.pv-hero{display:flex;align-items:center;gap:20px;direction:rtl}
+.pv-hero-text{flex:1}
+.pv-hero-line1{font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+.pv-hero-line2{font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--gold),#e8a66a);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.pv-hero-promise{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2);margin-bottom:4px}
+.pv-hero-promise svg{width:14px;height:14px;color:#63b3a5;flex-shrink:0}
+.pv-hero-cta{display:inline-block;padding:8px 16px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-size:12px;font-weight:600;border-radius:999px;margin-top:8px}
+.pv-hero-img{width:100px;height:80px;border-radius:8px;background:rgba(255,255,255,.05);overflow:hidden;flex-shrink:0}
+.pv-hero-img img{width:100%;height:100%;object-fit:cover}
+
+/* Preview: Stats */
+.pv-stats{display:flex;gap:12px;flex-wrap:wrap}
+.pv-stat{flex:1;min-width:80px;text-align:center;padding:12px 8px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid var(--border)}
+.pv-stat-num{display:block;font-size:18px;font-weight:700;color:#fff}
+.pv-stat-label{display:block;font-size:11px;color:var(--text3);margin-top:2px}
+
+/* Preview: Gallery */
+.pv-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pv-gallery-img{aspect-ratio:1;border-radius:6px;overflow:hidden;background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.pv-gallery-img img{width:100%;height:100%;object-fit:cover}
+.pv-gallery-empty{display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px}
+
+/* Preview: Testimonials */
+.pv-tests{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.pv-test{flex-shrink:0;width:200px;padding:12px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid var(--border)}
+.pv-test-stars{color:var(--gold);font-size:10px;margin-bottom:6px}
+.pv-test-quote{font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pv-test-author{display:flex;align-items:center;gap:6px}
+.pv-test-avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;font-weight:600}
+.pv-test-name{font-size:11px;color:var(--text)}
+
+/* Preview: Branches */
+.pv-branches{display:flex;gap:10px;flex-wrap:wrap}
+.pv-branch{flex:1;min-width:160px;padding:12px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid var(--border)}
+.pv-branch-badge{display:inline-block;padding:2px 8px;background:rgba(212,136,74,.1);border-radius:999px;font-size:10px;color:var(--gold);margin-bottom:6px}
+.pv-branch-city{display:block;font-size:14px;font-weight:600;margin-bottom:2px}
+.pv-branch-addr{font-size:11px;color:var(--text3)}
+
+/* Preview: Contact */
+.pv-contact{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pv-contact-item{display:flex;align-items:center;gap:8px;padding:10px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid var(--border)}
+.pv-contact-item svg{width:16px;height:16px;color:var(--gold);flex-shrink:0}
+.pv-contact-item span{font-size:12px;color:var(--text2)}
 
 /* Form elements */
-.field{margin-bottom:20px}
-.field-label{display:block;font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px}
-.field-input{width:100%;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;outline:none;transition:border-color .2s;resize:vertical}
+.field{margin-bottom:16px}
+.field-label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px}
+.field-input{width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px;outline:none;transition:border-color .2s;resize:vertical}
 .field-input:focus{border-color:rgba(212,136,74,.4)}
 .field-input::placeholder{color:var(--text3)}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.field-hint{font-size:12px;color:var(--text3);margin-top:4px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field-hint{font-size:11px;color:var(--text3);margin-top:3px}
 
 /* Cards list */
-.cards-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.card-item{padding:16px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);position:relative}
-.card-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.card-item-title{font-size:14px;font-weight:600}
-.card-item-actions{display:flex;gap:8px}
-.btn-card-action{padding:4px 8px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--text3);font-size:12px;transition:all .2s}
+.cards-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.card-item{padding:14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);position:relative;transition:border-color .2s}
+.card-item:hover{border-color:rgba(255,255,255,.12)}
+.card-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.card-item-title{font-size:13px;font-weight:600}
+.card-item-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;background:rgba(212,136,74,.1);color:var(--gold);font-size:11px;font-weight:600;margin-left:8px}
+.card-item-actions{display:flex;gap:6px}
+.btn-card-action{padding:4px 8px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--text3);font-size:11px;transition:all .2s}
 .btn-card-action:hover{border-color:rgba(255,255,255,.2);color:#fff}
 .btn-card-action.delete{border-color:rgba(239,68,68,.2);color:#ef4444}
 .btn-card-action.delete:hover{background:rgba(239,68,68,.1)}
 
 /* Image upload */
-.img-upload{display:flex;align-items:center;gap:16px;margin-bottom:12px}
-.img-preview{width:80px;height:80px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);object-fit:cover;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.img-upload{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.img-preview{width:64px;height:64px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);object-fit:cover;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
 .img-preview img{width:100%;height:100%;object-fit:cover}
-.img-preview-empty{color:var(--text3);font-size:12px;text-align:center;padding:8px}
-.btn-upload{padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:13px;cursor:pointer;transition:all .2s}
-.btn-upload:hover{background:rgba(255,255,255,.1);color:#fff}
-input[type="file"]{display:none}
+.img-preview-empty{color:var(--text3);font-size:11px;text-align:center;padding:6px}
 
 /* Action buttons */
-.btn-save{padding:12px 32px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:14px;border-radius:999px;transition:opacity .2s}
+.btn-save{padding:10px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:13px;border-radius:999px;transition:opacity .2s}
 .btn-save:hover{opacity:.9}
 .btn-save:disabled{opacity:.5;cursor:not-allowed}
-.btn-add{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:none;border:1px dashed rgba(255,255,255,.15);border-radius:8px;color:var(--gold);font-size:13px;font-weight:500;transition:all .2s}
+.btn-add{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;background:none;border:1px dashed rgba(255,255,255,.15);border-radius:8px;color:var(--gold);font-size:12px;font-weight:500;transition:all .2s}
 .btn-add:hover{border-color:rgba(212,136,74,.3);background:rgba(212,136,74,.05)}
-.actions-bar{display:flex;align-items:center;gap:12px;padding-top:24px;border-top:1px solid var(--border);margin-top:32px}
-.save-status{font-size:13px;color:var(--text3);margin-right:auto}
+.actions-bar{display:flex;align-items:center;gap:12px;padding-top:20px;border-top:1px solid var(--border);margin-top:24px}
+.save-status{font-size:12px;color:var(--text3);margin-right:auto}
 
 /* Toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);padding:12px 24px;background:#22c55e;color:#fff;font-size:14px;font-weight:500;border-radius:999px;z-index:100;transition:transform .3s cubic-bezier(.22,1,.36,1);pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.error{background:#ef4444}
 
+/* Empty state */
+.empty-state{text-align:center;padding:32px;color:var(--text3);font-size:13px}
+.empty-state svg{width:32px;height:32px;opacity:.3;margin-bottom:8px;display:block;margin-inline:auto}
+
 /* Responsive */
 @media(max-width:768px){
-  .dash-nav{display:none}
+  .btn-menu{display:block}
+  .dash-nav{position:fixed;top:57px;right:0;bottom:0;width:220px;z-index:20;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,1,.36,1)}
+  .dash-nav.open{transform:translateX(0)}
+  .nav-overlay{display:none;position:fixed;inset:0;top:57px;background:rgba(0,0,0,.5);z-index:19}
+  .nav-overlay.open{display:block}
   .dash-content{padding:20px 16px}
   .field-row{grid-template-columns:1fr}
+  .pv-hero{flex-direction:column}
+  .pv-hero-img{width:100%;height:120px}
+  .pv-gallery{grid-template-columns:repeat(3,1fr)}
+  .pv-contact{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -133,17 +208,20 @@ input[type="file"]{display:none}
 <div class="dash" id="dashboard">
   <header class="dash-header">
     <div class="dash-header-right">
+      <button class="btn-menu" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <img src="images/Logo-white.png" alt="Logo" class="dash-logo">
       <span class="dash-title">إدارة المحتوى</span>
     </div>
-    <div style="display:flex;align-items:center;gap:16px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="/" target="_blank" class="btn-view-site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>الموقع</a>
       <span class="dash-user" id="dashUser"></span>
-      <button class="btn-logout" id="logoutBtn">تسجيل خروج</button>
+      <button class="btn-logout" id="logoutBtn">خروج</button>
     </div>
   </header>
 
+  <div class="nav-overlay" id="navOverlay"></div>
   <div class="dash-body">
-    <nav class="dash-nav">
+    <nav class="dash-nav" id="dashNav">
       <div class="nav-item active" data-section="announce">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         شريط الإعلان
@@ -178,11 +256,19 @@ input[type="file"]{display:none}
 
       <!-- ANNOUNCE -->
       <div class="section-panel active" id="panel-announce">
-        <h2 class="panel-title">شريط الإعلان</h2>
-        <p class="panel-desc">النص المتحرك في أعلى الموقع</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">شريط الإعلان</h2>
+            <p class="panel-desc">النص المتحرك في أعلى الموقع</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body"><div class="pv-announce" id="pv-announce">عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً</div></div>
+        </div>
         <div class="field">
           <label class="field-label">نص الإعلان</label>
-          <textarea class="field-input" id="cms-announce-text" rows="3" placeholder="عرض شهر أبريل: تصميم مجاني..."></textarea>
+          <textarea class="field-input" id="cms-announce-text" rows="3" placeholder="عرض شهر أبريل: تصميم مجاني..." oninput="updatePreview('announce')"></textarea>
         </div>
         <div class="actions-bar">
           <button class="btn-save" onclick="saveSection('announce')">حفظ التغييرات</button>
@@ -192,27 +278,46 @@ input[type="file"]{display:none}
 
       <!-- HERO -->
       <div class="section-panel" id="panel-hero">
-        <h2 class="panel-title">قسم الهيرو</h2>
-        <p class="panel-desc">العنوان الرئيسي والنص في أعلى الصفحة</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">قسم الهيرو</h2>
+            <p class="panel-desc">العنوان الرئيسي والنص في أعلى الصفحة</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body">
+            <div class="pv-hero">
+              <div class="pv-hero-text">
+                <div class="pv-hero-line1" id="pv-hero-line1">+30 عام من الخبرة</div>
+                <div class="pv-hero-line2" id="pv-hero-line2">في تصميم المطابخ</div>
+                <div class="pv-hero-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg><span id="pv-hero-promise1">تركيب 20 يوم أو تعويض</span></div>
+                <div class="pv-hero-promise" style="opacity:.6"><span id="pv-hero-promise2">100 ر.س تعويض عن كل يوم تأخير – بالعقد</span></div>
+                <div class="pv-hero-cta" id="pv-hero-cta">استشاري المبيعات متاح الآن</div>
+              </div>
+              <div class="pv-hero-img"><img src="images/img_2.jpeg" alt=""></div>
+            </div>
+          </div>
+        </div>
         <div class="field">
           <label class="field-label">السطر الأول (فوق العنوان)</label>
-          <input class="field-input" id="cms-hero-line1" placeholder="+30 عام من الخبرة">
+          <input class="field-input" id="cms-hero-line1" placeholder="+30 عام من الخبرة" oninput="updatePreview('hero')">
         </div>
         <div class="field">
           <label class="field-label">السطر الثاني (العنوان الذهبي)</label>
-          <input class="field-input" id="cms-hero-line2" placeholder="في تصميم المطابخ">
+          <input class="field-input" id="cms-hero-line2" placeholder="في تصميم المطابخ" oninput="updatePreview('hero')">
         </div>
         <div class="field">
           <label class="field-label">نص الوعد</label>
-          <input class="field-input" id="cms-hero-promise1" placeholder="تركيب 20 يوم أو تعويض">
+          <input class="field-input" id="cms-hero-promise1" placeholder="تركيب 20 يوم أو تعويض" oninput="updatePreview('hero')">
         </div>
         <div class="field">
           <label class="field-label">تفاصيل الوعد</label>
-          <input class="field-input" id="cms-hero-promise2" placeholder="100 ر.س تعويض عن كل يوم تأخير – بالعقد">
+          <input class="field-input" id="cms-hero-promise2" placeholder="100 ر.س تعويض عن كل يوم تأخير – بالعقد" oninput="updatePreview('hero')">
         </div>
         <div class="field">
           <label class="field-label">نص الزر</label>
-          <input class="field-input" id="cms-hero-cta" placeholder="استشاري المبيعات متاح الآن">
+          <input class="field-input" id="cms-hero-cta" placeholder="استشاري المبيعات متاح الآن" oninput="updatePreview('hero')">
         </div>
         <div class="actions-bar">
           <button class="btn-save" onclick="saveSection('hero')">حفظ التغييرات</button>
@@ -222,8 +327,16 @@ input[type="file"]{display:none}
 
       <!-- STATS -->
       <div class="section-panel" id="panel-stats">
-        <h2 class="panel-title">الإحصائيات</h2>
-        <p class="panel-desc">الأرقام المعروضة فوق خلفية الفيديو</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">الإحصائيات</h2>
+            <p class="panel-desc">الأرقام المعروضة فوق خلفية الفيديو</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body"><div class="pv-stats" id="pv-stats"></div></div>
+        </div>
         <div class="cards-list" id="statsList"></div>
         <button class="btn-add" onclick="addStat()">+ إضافة إحصائية</button>
         <div class="actions-bar">
@@ -234,8 +347,16 @@ input[type="file"]{display:none}
 
       <!-- GALLERY -->
       <div class="section-panel" id="panel-gallery">
-        <h2 class="panel-title">معرض المطابخ</h2>
-        <p class="panel-desc">صور المطابخ المعروضة في قسم المعرض — أضف رابط الصورة</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">معرض المطابخ</h2>
+            <p class="panel-desc">صور المطابخ المعروضة في قسم المعرض</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body"><div class="pv-gallery" id="pv-gallery"></div></div>
+        </div>
         <div class="cards-list" id="galleryList"></div>
         <button class="btn-add" onclick="addGalleryItem()">+ إضافة صورة</button>
         <div class="actions-bar">
@@ -246,8 +367,16 @@ input[type="file"]{display:none}
 
       <!-- TESTIMONIALS -->
       <div class="section-panel" id="panel-testimonials">
-        <h2 class="panel-title">التقييمات</h2>
-        <p class="panel-desc">آراء العملاء المعروضة في الماركي</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">التقييمات</h2>
+            <p class="panel-desc">آراء العملاء المعروضة في شريط متحرك</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body"><div class="pv-tests" id="pv-testimonials"></div></div>
+        </div>
         <div class="cards-list" id="testimonialsList"></div>
         <button class="btn-add" onclick="addTestimonial()">+ إضافة تقييم</button>
         <div class="actions-bar">
@@ -258,8 +387,16 @@ input[type="file"]{display:none}
 
       <!-- BRANCHES -->
       <div class="section-panel" id="panel-branches">
-        <h2 class="panel-title">الفروع</h2>
-        <p class="panel-desc">معلومات الفروع وعناوينها</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">الفروع</h2>
+            <p class="panel-desc">معلومات الفروع وعناوينها</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body"><div class="pv-branches" id="pv-branches"></div></div>
+        </div>
         <div class="cards-list" id="branchesList"></div>
         <button class="btn-add" onclick="addBranch()">+ إضافة فرع</button>
         <div class="actions-bar">
@@ -270,23 +407,38 @@ input[type="file"]{display:none}
 
       <!-- CONTACT -->
       <div class="section-panel" id="panel-contact">
-        <h2 class="panel-title">معلومات التواصل</h2>
-        <p class="panel-desc">أرقام الهاتف والبريد والعنوان</p>
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">معلومات التواصل</h2>
+            <p class="panel-desc">أرقام الهاتف والبريد والعنوان</p>
+          </div>
+        </div>
+        <div class="preview-wrap">
+          <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
+          <div class="preview-body">
+            <div class="pv-contact" id="pv-contact">
+              <div class="pv-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg><span id="pv-contact-phone">920031000</span></div>
+              <div class="pv-contact-item"><svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg><span id="pv-contact-whatsapp">واتساب</span></div>
+              <div class="pv-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span id="pv-contact-email">info@uwkitchens.com</span></div>
+              <div class="pv-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span id="pv-contact-address">الرياض</span></div>
+            </div>
+          </div>
+        </div>
         <div class="field">
           <label class="field-label">رقم الهاتف</label>
-          <input class="field-input" id="cms-contact-phone" placeholder="920031000" dir="ltr">
+          <input class="field-input" id="cms-contact-phone" placeholder="920031000" dir="ltr" oninput="updatePreview('contact')">
         </div>
         <div class="field">
           <label class="field-label">رقم الواتساب</label>
-          <input class="field-input" id="cms-contact-whatsapp" placeholder="966920031000" dir="ltr">
+          <input class="field-input" id="cms-contact-whatsapp" placeholder="966920031000" dir="ltr" oninput="updatePreview('contact')">
         </div>
         <div class="field">
           <label class="field-label">البريد الإلكتروني</label>
-          <input class="field-input" id="cms-contact-email" placeholder="info@uwkitchens.com" dir="ltr">
+          <input class="field-input" id="cms-contact-email" placeholder="info@uwkitchens.com" dir="ltr" oninput="updatePreview('contact')">
         </div>
         <div class="field">
           <label class="field-label">العنوان</label>
-          <textarea class="field-input" id="cms-contact-address" rows="2" placeholder="طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض"></textarea>
+          <textarea class="field-input" id="cms-contact-address" rows="2" placeholder="طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض" oninput="updatePreview('contact')"></textarea>
         </div>
         <div class="actions-bar">
           <button class="btn-save" onclick="saveSection('contact')">حفظ التغييرات</button>
@@ -308,9 +460,7 @@ input[type="file"]{display:none}
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 
 <script>
-/* ═══════════════════════════════════════
-   FIREBASE CONFIG — Fill in your values
-   ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════ */
 var firebaseConfig = {
   apiKey: "AIzaSyAfOq1iR7HFRq15LDbtONAH7fqw1LGdMek",
   authDomain: "uwkitchen-c3279.firebaseapp.com",
@@ -339,13 +489,9 @@ loginForm.addEventListener('submit', function(e) {
   loginBtn.disabled = true;
   loginBtn.textContent = 'جاري الدخول...';
   loginError.style.display = 'none';
-
   auth.signInWithEmailAndPassword(email, pass)
-    .then(function() {
-      loginBtn.disabled = false;
-      loginBtn.textContent = 'تسجيل الدخول';
-    })
-    .catch(function(err) {
+    .then(function() { loginBtn.disabled = false; loginBtn.textContent = 'تسجيل الدخول'; })
+    .catch(function() {
       loginBtn.disabled = false;
       loginBtn.textContent = 'تسجيل الدخول';
       loginError.textContent = 'البريد أو كلمة المرور غير صحيحة';
@@ -353,9 +499,7 @@ loginForm.addEventListener('submit', function(e) {
     });
 });
 
-document.getElementById('logoutBtn').addEventListener('click', function() {
-  auth.signOut();
-});
+document.getElementById('logoutBtn').addEventListener('click', function() { auth.signOut(); });
 
 auth.onAuthStateChanged(function(user) {
   if (user) {
@@ -370,12 +514,25 @@ auth.onAuthStateChanged(function(user) {
 });
 
 /* ═══════ NAVIGATION ═══════ */
+var dashNav = document.getElementById('dashNav');
+var navOverlay = document.getElementById('navOverlay');
+document.getElementById('menuBtn').addEventListener('click', function() {
+  dashNav.classList.toggle('open');
+  navOverlay.classList.toggle('open');
+});
+navOverlay.addEventListener('click', function() {
+  dashNav.classList.remove('open');
+  navOverlay.classList.remove('open');
+});
+
 document.querySelectorAll('.nav-item').forEach(function(item) {
   item.addEventListener('click', function() {
     document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
     document.querySelectorAll('.section-panel').forEach(function(p) { p.classList.remove('active'); });
     item.classList.add('active');
     document.getElementById('panel-' + item.dataset.section).classList.add('active');
+    dashNav.classList.remove('open');
+    navOverlay.classList.remove('open');
   });
 });
 
@@ -385,6 +542,62 @@ function showToast(msg, isError) {
   t.textContent = msg;
   t.className = 'toast show' + (isError ? ' error' : '');
   setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+/* ═══════ LIVE PREVIEW ═══════ */
+function updatePreview(section) {
+  if (section === 'announce') {
+    var txt = document.getElementById('cms-announce-text').value;
+    document.getElementById('pv-announce').textContent = txt || 'نص الإعلان هنا...';
+  }
+  else if (section === 'hero') {
+    document.getElementById('pv-hero-line1').textContent = document.getElementById('cms-hero-line1').value || '+30 عام من الخبرة';
+    document.getElementById('pv-hero-line2').textContent = document.getElementById('cms-hero-line2').value || 'في تصميم المطابخ';
+    document.getElementById('pv-hero-promise1').textContent = document.getElementById('cms-hero-promise1').value || 'تركيب 20 يوم أو تعويض';
+    document.getElementById('pv-hero-promise2').textContent = document.getElementById('cms-hero-promise2').value || '100 ر.س تعويض عن كل يوم تأخير – بالعقد';
+    document.getElementById('pv-hero-cta').textContent = document.getElementById('cms-hero-cta').value || 'استشاري المبيعات متاح الآن';
+  }
+  else if (section === 'stats') {
+    var pv = document.getElementById('pv-stats');
+    pv.innerHTML = '';
+    if (!statsData.length) { pv.innerHTML = '<div class="empty-state">لا يوجد إحصائيات</div>'; return; }
+    statsData.forEach(function(s) {
+      pv.innerHTML += '<div class="pv-stat"><span class="pv-stat-num">' + escHtml(s.num || '0') + '</span><span class="pv-stat-label">' + escHtml(s.label || '—') + '</span></div>';
+    });
+  }
+  else if (section === 'gallery') {
+    var pv = document.getElementById('pv-gallery');
+    pv.innerHTML = '';
+    if (!galleryData.length) { pv.innerHTML = '<div class="pv-gallery-empty" style="grid-column:1/-1;padding:20px">لا يوجد صور</div>'; return; }
+    galleryData.slice(0, 8).forEach(function(g) {
+      pv.innerHTML += '<div class="pv-gallery-img">' + (g.src ? '<img src="' + escHtml(g.src) + '" onerror="this.style.display=\'none\'">' : '') + '</div>';
+    });
+    if (galleryData.length > 8) {
+      pv.innerHTML += '<div class="pv-gallery-img pv-gallery-empty">+' + (galleryData.length - 8) + '</div>';
+    }
+  }
+  else if (section === 'testimonials') {
+    var pv = document.getElementById('pv-testimonials');
+    pv.innerHTML = '';
+    if (!testimonialsData.length) { pv.innerHTML = '<div class="empty-state" style="width:100%">لا يوجد تقييمات</div>'; return; }
+    testimonialsData.forEach(function(t) {
+      pv.innerHTML += '<div class="pv-test"><div class="pv-test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="pv-test-quote">' + escHtml(t.quote || '...') + '</p><div class="pv-test-author"><div class="pv-test-avatar">' + escHtml(t.initials || '?') + '</div><span class="pv-test-name">' + escHtml(t.name || 'مجهول') + '</span></div></div>';
+    });
+  }
+  else if (section === 'branches') {
+    var pv = document.getElementById('pv-branches');
+    pv.innerHTML = '';
+    if (!branchesData.length) { pv.innerHTML = '<div class="empty-state" style="width:100%">لا يوجد فروع</div>'; return; }
+    branchesData.forEach(function(b) {
+      pv.innerHTML += '<div class="pv-branch">' + (b.badge ? '<span class="pv-branch-badge">' + escHtml(b.badge) + '</span>' : '') + '<span class="pv-branch-city">' + escHtml(b.city || 'مدينة') + '</span><span class="pv-branch-addr">' + escHtml(b.address || '...') + '</span></div>';
+    });
+  }
+  else if (section === 'contact') {
+    document.getElementById('pv-contact-phone').textContent = document.getElementById('cms-contact-phone').value || '920031000';
+    document.getElementById('pv-contact-whatsapp').textContent = document.getElementById('cms-contact-whatsapp').value || 'واتساب';
+    document.getElementById('pv-contact-email').textContent = document.getElementById('cms-contact-email').value || 'info@uwkitchens.com';
+    document.getElementById('pv-contact-address').textContent = document.getElementById('cms-contact-address').value || 'الرياض';
+  }
 }
 
 /* ═══════ LOAD ALL SECTIONS ═══════ */
@@ -407,6 +620,7 @@ function loadAllSections() {
 /* ═══════ ANNOUNCE ═══════ */
 function loadAnnounce(data) {
   document.getElementById('cms-announce-text').value = data.text || '';
+  updatePreview('announce');
 }
 
 /* ═══════ HERO ═══════ */
@@ -416,6 +630,7 @@ function loadHero(data) {
   document.getElementById('cms-hero-promise1').value = data.promise1 || '';
   document.getElementById('cms-hero-promise2').value = data.promise2 || '';
   document.getElementById('cms-hero-cta').value = data.cta || '';
+  updatePreview('hero');
 }
 
 /* ═══════ STATS ═══════ */
@@ -428,17 +643,12 @@ function renderStats() {
   var list = document.getElementById('statsList');
   list.innerHTML = '';
   statsData.forEach(function(s, i) {
-    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">إحصائية ' + (i+1) + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeStat('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الرقم</label><input class="field-input" value="' + escHtml(s.num) + '" onchange="statsData['+i+'].num=this.value" dir="ltr"></div><div class="field"><label class="field-label">التسمية</label><input class="field-input" value="' + escHtml(s.label) + '" onchange="statsData['+i+'].label=this.value"></div></div></div>';
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>إحصائية</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeStat('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الرقم</label><input class="field-input" value="' + escHtml(s.num) + '" oninput="statsData['+i+'].num=this.value;updatePreview(\'stats\')" dir="ltr"></div><div class="field"><label class="field-label">التسمية</label><input class="field-input" value="' + escHtml(s.label) + '" oninput="statsData['+i+'].label=this.value;updatePreview(\'stats\')"></div></div></div>';
   });
+  updatePreview('stats');
 }
-function addStat() {
-  statsData.push({ num: '', label: '' });
-  renderStats();
-}
-function removeStat(i) {
-  statsData.splice(i, 1);
-  renderStats();
-}
+function addStat() { statsData.push({ num: '', label: '' }); renderStats(); }
+function removeStat(i) { statsData.splice(i, 1); renderStats(); }
 
 /* ═══════ GALLERY ═══════ */
 var galleryData = [];
@@ -450,17 +660,12 @@ function renderGallery() {
   var list = document.getElementById('galleryList');
   list.innerHTML = '';
   galleryData.forEach(function(g, i) {
-    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">صورة ' + (i+1) + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeGalleryItem('+i+')">حذف</button></div></div><div class="img-upload"><div class="img-preview">' + (g.src ? '<img src="' + escHtml(g.src) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div class="field" style="flex:1;margin:0"><label class="field-label">رابط الصورة</label><input class="field-input" value="' + escHtml(g.src) + '" onchange="galleryData['+i+'].src=this.value;renderGallery()" dir="ltr" placeholder="images/kitchens/kitchen-01.webp"></div></div><div class="field"><label class="field-label">الوصف (alt)</label><input class="field-input" value="' + escHtml(g.alt) + '" onchange="galleryData['+i+'].alt=this.value"></div></div>';
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>صورة</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeGalleryItem('+i+')">حذف</button></div></div><div class="img-upload"><div class="img-preview">' + (g.src ? '<img src="' + escHtml(g.src) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div class="field" style="flex:1;margin:0"><label class="field-label">رابط الصورة</label><input class="field-input" value="' + escHtml(g.src) + '" oninput="galleryData['+i+'].src=this.value;updatePreview(\'gallery\')" dir="ltr" placeholder="images/kitchens/kitchen-01.webp"></div></div><div class="field"><label class="field-label">الوصف (alt)</label><input class="field-input" value="' + escHtml(g.alt) + '" oninput="galleryData['+i+'].alt=this.value"></div></div>';
   });
+  updatePreview('gallery');
 }
-function addGalleryItem() {
-  galleryData.push({ src: '', alt: '' });
-  renderGallery();
-}
-function removeGalleryItem(i) {
-  galleryData.splice(i, 1);
-  renderGallery();
-}
+function addGalleryItem() { galleryData.push({ src: '', alt: '' }); renderGallery(); }
+function removeGalleryItem(i) { galleryData.splice(i, 1); renderGallery(); }
 
 /* ═══════ TESTIMONIALS ═══════ */
 var testimonialsData = [];
@@ -472,17 +677,12 @@ function renderTestimonials() {
   var list = document.getElementById('testimonialsList');
   list.innerHTML = '';
   testimonialsData.forEach(function(t, i) {
-    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">' + escHtml(t.name || 'تقييم جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeTestimonial('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الاسم</label><input class="field-input" value="' + escHtml(t.name) + '" onchange="testimonialsData['+i+'].name=this.value"></div><div class="field"><label class="field-label">الأحرف الأولى</label><input class="field-input" value="' + escHtml(t.initials) + '" onchange="testimonialsData['+i+'].initials=this.value"></div></div><div class="field"><label class="field-label">التقييم</label><textarea class="field-input" rows="3" onchange="testimonialsData['+i+'].quote=this.value">' + escHtml(t.quote) + '</textarea></div></div>';
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>' + escHtml(t.name || 'تقييم جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeTestimonial('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الاسم</label><input class="field-input" value="' + escHtml(t.name) + '" oninput="testimonialsData['+i+'].name=this.value;updatePreview(\'testimonials\')"></div><div class="field"><label class="field-label">الأحرف الأولى</label><input class="field-input" value="' + escHtml(t.initials) + '" oninput="testimonialsData['+i+'].initials=this.value;updatePreview(\'testimonials\')"></div></div><div class="field"><label class="field-label">التقييم</label><textarea class="field-input" rows="3" oninput="testimonialsData['+i+'].quote=this.value;updatePreview(\'testimonials\')">' + escHtml(t.quote) + '</textarea></div></div>';
   });
+  updatePreview('testimonials');
 }
-function addTestimonial() {
-  testimonialsData.push({ name: '', initials: '', quote: '' });
-  renderTestimonials();
-}
-function removeTestimonial(i) {
-  testimonialsData.splice(i, 1);
-  renderTestimonials();
-}
+function addTestimonial() { testimonialsData.push({ name: '', initials: '', quote: '' }); renderTestimonials(); }
+function removeTestimonial(i) { testimonialsData.splice(i, 1); renderTestimonials(); }
 
 /* ═══════ BRANCHES ═══════ */
 var branchesData = [];
@@ -494,17 +694,12 @@ function renderBranches() {
   var list = document.getElementById('branchesList');
   list.innerHTML = '';
   branchesData.forEach(function(b, i) {
-    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">' + escHtml(b.city || 'فرع جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeBranch('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">المدينة</label><input class="field-input" value="' + escHtml(b.city) + '" onchange="branchesData['+i+'].city=this.value"></div><div class="field"><label class="field-label">الشارة</label><input class="field-input" value="' + escHtml(b.badge) + '" onchange="branchesData['+i+'].badge=this.value" placeholder="المعرض الرئيسي"></div></div><div class="field"><label class="field-label">العنوان</label><input class="field-input" value="' + escHtml(b.address) + '" onchange="branchesData['+i+'].address=this.value"></div><div class="field-row"><div class="field"><label class="field-label">الهاتف</label><input class="field-input" value="' + escHtml(b.phone) + '" onchange="branchesData['+i+'].phone=this.value" dir="ltr"></div><div class="field"><label class="field-label">رابط الخريطة</label><input class="field-input" value="' + escHtml(b.mapUrl) + '" onchange="branchesData['+i+'].mapUrl=this.value" dir="ltr"></div></div></div>';
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>' + escHtml(b.city || 'فرع جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeBranch('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">المدينة</label><input class="field-input" value="' + escHtml(b.city) + '" oninput="branchesData['+i+'].city=this.value;updatePreview(\'branches\')"></div><div class="field"><label class="field-label">الشارة</label><input class="field-input" value="' + escHtml(b.badge) + '" oninput="branchesData['+i+'].badge=this.value;updatePreview(\'branches\')" placeholder="المعرض الرئيسي"></div></div><div class="field"><label class="field-label">العنوان</label><input class="field-input" value="' + escHtml(b.address) + '" oninput="branchesData['+i+'].address=this.value;updatePreview(\'branches\')"></div><div class="field-row"><div class="field"><label class="field-label">الهاتف</label><input class="field-input" value="' + escHtml(b.phone) + '" oninput="branchesData['+i+'].phone=this.value" dir="ltr"></div><div class="field"><label class="field-label">رابط الخريطة</label><input class="field-input" value="' + escHtml(b.mapUrl) + '" oninput="branchesData['+i+'].mapUrl=this.value" dir="ltr"></div></div></div>';
   });
+  updatePreview('branches');
 }
-function addBranch() {
-  branchesData.push({ city: '', badge: '', address: '', phone: '', mapUrl: '' });
-  renderBranches();
-}
-function removeBranch(i) {
-  branchesData.splice(i, 1);
-  renderBranches();
-}
+function addBranch() { branchesData.push({ city: '', badge: '', address: '', phone: '', mapUrl: '' }); renderBranches(); }
+function removeBranch(i) { branchesData.splice(i, 1); renderBranches(); }
 
 /* ═══════ CONTACT ═══════ */
 function loadContact(data) {
@@ -512,6 +707,7 @@ function loadContact(data) {
   document.getElementById('cms-contact-whatsapp').value = data.whatsapp || '';
   document.getElementById('cms-contact-email').value = data.email || '';
   document.getElementById('cms-contact-address').value = data.address || '';
+  updatePreview('contact');
 }
 
 /* ═══════ SAVE ═══════ */
