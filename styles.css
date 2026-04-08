@@ -371,18 +371,21 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .contact{position:relative;overflow:hidden}
 .contact-bg{position:absolute;inset:0;background:var(--white)}
 .contact-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:40px;padding:72px 24px;max-width:1200px;margin:0 auto}
-@media(min-width:1024px){.contact-inner{gap:48px;padding:88px 64px}}
+@media(min-width:1024px){.contact-inner{flex-direction:row;align-items:flex-start;gap:64px;padding:88px 64px}}
 .contact-info{display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center}
+@media(min-width:1024px){.contact-info{flex:1;align-items:flex-start;text-align:right;position:sticky;top:120px}}
 .contact-header{text-align:center;align-items:center}
-.contact-header .section-title{text-align:center}
+@media(min-width:1024px){.contact-header{text-align:right;align-items:flex-start}}
+@media(min-width:1024px){.contact-header .section-title{text-align:right}}
 .contact-checks{display:flex;flex-direction:column;gap:14px}
 .contact-check{display:flex;align-items:center;gap:12px;justify-content:center}
+@media(min-width:1024px){.contact-check{justify-content:flex-start}}
 .contact-check-icon{width:24px;height:24px;border-radius:50%;background:rgba(228,147,93,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .contact-check-icon svg{width:14px;height:14px;color:var(--gold)}
 .contact-check span{font-weight:400;color:rgba(255,255,255,.9);font-size:clamp(14px,1.3vw,16px)}
 .contact-proof{display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.55);margin-top:8px}
 .form-card{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);backdrop-filter:blur(12px);box-shadow:none;width:100%;max-width:560px}
-@media(min-width:1024px){.form-card{padding:var(--space-6)}}
+@media(min-width:1024px){.form-card{padding:var(--space-6);flex:1;max-width:520px}}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 .form-row .form-field{margin-top:0}
 .form-field{position:relative;margin-top:12px}
