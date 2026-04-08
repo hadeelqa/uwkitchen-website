@@ -119,8 +119,8 @@ body.nav-open{overflow:hidden}
 
 /* ── Light Mode Smooth Transitions ── */
 /* Theme toggle button */
-html{scroll-behavior:smooth;overflow-x:hidden;scroll-padding-top:80px}
-body{font-family:var(--font);background:var(--white);color:var(--text-main);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--font);background:var(--white);color:var(--text-main);overflow-x:clip;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 ::selection{background:rgba(212,136,74,.3);color:#fff}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}

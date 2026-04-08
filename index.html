@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=36">
+<link rel="stylesheet" href="styles.css?v=37">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 </head>
 <body>
@@ -28,8 +28,8 @@
   </button>
   <div class="marquee-wrap">
     <div class="marquee-track">
-      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
-      <span class="marquee-item"><span class="marquee-dot"></span>🎉 عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً<span class="marquee-dot"></span>احجز الآن<span class="marquee-dot"></span>مطابخ الأبيض المتحدة</span>
     </div>
   </div>
 </div>
@@ -92,7 +92,7 @@
         <video
           id="realityVideo"
           src="Videos/snaptik_7484152625647209735_v3.mp4"
-          autoplay muted loop playsinline preload="none"
+          autoplay muted loop playsinline preload="metadata"
           poster="images/img_2.jpeg">
         </video>
         <div class="reality-video-play" role="button" aria-label="تشغيل الفيديو" tabindex="0">
@@ -103,7 +103,7 @@
         <video
           id="realityVideo2"
           src="Videos/snaptik_7613647879017729287_v3.mp4"
-          autoplay muted loop playsinline preload="none"
+          autoplay muted loop playsinline preload="metadata"
           poster="images/img_4.jpeg">
         </video>
         <div class="reality-video-play" role="button" aria-label="تشغيل الفيديو" tabindex="0">
@@ -121,7 +121,7 @@
 </section>
 <!-- ═══ 4. STATS V2 — Cards with background ═══ -->
 <section class="stats-v2">
-  <video class="stats-v2-bg" src="Videos/Taking Notes in the factory.mp4" autoplay muted loop playsinline preload="metadata"></video>
+  <video class="stats-v2-bg" src="Videos/Taking Notes in the factory.mp4" autoplay muted loop playsinline preload="none"></video>
   <div class="stats-v2-overlay"></div>
   <div class="stats-v2-inner">
     <div class="stats-v2-grid">
@@ -383,7 +383,7 @@
 </section>
 <!-- ═══ 9. CONTACT ═══ -->
 <section class="contact" id="contact">
-  <div class="contact-bg"></div><img class="contact-bg-img" src="images/img_6.jpeg" alt="" loading="lazy">
+  <div class="contact-bg"></div><img class="contact-bg-img" src="images/img_6.jpeg" alt="" role="presentation" loading="lazy">
   <div class="contact-inner">
     <div class="contact-info" data-animate="fade-start">
       <h2>اطلب زيارة قياس مجانية</h2>
@@ -510,7 +510,7 @@
   <img id="lightboxImg" src="" alt="">
 </div>
 
-<script src="scripts.js?v=20"></script>
+<script src="scripts.js?v=21"></script>
 <script>
 // Auto-play videos when scrolled into view
 (function(){

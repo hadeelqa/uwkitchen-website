@@ -84,14 +84,20 @@ const counterObs = new IntersectionObserver((entries)=>{
 },{threshold:0.2});
 document.querySelectorAll('.stat-value, .counter').forEach(el=>counterObs.observe(el));
 
-/* ═══════ HERO PARALLAX ═══════ */
+/* ═══════ HERO PARALLAX (rAF-throttled) ═══════ */
 const heroImg = document.getElementById('heroImg');
 if(heroImg && window.innerWidth >= 768){
-  window.addEventListener('scroll',()=>{
-    const y = window.scrollY;
-    if(y < window.innerHeight * 1.2){
-      heroImg.style.transform = 'translateY('+y*0.12+'px)';
-    }
+  var _parallaxTick = false;
+  window.addEventListener('scroll',function(){
+    if(_parallaxTick) return;
+    _parallaxTick = true;
+    requestAnimationFrame(function(){
+      var y = window.scrollY;
+      if(y < window.innerHeight * 1.2){
+        heroImg.style.transform = 'translateY('+y*0.12+'px)';
+      }
+      _parallaxTick = false;
+    });
   },{passive:true});
 }
 
