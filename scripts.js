@@ -244,7 +244,7 @@ if(kitchensGrid){
     {src:'images/kitchens/kitchen-49.webp', alt:'مطبخ فاخر مع إنارة'},
     {src:'images/kitchens/kitchen-50.webp', alt:'مطبخ حديث مع بار جلوس'},
   ];
-  var initialCount = 9;
+  var initialCount = 8;
   function buildItem(p, idx){
     var div = document.createElement('div');
     div.className = 'kitchen-item';
@@ -287,16 +287,47 @@ if(kitchensGrid){
   }
 }
 
-/* ═══════ SCROLL TOP + WHATSAPP FAB ═══════ */
+/* ═══════ SCROLL TOP + WHATSAPP FAB + NAV STATE ═══════ */
 const scrollTopBtn = document.getElementById('scrollTop');
 const waFab = document.getElementById('waFab');
-if(scrollTopBtn || waFab){
-  window.addEventListener('scroll',()=>{
-    var y = window.scrollY;
-    if(scrollTopBtn) scrollTopBtn.classList.toggle('show', y > 500);
-    if(waFab) waFab.classList.toggle('show', y > 300);
-  },{passive:true});
-}
+var navEl = document.getElementById('nav');
+window.addEventListener('scroll',function(){
+  var y = window.scrollY;
+  if(scrollTopBtn) scrollTopBtn.classList.toggle('show', y > 500);
+  if(waFab) waFab.classList.toggle('show', y > 300);
+  // Nav scroll state
+  if(navEl) navEl.classList.toggle('scrolled', y > 80);
+},{passive:true});
+
+/* ═══════ GALLERY STAGGER ANIMATION ═══════ */
+(function(){
+  var grid = document.getElementById('kitchensGrid');
+  if(!grid) return;
+  var galObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting) return;
+      // Stagger reveal visible items
+      var items = grid.querySelectorAll('.kitchen-item:not(.kitchen-item--hidden)');
+      items.forEach(function(item, i){
+        setTimeout(function(){ item.classList.add('kitchen-visible'); }, i * 60);
+      });
+      galObs.unobserve(entry.target);
+    });
+  },{threshold:0.1});
+  galObs.observe(grid);
+  // Also reveal items when "show all" is clicked
+  var showBtn = document.getElementById('kitchensShowAll');
+  if(showBtn){
+    showBtn.addEventListener('click', function(){
+      setTimeout(function(){
+        var newItems = grid.querySelectorAll('.kitchen-item:not(.kitchen-visible):not(.kitchen-item--hidden)');
+        newItems.forEach(function(item, i){
+          setTimeout(function(){ item.classList.add('kitchen-visible'); }, i * 40);
+        });
+      }, 50);
+    });
+  }
+})();
 
 /* ═══════ FACTORY, MATERIALS & GALLERY IMAGES ═══════ */
 (function(){
