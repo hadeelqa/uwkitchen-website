@@ -3,12 +3,12 @@
 (function () {
   /* ── Firebase config (same project as admin.html) ── */
   var cfg = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAfOq1iR7HFRq15LDbtONAH7fqw1LGdMek",
+    authDomain: "uwkitchen-c3279.firebaseapp.com",
+    projectId: "uwkitchen-c3279",
+    storageBucket: "uwkitchen-c3279.firebasestorage.app",
+    messagingSenderId: "699589252553",
+    appId: "1:699589252553:web:e967e5b46eb7ba5e980418"
   };
 
   /* Bail if Firebase SDK not loaded */
