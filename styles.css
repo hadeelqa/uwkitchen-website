@@ -729,6 +729,7 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
   .hero-title .line2{animation:none!important;background-size:100% 100%!important}
   .kitchen-item{opacity:1!important;transform:none!important;transition:none!important}
   .warranty-compact-item{opacity:1!important;transform:none!important}
+  .hero-chips{opacity:1!important}
   .section-title::after{width:60%!important;transition:none!important}
 }
 
@@ -847,6 +848,10 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .hero-warranty{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(237,172,110,.1);border:1px solid rgba(237,172,110,.25);border-radius:var(--radius-full);color:var(--gold);font-size:13px;font-weight:400}
 .hero-warranty svg{width:18px;height:18px;flex-shrink:0}
 .hero-warranty strong{font-weight:700}
+/* Hero trust chips — small & minimal */
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;opacity:0;animation:heroFadeUp .7s .95s cubic-bezier(.22,1,.36,1) forwards}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-full);color:rgba(255,255,255,.55);font-size:12px;font-weight:400}
+.hero-chip svg{color:var(--gold);stroke:var(--gold)}
 /* Promise card */
 .hero-promise-card{display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(99,179,165,.12);border:1px solid rgba(99,179,165,.3);border-radius:var(--radius-md);backdrop-filter:blur(8px)}
 .hero-promise-icon svg{width:24px;height:24px;flex-shrink:0}

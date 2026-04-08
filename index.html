@@ -12,11 +12,16 @@
 <meta property="og:locale" content="ar_SA">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/Logo-white.png">
+<link rel="canonical" href="https://uwkitchens.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=45">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="styles.css?v=49">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"مطابخ الأبيض المتحدة","alternateName":"United White Kitchens","url":"https://uwkitchens.com","telephone":"920031000","email":"info@uwkitchens.com","image":"images/img_2.jpeg","description":"ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة. ضمان 15 سنة، تركيب في 20 يوم.","address":{"@type":"PostalAddress","streetAddress":"طريق الإمام سعود بن عبدالعزيز، حي التعاون","addressLocality":"الرياض","addressCountry":"SA"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"17500"},"priceRange":"$$"}
+</script>
 </head>
 <body>
 <a href="#hero" class="skip-link">تخطي إلى المحتوى</a>
@@ -66,6 +71,11 @@
             <span class="hero-promise-line2">100 ر.س تعويض عن كل يوم تأخير – بالعقد</span>
           </div>
         </div>
+      </div>
+      <div class="hero-chips">
+        <span class="hero-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>ضمان 15 سنة</span>
+        <span class="hero-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>+17,500 مطبخ منفّذ</span>
+        <span class="hero-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>4.8 تقييم عملائنا</span>
       </div>
       <div class="hero-cta-wrap">
         <a href="tel:920031000" class="btn-hero btn-hero--call">
@@ -515,8 +525,31 @@
   <img id="lightboxImg" src="" alt="">
 </div>
 
-<script src="scripts.js?v=21" defer></script>
+<script src="scripts.js?v=22"></script>
 <script>
+// Stats background video — IO-triggered with fallback
+(function(){
+  var vid = document.querySelector('.stats-v2-bg');
+  if(!vid) return;
+  function tryPlay(){
+    var p = vid.play();
+    if(p !== undefined){
+      p.catch(function(){
+        vid.style.display = 'none';
+      });
+    }
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ tryPlay(); io.unobserve(vid); }
+      });
+    },{threshold:0.1});
+    io.observe(vid);
+  } else {
+    tryPlay();
+  }
+})();
 // Auto-play videos when scrolled into view
 (function(){
   var videos = [document.getElementById('realityVideo'), document.getElementById('realityVideo2')];
