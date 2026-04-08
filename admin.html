@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | مطابخ الأبيض المتحدة</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="images/Logo-white.png">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0e040d;--bg2:#160b15;--bg3:#1e121d;--gold:#d4884a;--gold-dark:#b86a2e;--text:#f0eaef;--text2:#b8adb7;--text3:rgba(255,255,255,.45);--border:rgba(255,255,255,.08);--radius:12px;--font:'IBM Plex Sans Arabic',sans-serif}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{border:none;cursor:pointer;font-family:var(--font)}
+input,textarea,select{font-family:var(--font)}
+
+/* ── LOGIN ── */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.login-card{width:100%;max-width:400px;padding:40px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);text-align:center}
+.login-logo{height:48px;margin-bottom:24px}
+.login-title{font-size:20px;font-weight:600;margin-bottom:8px}
+.login-sub{font-size:14px;color:var(--text2);margin-bottom:32px}
+.login-field{position:relative;margin-bottom:16px;text-align:right}
+.login-field input{width:100%;padding:14px 16px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;outline:none;transition:border-color .2s}
+.login-field input:focus{border-color:rgba(212,136,74,.4)}
+.login-field input::placeholder{color:var(--text3)}
+.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:15px;border-radius:999px;margin-top:8px;transition:opacity .2s}
+.login-btn:hover{opacity:.9}
+.login-btn:disabled{opacity:.5;cursor:not-allowed}
+.login-error{color:#ef4444;font-size:13px;margin-top:12px;display:none}
+
+/* ── DASHBOARD ── */
+.dash{display:none;min-height:100vh}
+.dash-header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.dash-header-right{display:flex;align-items:center;gap:16px}
+.dash-logo{height:36px}
+.dash-title{font-size:15px;font-weight:600;color:var(--text2)}
+.dash-user{font-size:13px;color:var(--text3)}
+.btn-logout{padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:13px;transition:all .2s}
+.btn-logout:hover{background:rgba(255,255,255,.1);color:#fff}
+
+.dash-body{display:flex;min-height:calc(100vh - 65px)}
+
+/* Sidebar */
+.dash-nav{width:220px;background:var(--bg2);border-left:1px solid var(--border);padding:16px 0;flex-shrink:0;position:sticky;top:65px;height:calc(100vh - 65px);overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;color:var(--text2);cursor:pointer;transition:all .2s;border-right:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,.03);color:#fff}
+.nav-item.active{background:rgba(212,136,74,.06);color:var(--gold);border-right-color:var(--gold)}
+.nav-item svg{width:18px;height:18px;flex-shrink:0;opacity:.6}
+.nav-item.active svg{opacity:1}
+
+/* Content */
+.dash-content{flex:1;padding:32px;max-width:900px}
+.section-panel{display:none}
+.section-panel.active{display:block}
+.panel-title{font-size:22px;font-weight:700;margin-bottom:8px}
+.panel-desc{font-size:14px;color:var(--text2);margin-bottom:32px}
+
+/* Form elements */
+.field{margin-bottom:20px}
+.field-label{display:block;font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px}
+.field-input{width:100%;padding:12px 14px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:14px;outline:none;transition:border-color .2s;resize:vertical}
+.field-input:focus{border-color:rgba(212,136,74,.4)}
+.field-input::placeholder{color:var(--text3)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field-hint{font-size:12px;color:var(--text3);margin-top:4px}
+
+/* Cards list */
+.cards-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.card-item{padding:16px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius);position:relative}
+.card-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-item-title{font-size:14px;font-weight:600}
+.card-item-actions{display:flex;gap:8px}
+.btn-card-action{padding:4px 8px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--text3);font-size:12px;transition:all .2s}
+.btn-card-action:hover{border-color:rgba(255,255,255,.2);color:#fff}
+.btn-card-action.delete{border-color:rgba(239,68,68,.2);color:#ef4444}
+.btn-card-action.delete:hover{background:rgba(239,68,68,.1)}
+
+/* Image upload */
+.img-upload{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.img-preview{width:80px;height:80px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);object-fit:cover;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.img-preview img{width:100%;height:100%;object-fit:cover}
+.img-preview-empty{color:var(--text3);font-size:12px;text-align:center;padding:8px}
+.btn-upload{padding:8px 16px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-size:13px;cursor:pointer;transition:all .2s}
+.btn-upload:hover{background:rgba(255,255,255,.1);color:#fff}
+input[type="file"]{display:none}
+
+/* Action buttons */
+.btn-save{padding:12px 32px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:14px;border-radius:999px;transition:opacity .2s}
+.btn-save:hover{opacity:.9}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+.btn-add{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;background:none;border:1px dashed rgba(255,255,255,.15);border-radius:8px;color:var(--gold);font-size:13px;font-weight:500;transition:all .2s}
+.btn-add:hover{border-color:rgba(212,136,74,.3);background:rgba(212,136,74,.05)}
+.actions-bar{display:flex;align-items:center;gap:12px;padding-top:24px;border-top:1px solid var(--border);margin-top:32px}
+.save-status{font-size:13px;color:var(--text3);margin-right:auto}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);padding:12px 24px;background:#22c55e;color:#fff;font-size:14px;font-weight:500;border-radius:999px;z-index:100;transition:transform .3s cubic-bezier(.22,1,.36,1);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:#ef4444}
+
+/* Responsive */
+@media(max-width:768px){
+  .dash-nav{display:none}
+  .dash-content{padding:20px 16px}
+  .field-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div class="login-wrap" id="loginScreen">
+  <div class="login-card">
+    <img src="images/Logo-white.png" alt="Logo" class="login-logo">
+    <h1 class="login-title">لوحة التحكم</h1>
+    <p class="login-sub">سجّل الدخول لإدارة محتوى الموقع</p>
+    <form id="loginForm">
+      <div class="login-field">
+        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني" required autocomplete="email" dir="ltr">
+      </div>
+      <div class="login-field">
+        <input type="password" id="loginPass" placeholder="كلمة المرور" required autocomplete="current-password" dir="ltr">
+      </div>
+      <button type="submit" class="login-btn" id="loginBtn">تسجيل الدخول</button>
+    </form>
+    <p class="login-error" id="loginError"></p>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="dash" id="dashboard">
+  <header class="dash-header">
+    <div class="dash-header-right">
+      <img src="images/Logo-white.png" alt="Logo" class="dash-logo">
+      <span class="dash-title">إدارة المحتوى</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span class="dash-user" id="dashUser"></span>
+      <button class="btn-logout" id="logoutBtn">تسجيل خروج</button>
+    </div>
+  </header>
+
+  <div class="dash-body">
+    <nav class="dash-nav">
+      <div class="nav-item active" data-section="announce">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        شريط الإعلان
+      </div>
+      <div class="nav-item" data-section="hero">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+        الهيرو
+      </div>
+      <div class="nav-item" data-section="stats">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        الإحصائيات
+      </div>
+      <div class="nav-item" data-section="gallery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        معرض المطابخ
+      </div>
+      <div class="nav-item" data-section="testimonials">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        التقييمات
+      </div>
+      <div class="nav-item" data-section="branches">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        الفروع
+      </div>
+      <div class="nav-item" data-section="contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.11 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
+        التواصل
+      </div>
+    </nav>
+
+    <div class="dash-content">
+
+      <!-- ANNOUNCE -->
+      <div class="section-panel active" id="panel-announce">
+        <h2 class="panel-title">شريط الإعلان</h2>
+        <p class="panel-desc">النص المتحرك في أعلى الموقع</p>
+        <div class="field">
+          <label class="field-label">نص الإعلان</label>
+          <textarea class="field-input" id="cms-announce-text" rows="3" placeholder="عرض شهر أبريل: تصميم مجاني..."></textarea>
+        </div>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('announce')">حفظ التغييرات</button>
+          <span class="save-status" id="status-announce"></span>
+        </div>
+      </div>
+
+      <!-- HERO -->
+      <div class="section-panel" id="panel-hero">
+        <h2 class="panel-title">قسم الهيرو</h2>
+        <p class="panel-desc">العنوان الرئيسي والنص في أعلى الصفحة</p>
+        <div class="field">
+          <label class="field-label">السطر الأول (فوق العنوان)</label>
+          <input class="field-input" id="cms-hero-line1" placeholder="+30 عام من الخبرة">
+        </div>
+        <div class="field">
+          <label class="field-label">السطر الثاني (العنوان الذهبي)</label>
+          <input class="field-input" id="cms-hero-line2" placeholder="في تصميم المطابخ">
+        </div>
+        <div class="field">
+          <label class="field-label">نص الوعد</label>
+          <input class="field-input" id="cms-hero-promise1" placeholder="تركيب 20 يوم أو تعويض">
+        </div>
+        <div class="field">
+          <label class="field-label">تفاصيل الوعد</label>
+          <input class="field-input" id="cms-hero-promise2" placeholder="100 ر.س تعويض عن كل يوم تأخير – بالعقد">
+        </div>
+        <div class="field">
+          <label class="field-label">نص الزر</label>
+          <input class="field-input" id="cms-hero-cta" placeholder="استشاري المبيعات متاح الآن">
+        </div>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('hero')">حفظ التغييرات</button>
+          <span class="save-status" id="status-hero"></span>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="section-panel" id="panel-stats">
+        <h2 class="panel-title">الإحصائيات</h2>
+        <p class="panel-desc">الأرقام المعروضة فوق خلفية الفيديو</p>
+        <div class="cards-list" id="statsList"></div>
+        <button class="btn-add" onclick="addStat()">+ إضافة إحصائية</button>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('stats')">حفظ التغييرات</button>
+          <span class="save-status" id="status-stats"></span>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="section-panel" id="panel-gallery">
+        <h2 class="panel-title">معرض المطابخ</h2>
+        <p class="panel-desc">صور المطابخ المعروضة في قسم المعرض — أضف رابط الصورة</p>
+        <div class="cards-list" id="galleryList"></div>
+        <button class="btn-add" onclick="addGalleryItem()">+ إضافة صورة</button>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('gallery')">حفظ التغييرات</button>
+          <span class="save-status" id="status-gallery"></span>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="section-panel" id="panel-testimonials">
+        <h2 class="panel-title">التقييمات</h2>
+        <p class="panel-desc">آراء العملاء المعروضة في الماركي</p>
+        <div class="cards-list" id="testimonialsList"></div>
+        <button class="btn-add" onclick="addTestimonial()">+ إضافة تقييم</button>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('testimonials')">حفظ التغييرات</button>
+          <span class="save-status" id="status-testimonials"></span>
+        </div>
+      </div>
+
+      <!-- BRANCHES -->
+      <div class="section-panel" id="panel-branches">
+        <h2 class="panel-title">الفروع</h2>
+        <p class="panel-desc">معلومات الفروع وعناوينها</p>
+        <div class="cards-list" id="branchesList"></div>
+        <button class="btn-add" onclick="addBranch()">+ إضافة فرع</button>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('branches')">حفظ التغييرات</button>
+          <span class="save-status" id="status-branches"></span>
+        </div>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="section-panel" id="panel-contact">
+        <h2 class="panel-title">معلومات التواصل</h2>
+        <p class="panel-desc">أرقام الهاتف والبريد والعنوان</p>
+        <div class="field">
+          <label class="field-label">رقم الهاتف</label>
+          <input class="field-input" id="cms-contact-phone" placeholder="920031000" dir="ltr">
+        </div>
+        <div class="field">
+          <label class="field-label">رقم الواتساب</label>
+          <input class="field-input" id="cms-contact-whatsapp" placeholder="966920031000" dir="ltr">
+        </div>
+        <div class="field">
+          <label class="field-label">البريد الإلكتروني</label>
+          <input class="field-input" id="cms-contact-email" placeholder="info@uwkitchens.com" dir="ltr">
+        </div>
+        <div class="field">
+          <label class="field-label">العنوان</label>
+          <textarea class="field-input" id="cms-contact-address" rows="2" placeholder="طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض"></textarea>
+        </div>
+        <div class="actions-bar">
+          <button class="btn-save" onclick="saveSection('contact')">حفظ التغييرات</button>
+          <span class="save-status" id="status-contact"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ FIREBASE SDK ═══ -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+<script>
+/* ═══════════════════════════════════════
+   FIREBASE CONFIG — Fill in your values
+   ═══════════════════════════════════════ */
+var firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+var auth = firebase.auth();
+var db = firebase.firestore();
+var storage = firebase.storage();
+
+/* ═══════ AUTH ═══════ */
+var loginForm = document.getElementById('loginForm');
+var loginScreen = document.getElementById('loginScreen');
+var dashboard = document.getElementById('dashboard');
+var loginError = document.getElementById('loginError');
+var loginBtn = document.getElementById('loginBtn');
+
+loginForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  var email = document.getElementById('loginEmail').value;
+  var pass = document.getElementById('loginPass').value;
+  loginBtn.disabled = true;
+  loginBtn.textContent = 'جاري الدخول...';
+  loginError.style.display = 'none';
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(function() {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'تسجيل الدخول';
+    })
+    .catch(function(err) {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'تسجيل الدخول';
+      loginError.textContent = 'البريد أو كلمة المرور غير صحيحة';
+      loginError.style.display = 'block';
+    });
+});
+
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  auth.signOut();
+});
+
+auth.onAuthStateChanged(function(user) {
+  if (user) {
+    loginScreen.style.display = 'none';
+    dashboard.style.display = 'block';
+    document.getElementById('dashUser').textContent = user.email;
+    loadAllSections();
+  } else {
+    loginScreen.style.display = 'flex';
+    dashboard.style.display = 'none';
+  }
+});
+
+/* ═══════ NAVIGATION ═══════ */
+document.querySelectorAll('.nav-item').forEach(function(item) {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+    document.querySelectorAll('.section-panel').forEach(function(p) { p.classList.remove('active'); });
+    item.classList.add('active');
+    document.getElementById('panel-' + item.dataset.section).classList.add('active');
+  });
+});
+
+/* ═══════ TOAST ═══════ */
+function showToast(msg, isError) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+/* ═══════ LOAD ALL SECTIONS ═══════ */
+function loadAllSections() {
+  db.collection('content').get().then(function(snap) {
+    snap.forEach(function(doc) {
+      var data = doc.data();
+      var id = doc.id;
+      if (id === 'announce') loadAnnounce(data);
+      if (id === 'hero') loadHero(data);
+      if (id === 'stats') loadStats(data);
+      if (id === 'gallery') loadGallery(data);
+      if (id === 'testimonials') loadTestimonials(data);
+      if (id === 'branches') loadBranches(data);
+      if (id === 'contact') loadContact(data);
+    });
+  });
+}
+
+/* ═══════ ANNOUNCE ═══════ */
+function loadAnnounce(data) {
+  document.getElementById('cms-announce-text').value = data.text || '';
+}
+
+/* ═══════ HERO ═══════ */
+function loadHero(data) {
+  document.getElementById('cms-hero-line1').value = data.line1 || '';
+  document.getElementById('cms-hero-line2').value = data.line2 || '';
+  document.getElementById('cms-hero-promise1').value = data.promise1 || '';
+  document.getElementById('cms-hero-promise2').value = data.promise2 || '';
+  document.getElementById('cms-hero-cta').value = data.cta || '';
+}
+
+/* ═══════ STATS ═══════ */
+var statsData = [];
+function loadStats(data) {
+  statsData = data.items || [];
+  renderStats();
+}
+function renderStats() {
+  var list = document.getElementById('statsList');
+  list.innerHTML = '';
+  statsData.forEach(function(s, i) {
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">إحصائية ' + (i+1) + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeStat('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الرقم</label><input class="field-input" value="' + escHtml(s.num) + '" onchange="statsData['+i+'].num=this.value" dir="ltr"></div><div class="field"><label class="field-label">التسمية</label><input class="field-input" value="' + escHtml(s.label) + '" onchange="statsData['+i+'].label=this.value"></div></div></div>';
+  });
+}
+function addStat() {
+  statsData.push({ num: '', label: '' });
+  renderStats();
+}
+function removeStat(i) {
+  statsData.splice(i, 1);
+  renderStats();
+}
+
+/* ═══════ GALLERY ═══════ */
+var galleryData = [];
+function loadGallery(data) {
+  galleryData = data.items || [];
+  renderGallery();
+}
+function renderGallery() {
+  var list = document.getElementById('galleryList');
+  list.innerHTML = '';
+  galleryData.forEach(function(g, i) {
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">صورة ' + (i+1) + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeGalleryItem('+i+')">حذف</button></div></div><div class="img-upload"><div class="img-preview">' + (g.src ? '<img src="' + escHtml(g.src) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div class="field" style="flex:1;margin:0"><label class="field-label">رابط الصورة</label><input class="field-input" value="' + escHtml(g.src) + '" onchange="galleryData['+i+'].src=this.value;renderGallery()" dir="ltr" placeholder="images/kitchens/kitchen-01.webp"></div></div><div class="field"><label class="field-label">الوصف (alt)</label><input class="field-input" value="' + escHtml(g.alt) + '" onchange="galleryData['+i+'].alt=this.value"></div></div>';
+  });
+}
+function addGalleryItem() {
+  galleryData.push({ src: '', alt: '' });
+  renderGallery();
+}
+function removeGalleryItem(i) {
+  galleryData.splice(i, 1);
+  renderGallery();
+}
+
+/* ═══════ TESTIMONIALS ═══════ */
+var testimonialsData = [];
+function loadTestimonials(data) {
+  testimonialsData = data.items || [];
+  renderTestimonials();
+}
+function renderTestimonials() {
+  var list = document.getElementById('testimonialsList');
+  list.innerHTML = '';
+  testimonialsData.forEach(function(t, i) {
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">' + escHtml(t.name || 'تقييم جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeTestimonial('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الاسم</label><input class="field-input" value="' + escHtml(t.name) + '" onchange="testimonialsData['+i+'].name=this.value"></div><div class="field"><label class="field-label">الأحرف الأولى</label><input class="field-input" value="' + escHtml(t.initials) + '" onchange="testimonialsData['+i+'].initials=this.value"></div></div><div class="field"><label class="field-label">التقييم</label><textarea class="field-input" rows="3" onchange="testimonialsData['+i+'].quote=this.value">' + escHtml(t.quote) + '</textarea></div></div>';
+  });
+}
+function addTestimonial() {
+  testimonialsData.push({ name: '', initials: '', quote: '' });
+  renderTestimonials();
+}
+function removeTestimonial(i) {
+  testimonialsData.splice(i, 1);
+  renderTestimonials();
+}
+
+/* ═══════ BRANCHES ═══════ */
+var branchesData = [];
+function loadBranches(data) {
+  branchesData = data.items || [];
+  renderBranches();
+}
+function renderBranches() {
+  var list = document.getElementById('branchesList');
+  list.innerHTML = '';
+  branchesData.forEach(function(b, i) {
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title">' + escHtml(b.city || 'فرع جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeBranch('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">المدينة</label><input class="field-input" value="' + escHtml(b.city) + '" onchange="branchesData['+i+'].city=this.value"></div><div class="field"><label class="field-label">الشارة</label><input class="field-input" value="' + escHtml(b.badge) + '" onchange="branchesData['+i+'].badge=this.value" placeholder="المعرض الرئيسي"></div></div><div class="field"><label class="field-label">العنوان</label><input class="field-input" value="' + escHtml(b.address) + '" onchange="branchesData['+i+'].address=this.value"></div><div class="field-row"><div class="field"><label class="field-label">الهاتف</label><input class="field-input" value="' + escHtml(b.phone) + '" onchange="branchesData['+i+'].phone=this.value" dir="ltr"></div><div class="field"><label class="field-label">رابط الخريطة</label><input class="field-input" value="' + escHtml(b.mapUrl) + '" onchange="branchesData['+i+'].mapUrl=this.value" dir="ltr"></div></div></div>';
+  });
+}
+function addBranch() {
+  branchesData.push({ city: '', badge: '', address: '', phone: '', mapUrl: '' });
+  renderBranches();
+}
+function removeBranch(i) {
+  branchesData.splice(i, 1);
+  renderBranches();
+}
+
+/* ═══════ CONTACT ═══════ */
+function loadContact(data) {
+  document.getElementById('cms-contact-phone').value = data.phone || '';
+  document.getElementById('cms-contact-whatsapp').value = data.whatsapp || '';
+  document.getElementById('cms-contact-email').value = data.email || '';
+  document.getElementById('cms-contact-address').value = data.address || '';
+}
+
+/* ═══════ SAVE ═══════ */
+function saveSection(section) {
+  var data = {};
+  var btn = event.target;
+  btn.disabled = true;
+  btn.textContent = 'جاري الحفظ...';
+
+  if (section === 'announce') {
+    data = { text: document.getElementById('cms-announce-text').value };
+  } else if (section === 'hero') {
+    data = {
+      line1: document.getElementById('cms-hero-line1').value,
+      line2: document.getElementById('cms-hero-line2').value,
+      promise1: document.getElementById('cms-hero-promise1').value,
+      promise2: document.getElementById('cms-hero-promise2').value,
+      cta: document.getElementById('cms-hero-cta').value
+    };
+  } else if (section === 'stats') {
+    data = { items: statsData };
+  } else if (section === 'gallery') {
+    data = { items: galleryData };
+  } else if (section === 'testimonials') {
+    data = { items: testimonialsData };
+  } else if (section === 'branches') {
+    data = { items: branchesData };
+  } else if (section === 'contact') {
+    data = {
+      phone: document.getElementById('cms-contact-phone').value,
+      whatsapp: document.getElementById('cms-contact-whatsapp').value,
+      email: document.getElementById('cms-contact-email').value,
+      address: document.getElementById('cms-contact-address').value
+    };
+  }
+
+  data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+
+  db.collection('content').doc(section).set(data, { merge: true })
+    .then(function() {
+      btn.disabled = false;
+      btn.textContent = 'حفظ التغييرات';
+      showToast('تم الحفظ بنجاح');
+    })
+    .catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'حفظ التغييرات';
+      showToast('خطأ في الحفظ: ' + err.message, true);
+    });
+}
+
+/* ═══════ HELPERS ═══════ */
+function escHtml(str) {
+  if (!str) return '';
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+</script>
+</body>
+</html>
