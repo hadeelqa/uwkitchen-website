@@ -241,7 +241,9 @@
     </div>
     <div class="live-hero" data-animate="scale-up" data-delay="1">
       <div class="live-hero-visual">
-        <img src="images/img_3.jpeg" alt="تركيب مطبخ مباشر" loading="lazy">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/img_3.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
+          <source src="Videos/Live.mp4" type="video/mp4">
+        </video>
         <div class="live-chip">
           <span class="live-chip-dot"></span>
           LIVE
@@ -579,6 +581,18 @@
     }, {threshold: 0.2});
     observer.observe(video);
   });
+})();
+// Live installation video — IO-triggered
+(function(){
+  var vid = document.querySelector('.live-hero-visual video');
+  if(!vid) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ vid.play().catch(function(){}); }
+      else { vid.pause(); }
+    });
+  },{threshold:0.2});
+  io.observe(vid);
 })();
 </script>
 <!-- ═══ CMS: Firebase SDK + content loader ═══ -->
