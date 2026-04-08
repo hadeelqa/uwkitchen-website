@@ -14,8 +14,8 @@
 <link rel="icon" type="image/png" href="images/Logo-white.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=42">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=45">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 </head>
 <body>
@@ -76,7 +76,7 @@
     </div>
   </div>
   <div class="hero-img">
-    <img src="images/img_2.jpeg" alt="مطابخ الأبيض المتحدة - تصميم عصري" id="heroImg">
+    <img src="images/img_2.jpeg" alt="مطابخ الأبيض المتحدة - تصميم عصري" id="heroImg" decoding="async">
     <div class="hero-img-overlay"></div>
   </div>
 </section>
@@ -92,7 +92,7 @@
         <video
           id="realityVideo"
           src="Videos/snaptik_7484152625647209735_v3.mp4"
-          autoplay muted loop playsinline preload="metadata"
+          autoplay muted loop playsinline preload="none"
           poster="images/img_2.jpeg">
         </video>
         <div class="reality-video-play" role="button" aria-label="تشغيل الفيديو" tabindex="0">
@@ -103,7 +103,7 @@
         <video
           id="realityVideo2"
           src="Videos/snaptik_7613647879017729287_v3.mp4"
-          autoplay muted loop playsinline preload="metadata"
+          autoplay muted loop playsinline preload="none"
           poster="images/img_4.jpeg">
         </video>
         <div class="reality-video-play" role="button" aria-label="تشغيل الفيديو" tabindex="0">
@@ -121,7 +121,9 @@
 </section>
 <!-- ═══ 4. STATS V2 — Cards with background ═══ -->
 <section class="stats-v2">
-  <video class="stats-v2-bg" src="Videos/Taking Notes in the factory.mp4" autoplay muted loop playsinline preload="metadata"></video>
+  <video class="stats-v2-bg" autoplay muted loop playsinline preload="metadata" poster="images/img_2.jpeg">
+    <source src="Videos/Taking Notes in the factory.mp4" type="video/mp4">
+  </video>
   <div class="stats-v2-overlay"></div>
   <div class="stats-v2-inner">
     <div class="stats-v2-grid">
@@ -383,17 +385,20 @@
 </section>
 <!-- ═══ 9. CONTACT ═══ -->
 <section class="contact" id="contact">
-  <div class="contact-bg"></div><img class="contact-bg-img" src="images/img_6.jpeg" alt="" role="presentation" loading="lazy">
+  <div class="contact-bg"></div>
   <div class="contact-inner">
-    <div class="contact-info" data-animate="fade-start">
-      <h2>اطلب زيارة قياس مجانية</h2>
+    <div class="contact-info" data-animate="fade-up">
+      <div class="section-header contact-header">
+        <span class="section-eyebrow">تواصل معنا</span>
+        <h2 class="section-title">اطلب زيارة قياس مجانية</h2>
+      </div>
       <div class="contact-checks">
-        <div class="contact-check" data-animate="fade-start" data-delay="1"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>قياس احترافي في موقعك</span></div>
-        <div class="contact-check" data-animate="fade-start" data-delay="2"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>تصميم 3D مخصص لمطبخك</span></div>
-        <div class="contact-check" data-animate="fade-start" data-delay="3"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>مجاني قبل أي التزام</span></div>
+        <div class="contact-check" data-animate="fade-up" data-delay="1"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>قياس احترافي في موقعك</span></div>
+        <div class="contact-check" data-animate="fade-up" data-delay="2"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>تصميم 3D مخصص لمطبخك</span></div>
+        <div class="contact-check" data-animate="fade-up" data-delay="3"><div class="contact-check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>مجاني قبل أي التزام</span></div>
       </div>
     </div>
-    <div class="form-card" data-animate="fade-end" data-delay="2">
+    <div class="form-card" data-animate="fade-up" data-delay="2">
       <form id="contactForm" novalidate>
         <div class="form-field"><input type="text" id="fn" placeholder=" " required aria-required="true" minlength="2" maxlength="80"><label for="fn">الاسم</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-field"><input type="tel" id="ph" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="ph">رقم الجوال</label><span class="form-error" aria-live="polite"></span></div>
@@ -510,7 +515,7 @@
   <img id="lightboxImg" src="" alt="">
 </div>
 
-<script src="scripts.js?v=21"></script>
+<script src="scripts.js?v=21" defer></script>
 <script>
 // Auto-play videos when scrolled into view
 (function(){
