@@ -663,16 +663,16 @@ var DEFAULTS = {
     {src:'images/kitchens/kitchen-08.webp', alt:'مطبخ خشب ورخام'}
   ]},
   testimonials: { items: [
-    {name:'أبو عبدالله', initials:'أع', quote:'من أفضل الشركات اللي تعاملت معهم. التصميم طلع أحلى من اللي تخيلته والتركيب كان سريع واحترافي.'},
-    {name:'ليلى عبدالكريم', initials:'لع', quote:'اليوم تم انجاز المطبخ من شركة المطابخ الابيض المتحدة. سعدت جداً بالعمل مع المهندس المتميز عبد الله.'},
-    {name:'ماجد الدويش', initials:'مد', quote:'أحب أشكر المهندس فتح الله على شغله المميز في تصميم المطبخ. من أول اجتماع كان واضح حرصه على التفاصيل.'},
-    {name:'سارة أبوزيد', initials:'سأ', quote:'مش عارفة أبدأ من فين عشان اشكرهم من اول المعاينة المجانية اللي شجعتنا نكمل معاهم ولا التصميم الجميل.'},
-    {name:'أم سارة', initials:'أس', quote:'مطبخي صار تحفة! الخامات ممتازة والضمان أعطاني راحة بال. أنصح الكل يتعاملون معهم بدون تردد.'},
-    {name:'خالد المطيري', initials:'خم', quote:'خدمة التتبع المباشر شيء مميز جداً. تابعت كل مرحلة من موبايلي وكان الموعد دقيق. تجربة ممتازة.'},
-    {name:'نورة الحربي', initials:'نح', quote:'التركيب خلص بالضبط في 20 يوم زي ما قالوا. الفريق كان محترف ونظيف ويحترم البيت. شغل راقي.'},
-    {name:'فهد العتيبي', initials:'فع', quote:'أخذت عروض من 5 شركات وكان عرضهم الأفضل من ناحية الجودة والسعر. الضمان 15 سنة أعطاني ثقة كاملة.'},
-    {name:'عبدالرحمن السبيعي', initials:'عس', quote:'تعاملت معهم مرتين والمرتين نفس المستوى. ما يتغير شي لا بالجودة ولا بالخدمة. ناس محترمين.'},
-    {name:'هند الشمري', initials:'هش', quote:'أجمل شي إنهم يسمعونك ويفهمون احتياجك. طلعت بمطبخ فوق توقعاتي والتسليم كان قبل الموعد.'}
+    {name:'أبو عبدالله', initials:'أ', quote:'من أفضل الشركات اللي تعاملت معهم. التصميم طلع أحلى من اللي تخيلته والتركيب كان سريع واحترافي.'},
+    {name:'ليلى عبدالكريم', initials:'ل', quote:'اليوم تم انجاز المطبخ من شركة المطابخ الابيض المتحدة. سعدت جداً بالعمل مع المهندس المتميز عبد الله.'},
+    {name:'ماجد الدويش', initials:'م', quote:'أحب أشكر المهندس فتح الله على شغله المميز في تصميم المطبخ. من أول اجتماع كان واضح حرصه على التفاصيل.'},
+    {name:'سارة أبوزيد', initials:'س', quote:'مش عارفة أبدأ من فين عشان اشكرهم من اول المعاينة المجانية اللي شجعتنا نكمل معاهم ولا التصميم الجميل.'},
+    {name:'أم سارة', initials:'أ', quote:'مطبخي صار تحفة! الخامات ممتازة والضمان أعطاني راحة بال. أنصح الكل يتعاملون معهم بدون تردد.'},
+    {name:'خالد المطيري', initials:'خ', quote:'خدمة التتبع المباشر شيء مميز جداً. تابعت كل مرحلة من موبايلي وكان الموعد دقيق. تجربة ممتازة.'},
+    {name:'نورة الحربي', initials:'ن', quote:'التركيب خلص بالضبط في 20 يوم زي ما قالوا. الفريق كان محترف ونظيف ويحترم البيت. شغل راقي.'},
+    {name:'فهد العتيبي', initials:'ف', quote:'أخذت عروض من 5 شركات وكان عرضهم الأفضل من ناحية الجودة والسعر. الضمان 15 سنة أعطاني ثقة كاملة.'},
+    {name:'عبدالرحمن السبيعي', initials:'ع', quote:'تعاملت معهم مرتين والمرتين نفس المستوى. ما يتغير شي لا بالجودة ولا بالخدمة. ناس محترمين.'},
+    {name:'هند الشمري', initials:'ه', quote:'أجمل شي إنهم يسمعونك ويفهمون احتياجك. طلعت بمطبخ فوق توقعاتي والتسليم كان قبل الموعد.'}
   ]},
   branches: { items: [
     {city:'الرياض', badge:'المعرض الرئيسي', address:'طريق الإمام سعود بن عبدالعزيز، حي التعاون', phone:'920031000', mapUrl:'https://maps.app.goo.gl/AcM6F4wgarnTKvQ99'}
@@ -754,12 +754,54 @@ function renderGallery() {
   var list = document.getElementById('galleryList');
   list.innerHTML = '';
   galleryData.forEach(function(g, i) {
-    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>صورة</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeGalleryItem('+i+')">حذف</button></div></div><div class="img-upload"><div class="img-preview">' + (g.src ? '<img src="' + escHtml(g.src) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div class="field" style="flex:1;margin:0"><label class="field-label">رابط الصورة</label><input class="field-input" value="' + escHtml(g.src) + '" oninput="galleryData['+i+'].src=this.value;updatePreview(\'gallery\')" dir="ltr" placeholder="images/kitchens/kitchen-01.webp"></div></div><div class="field"><label class="field-label">الوصف (alt)</label><input class="field-input" value="' + escHtml(g.alt) + '" oninput="galleryData['+i+'].alt=this.value"></div></div>';
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>صورة</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeGalleryItem('+i+')">حذف</button></div></div><div class="img-upload"><div class="img-preview">' + (g.src ? '<img src="' + escHtml(g.src) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><label class="field-label">رابط الصورة أو ارفع صورة</label><input class="field-input" value="' + escHtml(g.src) + '" oninput="galleryData['+i+'].src=this.value;updatePreview(\'gallery\')" dir="ltr" placeholder="images/kitchens/kitchen-01.webp"><label class="btn-upload" style="align-self:flex-start">رفع صورة<input type="file" accept="image/*" onchange="uploadGalleryImg(this,'+i+')"></label></div></div><div class="field"><label class="field-label">الوصف (alt)</label><input class="field-input" value="' + escHtml(g.alt) + '" oninput="galleryData['+i+'].alt=this.value"></div></div>';
   });
   updatePreview('gallery');
 }
 function addGalleryItem() { galleryData.push({ src: '', alt: '' }); renderGallery(); }
 function removeGalleryItem(i) { galleryData.splice(i, 1); renderGallery(); }
+
+/* Image compression + upload to Firebase Storage */
+function compressImage(file, maxW, quality, cb) {
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      var w = img.width, h = img.height;
+      if (w > maxW) { h = Math.round(h * maxW / w); w = maxW; }
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      canvas.toBlob(function(blob) { cb(blob); }, 'image/webp', quality);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadGalleryImg(input, idx) {
+  var file = input.files[0];
+  if (!file) return;
+  var card = input.closest('.card-item');
+  var label = input.parentElement;
+  label.textContent = 'جاري الضغط...';
+  compressImage(file, 1200, 0.75, function(blob) {
+    label.textContent = 'جاري الرفع...';
+    var name = 'kitchens/kitchen-' + Date.now() + '.webp';
+    var ref = storage.ref('gallery/' + name);
+    ref.put(blob, {contentType:'image/webp'}).then(function(snap) {
+      return snap.ref.getDownloadURL();
+    }).then(function(url) {
+      galleryData[idx].src = url;
+      renderGallery();
+      showToast('تم رفع الصورة بنجاح');
+    }).catch(function(err) {
+      showToast('خطأ في الرفع: ' + err.message, true);
+      renderGallery();
+    });
+  });
+}
 
 /* ═══════ TESTIMONIALS ═══════ */
 var testimonialsData = [];
@@ -771,7 +813,7 @@ function renderTestimonials() {
   var list = document.getElementById('testimonialsList');
   list.innerHTML = '';
   testimonialsData.forEach(function(t, i) {
-    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>' + escHtml(t.name || 'تقييم جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeTestimonial('+i+')">حذف</button></div></div><div class="field-row"><div class="field"><label class="field-label">الاسم</label><input class="field-input" value="' + escHtml(t.name) + '" oninput="testimonialsData['+i+'].name=this.value;updatePreview(\'testimonials\')"></div><div class="field"><label class="field-label">الأحرف الأولى</label><input class="field-input" value="' + escHtml(t.initials) + '" oninput="testimonialsData['+i+'].initials=this.value;updatePreview(\'testimonials\')"></div></div><div class="field"><label class="field-label">التقييم</label><textarea class="field-input" rows="3" oninput="testimonialsData['+i+'].quote=this.value;updatePreview(\'testimonials\')">' + escHtml(t.quote) + '</textarea></div></div>';
+    list.innerHTML += '<div class="card-item"><div class="card-item-header"><span class="card-item-title"><span class="card-item-num">' + (i+1) + '</span>' + escHtml(t.name || 'تقييم جديد') + '</span><div class="card-item-actions"><button class="btn-card-action delete" onclick="removeTestimonial('+i+')">حذف</button></div></div><div class="field"><label class="field-label">الاسم</label><input class="field-input" value="' + escHtml(t.name) + '" oninput="testimonialsData['+i+'].name=this.value;testimonialsData['+i+'].initials=this.value.trim().charAt(0);updatePreview(\'testimonials\')"></div><div class="field"><label class="field-label">التقييم</label><textarea class="field-input" rows="3" oninput="testimonialsData['+i+'].quote=this.value;updatePreview(\'testimonials\')">' + escHtml(t.quote) + '</textarea></div></div>';
   });
   updatePreview('testimonials');
 }

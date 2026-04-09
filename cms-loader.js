@@ -134,7 +134,7 @@
     author.className = 'test-author';
     var avatar = document.createElement('div');
     avatar.className = 'test-avatar';
-    avatar.textContent = t.initials || '';
+    avatar.textContent = (t.initials || t.name || '').charAt(0);
     author.appendChild(avatar);
     var name = document.createElement('span');
     name.className = 'test-name';
