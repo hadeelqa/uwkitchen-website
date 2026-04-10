@@ -19,6 +19,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="styles.css?v=54">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
+<link rel="preload" as="video" href="Videos/Taking Notes in the factory.mp4" type="video/mp4" fetchpriority="high">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"مطابخ الأبيض المتحدة","alternateName":"United White Kitchens","url":"https://uwkitchens.com","telephone":"920031000","email":"info@uwkitchens.com","image":"images/img_2.jpeg","description":"ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة. ضمان 15 سنة، تركيب في 20 يوم.","address":{"@type":"PostalAddress","streetAddress":"طريق الإمام سعود بن عبدالعزيز، حي التعاون","addressLocality":"الرياض","addressCountry":"SA"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","reviewCount":"17500"},"priceRange":"$$"}
 </script>
@@ -131,7 +132,7 @@
 </section>
 <!-- ═══ 4. STATS V2 — Cards with background ═══ -->
 <section class="stats-v2">
-  <video class="stats-v2-bg" autoplay muted loop playsinline preload="metadata" poster="images/img_2.jpeg">
+  <video class="stats-v2-bg" autoplay muted loop playsinline preload="auto" fetchpriority="high" poster="images/img_2.jpeg">
     <source src="Videos/Taking Notes in the factory.mp4" type="video/mp4">
   </video>
   <div class="stats-v2-overlay"></div>
@@ -546,7 +547,7 @@
       entries.forEach(function(e){
         if(e.isIntersecting){ tryPlay(); io.unobserve(vid); }
       });
-    },{threshold:0.1});
+    },{threshold:0, rootMargin:'600px 0px'});
     io.observe(vid);
   } else {
     tryPlay();
