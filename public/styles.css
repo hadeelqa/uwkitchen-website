@@ -357,7 +357,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 /* ═══════════════════════════════════════════
    3. HERO — Inspired by premium reference
    ═══════════════════════════════════════════ */
-.hero{position:relative;min-height:100vh;margin-top:44px;display:flex;align-items:center;overflow:hidden}
+.hero{position:relative;min-height:calc(100svh - 44px);margin-top:44px;display:flex;align-items:center;overflow:hidden}
 
 /* RTL: text over full-width background image */
 .hero-text{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:28px;padding:120px var(--content-pad) 60px;position:relative;z-index:3;width:100%;max-width:var(--content-max);margin:0 auto}
@@ -912,7 +912,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
   .marquee-item{font-size:12px;gap:8px}
   .marquee-track{gap:40px}
   .nav{top:36px}
-  .hero{margin-top:36px}
+  .hero{margin-top:36px;min-height:calc(100svh - 36px)}
 }
 
 /* Auto-hide announcement on scroll */
