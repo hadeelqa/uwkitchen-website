@@ -12,3 +12,11 @@ v3.html
 
 # Claude config
 .claude/
+.mcp.json
+
+# Source archive (not deployed — local archive of raw photos)
+_source/
+
+# Firebase
+firebase-debug.log
+.firebase/

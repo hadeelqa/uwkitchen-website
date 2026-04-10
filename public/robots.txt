@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /cms-loader.js
+
+Sitemap: https://uwkitchens.com/sitemap.xml

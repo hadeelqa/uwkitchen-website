@@ -443,7 +443,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .features-inner{max-width:var(--content-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:48px}
 .section-header{text-align:center;display:flex;flex-direction:column;gap:var(--space-3)}
 .section-title{font-weight:700;color:#fff;font-size:var(--text-2xl)}
-.section-subtitle{font-weight:400;color:var(--text-sub);font-size:clamp(14px,1.3vw,16px);line-height:1.7;max-width:560px;margin-inline:auto}
+.section-subtitle{font-weight:400;color:var(--text-sub);font-size:var(--text-sm);line-height:1.7;max-width:560px;margin-inline:auto}
 .features-grid{display:grid;grid-template-columns:1fr;gap:20px;width:100%}
 @media(min-width:768px){.features-grid{grid-template-columns:repeat(3,1fr);gap:24px}}
 
