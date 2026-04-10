@@ -66,6 +66,23 @@ body.nav-open{overflow:hidden}
   --content-max:1200px;
   --content-pad:16px; /* mobile edge safety */
 
+  /* ── Button Tokens ── */
+  --btn-h-sm:36px;
+  --btn-h-md:44px; /* WCAG 2.5.5 touch target */
+  --btn-h-lg:52px;
+  --btn-px-sm:16px;
+  --btn-px-md:22px;
+  --btn-px-lg:30px;
+  --btn-fs-sm:13px;
+  --btn-fs-md:14px;
+  --btn-fs-lg:15px;
+  --btn-weight:600;
+  --btn-gap:8px;
+  --btn-radius:var(--radius-full);
+  --btn-ring:0 0 0 2px var(--gold);
+  --btn-shadow-primary:0 4px 16px rgba(212,136,74,.28);
+  --btn-shadow-primary-hover:0 8px 24px rgba(212,136,74,.4);
+
   /* ── Shadows (Elevation) ── */
   --shadow-sm:0 1px 3px rgba(0,0,0,.12);
   --shadow-md:0 4px 16px rgba(0,0,0,.2);
@@ -95,6 +112,116 @@ body.nav-open{overflow:hidden}
 .cert-inner,.reality-inner,.maps-header,.branches-grid,.footer-inner,
 .contact-inner,.warranty-compact-inner,.kitchens-header,.kitchens-grid-wrap,
 .testimonials-header,.testimonials-footer,.stats-inner{padding-inline:0}
+}
+
+/* ══════════════════════════════════════════
+   BUTTON SYSTEM — Primary / Secondary / Tertiary
+   Hierarchy: ONE primary per section. Secondary for alt actions.
+   Tertiary for low-priority utility or external links.
+   ══════════════════════════════════════════ */
+.btn{
+  --_bg:transparent;
+  --_fg:var(--text-main);
+  --_border:transparent;
+  --_bg-hover:transparent;
+  --_border-hover:transparent;
+  --_fg-hover:var(--text-main);
+  --_shadow:none;
+  --_shadow-hover:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--btn-gap);
+  height:var(--btn-h-md);
+  padding:0 var(--btn-px-md);
+  background:var(--_bg);
+  color:var(--_fg);
+  border:1px solid var(--_border);
+  border-radius:var(--btn-radius);
+  font-family:var(--font);
+  font-weight:var(--btn-weight);
+  font-size:var(--btn-fs-md);
+  line-height:1;
+  letter-spacing:.01em;
+  text-decoration:none;
+  cursor:pointer;
+  white-space:nowrap;
+  box-shadow:var(--_shadow);
+  transition:background var(--duration-normal) var(--ease-out),
+             border-color var(--duration-normal) var(--ease-out),
+             color var(--duration-normal) var(--ease-out),
+             box-shadow var(--duration-normal) var(--ease-out),
+             transform var(--duration-normal) var(--ease-out);
+}
+.btn:hover{
+  background:var(--_bg-hover);
+  border-color:var(--_border-hover);
+  color:var(--_fg-hover);
+  box-shadow:var(--_shadow-hover);
+  transform:translateY(-1px);
+}
+.btn:active{transform:translateY(0);transition-duration:var(--duration-fast)}
+.btn:focus-visible{outline:none;box-shadow:var(--_shadow),var(--btn-ring);outline-offset:0}
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.5;pointer-events:none;transform:none!important;box-shadow:var(--_shadow)!important}
+.btn svg{width:1.15em;height:1.15em;flex-shrink:0;transition:transform var(--duration-normal) var(--ease-out)}
+.btn:hover svg{transform:translateX(-3px)} /* RTL: arrow moves toward direction of reading */
+
+/* ── Variants ── */
+.btn--primary{
+  --_bg:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  --_fg:#fff;
+  --_bg-hover:linear-gradient(135deg,var(--gold-hover),var(--gold-dark));
+  --_fg-hover:#fff;
+  --_shadow:var(--btn-shadow-primary);
+  --_shadow-hover:var(--btn-shadow-primary-hover);
+}
+.btn--secondary{
+  --_bg:rgba(237,172,110,.08);
+  --_fg:var(--gold);
+  --_border:rgba(237,172,110,.35);
+  --_bg-hover:rgba(237,172,110,.14);
+  --_fg-hover:var(--gold);
+  --_border-hover:var(--gold);
+}
+.btn--tertiary{
+  --_bg:transparent;
+  --_fg:var(--text-main);
+  --_border:rgba(255,255,255,.15);
+  --_bg-hover:rgba(255,255,255,.06);
+  --_fg-hover:var(--gold);
+  --_border-hover:rgba(237,172,110,.35);
+}
+
+/* ── Sizes ── */
+.btn--sm{height:var(--btn-h-sm);padding:0 var(--btn-px-sm);font-size:var(--btn-fs-sm)}
+.btn--lg{height:var(--btn-h-lg);padding:0 var(--btn-px-lg);font-size:var(--btn-fs-lg)}
+
+/* ── Modifiers ── */
+.btn--block{width:100%}
+.btn--no-arrow:hover svg{transform:none}
+
+/* ── Loading state ── */
+.btn.is-loading{color:transparent;pointer-events:none;position:relative}
+.btn.is-loading::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  margin:auto;
+  width:18px;height:18px;
+  border:2px solid #fff;
+  border-top-color:transparent;
+  border-radius:50%;
+  animation:btn-spin .7s linear infinite;
+}
+@keyframes btn-spin{to{transform:rotate(360deg)}}
+
+/* ── Button group ── */
+.btn-group{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn-group--end{justify-content:flex-end}
+.btn-group--block{flex-direction:column;align-items:stretch}
+@media(max-width:540px){
+  .btn-group--stack-mobile{flex-direction:column;align-items:stretch}
+  .btn-group--stack-mobile .btn{width:100%}
 }
 
 /* ── Announcement Bar ── */
@@ -144,7 +271,7 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 /* ── Focus States (Accessibility) ── */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--radius-sm)}
 /* ── Cursor pointer on interactive elements ── */
-a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-card,.branch-card--active,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.live-social-btn,.branch-contact-link,.branch-directions,.branches-cta-link,.btn-kitchens-all,.google-review-link,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
+a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.google-review-link,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
 
 /* ═══════════════════════════════════════════
    SCROLL ANIMATIONS — Professional system
@@ -226,8 +353,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .nav-close-mobile:hover{color:#fff}
 .nav-close-mobile svg{width:24px;height:24px}
 @media(min-width:1024px){.nav-close-mobile{display:none}}
-.btn-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--gold);color:#fff;font-weight:500;font-size:13px;border-radius:var(--radius-full);transition:all var(--duration-normal) var(--ease-out)}
-.btn-cta:hover{background:var(--gold-dark);box-shadow:none;transform:translateY(-1px)}
 
 /* ═══════════════════════════════════════════
    3. HERO — Inspired by premium reference
@@ -253,11 +378,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 
 @keyframes heroFadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
-/* CTA Button */
-.btn-hero{display:inline-flex;align-items:center;gap:var(--space-2);padding:14px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:15px;border-radius:var(--radius-full);transition:all var(--duration-normal) var(--ease-out);border:none;box-shadow:0 4px 16px rgba(212,136,74,.25)}
-.btn-hero:hover{background:linear-gradient(135deg,var(--gold-hover),var(--gold-dark));box-shadow:0 4px 16px rgba(212,136,74,.2);transform:translateY(-1px)}
-.btn-hero svg{width:18px;height:18px;transition:transform var(--duration-normal)}
-.btn-hero:hover svg{transform:translateX(-4px)}
 
 /* Hero image — full background, softer overlay */
 .hero-img{position:absolute;inset:0;width:100%;height:100%;z-index:1}
@@ -417,10 +537,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .form-field input:focus~label,.form-field input:not(:placeholder-shown)~label{top:8px;transform:none;font-size:11px;color:rgba(228,147,93,.75)}
 .form-field textarea:focus~label,.form-field textarea:not(:placeholder-shown)~label{top:6px;font-size:11px;color:rgba(228,147,93,.75)}
 .form-field textarea{resize:none;min-height:80px}
-.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:15px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;gap:var(--space-3);transition:all var(--duration-normal) var(--ease-out);margin-top:var(--space-4);box-shadow:0 4px 16px rgba(212,136,74,.25)}
-.btn-submit:hover{background:linear-gradient(135deg,var(--gold-hover),var(--gold-dark));box-shadow:0 4px 16px rgba(212,136,74,.2);transform:translateY(-1px)}
-.btn-submit svg{width:16px;height:16px;transition:transform var(--duration-normal)}
-.btn-submit:hover svg{transform:translateX(-4px)}
 .form-note{font-weight:400;color:rgba(255,255,255,.5);font-size:12px;text-align:center;margin-top:8px}
 
 /* ═══════════════════════════════════════════
@@ -591,10 +707,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 @media(min-width:1024px){.reality-text{padding-right:16px}}
 .reality-text .section-title{text-align:right}
 .reality-desc{font-weight:400;color:var(--text-sub);font-size:var(--text-base);line-height:1.8;text-align:right}
-.reality-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:none;color:var(--text-main);font-weight:500;font-size:14px;border-radius:var(--radius-full);transition:all var(--duration-normal) var(--ease-out);align-self:flex-end;border:1px solid rgba(255,255,255,.15)}
-.reality-cta:hover{background:rgba(255,255,255,.06);border-color:rgba(212,136,74,.3);color:var(--gold);transform:translateY(-2px)}
-.reality-cta svg{transition:transform .3s}
-.reality-cta:hover svg{transform:translate(3px,-3px)}
 
 /* ═══════ GOOGLE REVIEW LINK ═══════ */
 .google-review-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--gold);font-weight:400;transition:color .2s;margin-top:8px}
@@ -612,8 +724,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .maps-header{text-align:center;margin-bottom:40px}
 .maps-header .section-eyebrow{margin-bottom:8px}
 .maps-header .section-subtitle{color:var(--text-sub);font-size:15px;margin-top:8px}
-.branches-cta-link{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:10px 24px;background:var(--gold);color:var(--bg);font-size:14px;font-weight:600;border-radius:var(--radius-full);text-decoration:none;transition:all .3s}
-.branches-cta-link:hover{background:var(--gold-hover);transform:translateY(-1px)}
 .maps-title{color:#fff}
 .branches-grid{max-width:var(--content-max);margin:0 auto}
 .branch-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:border-color var(--duration-normal) var(--ease-out),transform var(--duration-normal) var(--ease-out),box-shadow var(--duration-normal) var(--ease-out)}
@@ -623,11 +733,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .branch-city{font-size:18px;font-weight:700;color:var(--text-main)}
 .branch-address{font-size:13px;color:var(--text-sub);line-height:1.6}
 .branch-contacts{display:flex;gap:10px;flex-wrap:wrap}
-.branch-contact-link{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-full);font-size:13px;color:var(--gold);font-weight:500;transition:all .3s;text-decoration:none}
-.branch-contact-link:hover{border-color:var(--gold);background:rgba(237,172,110,.08)}
-.branch-contact-link svg{flex-shrink:0}
-.branch-directions{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:var(--gold);color:var(--bg);font-size:13px;font-weight:600;border-radius:var(--radius-full);text-decoration:none;transition:all .3s;width:fit-content}
-.branch-directions:hover{background:var(--gold-hover);transform:translateY(-1px)}
 .branch-map{border-radius:var(--radius-md);overflow:hidden;margin-top:4px}
 .branch-map iframe{display:block;width:100%;height:180px;border-radius:var(--radius-md)}
 /* Coming Soon - compact inline */
@@ -684,15 +789,11 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .lightbox.active .lightbox-close{opacity:1;transform:rotate(0) scale(1);transition-delay:.2s}
 .lightbox-close:hover{background:rgba(255,255,255,.15);transform:rotate(0)}
 
-/* ── 8. CTA Button Glow Pulse ── */
-.btn-hero{position:relative;overflow:visible}
-.btn-hero::after{content:'';position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(135deg,var(--gold),var(--gold-dark));opacity:0;z-index:-1;filter:blur(12px);transition:opacity .4s var(--ease-out)}
-.btn-hero:hover::after{opacity:.25}
-
-.btn-submit{position:relative;overflow:visible}
-.btn-submit::after{content:'';position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(135deg,var(--gold),var(--gold-dark));opacity:0;z-index:-1;filter:blur(10px);transition:opacity .4s var(--ease-out)}
-.btn-submit:hover::after{opacity:.2}
-.btn-submit:disabled::after{display:none}
+/* ── 8. Primary button glow pulse (ambient) ── */
+.btn--primary{position:relative;overflow:visible}
+.btn--primary::after{content:'';position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(135deg,var(--gold),var(--gold-dark));opacity:0;z-index:-1;filter:blur(12px);transition:opacity .4s var(--ease-out)}
+.btn--primary:hover::after{opacity:.25}
+.btn--primary:disabled::after,.btn--primary[aria-disabled="true"]::after{display:none}
 
 /* ── 9. Section Title Underline Draw ── */
 .section-header .section-title,.kitchens-header .section-title,.testimonials-header .section-title,.maps-header .section-title{position:relative;display:inline-block}
@@ -714,8 +815,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 /* ── 12. Social Button Hover Lift ── */
 .footer-social a{transition:all .3s var(--ease-out)}
 .footer-social a:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
-.live-social-btn{transition:all .3s var(--ease-out)}
-.live-social-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
 
 /* ── 13. Branch Card Entrance ── */
 .branch-card{transition:all .4s var(--ease-out)}
@@ -777,10 +876,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 @keyframes liveChipPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 @keyframes liveGlow{0%,100%{box-shadow:0 0 12px rgba(220,38,38,.4)}50%{box-shadow:0 0 24px rgba(220,38,38,.7)}}
 .live-social-links{display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap}
-.live-social-btn{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-3) var(--space-5);border-radius:var(--radius-md);font-size:var(--text-sm);font-weight:500;text-decoration:none;transition:all var(--duration-normal) var(--ease-out);background:rgba(237,172,110,.08);border:1px solid rgba(237,172,110,.2);color:var(--gold)}
-.live-social-btn:hover{background:rgba(237,172,110,.15);transform:translateY(-2px)}
-.live-social-btn--tiktok{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text-main)}
-.live-social-btn--tiktok:hover{background:rgba(255,255,255,.1)}
 
 /* ═══════════════════════════════════════════
    7.96 COMPLETED PROJECTS
@@ -844,7 +939,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 @media(max-width:767px){
   .form-field input,.form-field textarea{padding:18px 14px 8px;font-size:16px}
   .form-field label{font-size:13px}
-  .btn-submit{padding:14px;font-size:15px}
   .contact-inner{padding-block:64px}
 }
 
@@ -887,9 +981,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .trust-bar-item svg{opacity:.5;flex-shrink:0}
 
 /* ═══════ HERO CTA CALL STYLE ═══════ */
-.btn-hero--call{gap:10px;background:none;border:1px solid rgba(255,255,255,.15)}
-.btn-hero--call:hover{background:rgba(255,255,255,.06);border-color:rgba(212,136,74,.3);color:var(--gold)}
-.btn-cta--call{display:inline-flex;align-items:center;gap:8px;text-decoration:none}
 
 /* ═══════ WARRANTY TERMS ═══════ */
 /* warranty-terms removed — now .warranty-compact-terms */
@@ -909,10 +1000,6 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 }
 .kitchen-item--hidden{display:none}
 .kitchens-cta-wrap{text-align:center;margin-top:32px;padding:0 24px}
-.btn-kitchens-all{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-main);font-family:var(--font);font-size:14px;font-weight:500;border-radius:var(--radius-full);cursor:pointer;transition:all .3s}
-.btn-kitchens-all:hover{background:rgba(255,255,255,.06);border-color:rgba(237,172,110,.3);color:var(--gold)}
-.btn-kitchens-all svg{transition:transform .3s}
-.btn-kitchens-all:hover svg{transform:translateY(3px)}
 
 
 /* ═══════ SKIP LINK (Accessibility) ═══════ */
@@ -925,6 +1012,5 @@ a[href],.btn-cta,.btn-hero,.btn-submit,.process-card,.cladding-color-card,.test-
 .form-success{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.3);border-radius:var(--radius-md);color:#22c55e;font-size:14px;font-weight:500;margin-top:12px;animation:fadeInUp .4s ease}
 .form-success[hidden]{display:none}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none!important;box-shadow:none!important}
 
 /* ═══════ MAPS CTA BUTTON ═══════ */

@@ -481,12 +481,12 @@ document.addEventListener('click', function(e){
     // Disable button to prevent double submit
     submitting = true;
     submitBtn.disabled = true;
-    submitBtn.textContent = 'جاري الإرسال...';
+    submitBtn.classList.add('is-loading');
     // Simulate submission (replace with real API call)
     setTimeout(function(){
       form.reset();
       submitBtn.disabled = false;
-      submitBtn.innerHTML = 'اطلب زيارة قياس<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>';
+      submitBtn.classList.remove('is-loading');
       submitting = false;
       if(successMsg) successMsg.hidden = false;
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
