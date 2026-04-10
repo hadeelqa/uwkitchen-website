@@ -271,7 +271,7 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 /* ── Focus States (Accessibility) ── */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--radius-sm)}
 /* ── Cursor pointer on interactive elements ── */
-a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.google-review-link,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
+a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
 
 /* ═══════════════════════════════════════════
    SCROLL ANIMATIONS — Professional system
@@ -443,7 +443,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .features-inner{max-width:var(--content-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:48px}
 .section-header{text-align:center;display:flex;flex-direction:column;gap:var(--space-3)}
 .section-title{font-weight:700;color:#fff;font-size:var(--text-2xl)}
-.section-subtitle{font-weight:400;color:var(--text-sub);font-size:var(--text-lg)}
+.section-subtitle{font-weight:400;color:var(--text-sub);font-size:clamp(14px,1.3vw,16px);line-height:1.7;max-width:560px;margin-inline:auto}
 .features-grid{display:grid;grid-template-columns:1fr;gap:20px;width:100%}
 @media(min-width:768px){.features-grid{grid-template-columns:repeat(3,1fr);gap:24px}}
 
@@ -620,7 +620,6 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .materials::after{content:'';position:absolute;bottom:5%;left:-10%;width:350px;height:350px;background:radial-gradient(circle,rgba(70,22,66,.08) 0%,transparent 70%);pointer-events:none}
 @media(min-width:1024px){.materials{padding:100px 0}}
 .materials-inner{position:relative;z-index:2;max-width:var(--content-max);margin:0 auto}
-.materials .section-subtitle{color:rgba(255,255,255,.55);font-size:clamp(14px,1.3vw,17px)}
 /* ── Cladding Color Showcase ── */
 .cladding-colors{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px;width:100%}
 @media(min-width:768px){.cladding-colors{grid-template-columns:repeat(4,1fr);gap:20px}}
@@ -709,8 +708,6 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .reality-desc{font-weight:400;color:var(--text-sub);font-size:var(--text-base);line-height:1.8;text-align:right}
 
 /* ═══════ GOOGLE REVIEW LINK ═══════ */
-.google-review-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--gold);font-weight:400;transition:color .2s;margin-top:8px}
-.google-review-link:hover{color:#fff;text-decoration:underline}
 
 /* ═══════ SCROLL TO TOP ═══════ */
 .scroll-top{position:fixed;bottom:24px;left:24px;right:auto;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;z-index:900;opacity:0;transform:translateY(20px);transition:all var(--duration-normal) var(--ease-out);cursor:pointer;border:1px solid rgba(255,255,255,.12);box-shadow:none;backdrop-filter:blur(8px)}
@@ -723,7 +720,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 @media(min-width:1024px){.maps-section{padding:100px 0}}
 .maps-header{text-align:center;margin-bottom:40px}
 .maps-header .section-eyebrow{margin-bottom:8px}
-.maps-header .section-subtitle{color:var(--text-sub);font-size:15px;margin-top:8px}
+.maps-header .section-subtitle{margin-top:8px}
 .maps-title{color:#fff}
 .branches-grid{max-width:var(--content-max);margin:0 auto}
 .branch-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:border-color var(--duration-normal) var(--ease-out),transform var(--duration-normal) var(--ease-out),box-shadow var(--duration-normal) var(--ease-out)}
