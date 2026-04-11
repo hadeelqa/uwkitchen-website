@@ -62,8 +62,8 @@
   };
 
   // FormSubmit endpoint — first submission will send an activation email
-  // to info@uwkitchens.com; after one-click confirm, all submissions deliver.
-  var FORMSUBMIT_URL = 'https://formsubmit.co/info@uwkitchens.com';
+  // to info@unitewhitekitchens.com; after one-click confirm, all submissions deliver.
+  var FORMSUBMIT_URL = 'https://formsubmit.co/info@unitewhitekitchens.com';
 
   function showError(field, msg){
     field.classList.add('form-field--error');

@@ -507,7 +507,7 @@ document.addEventListener('click', function(e){
     // Fire-and-forget POST — no-cors means opaque response, but the request
     // is delivered. Show success regardless so the user isn't blocked by
     // transient network issues.
-    fetch('https://formsubmit.co/info@uwkitchens.com', {
+    fetch('https://formsubmit.co/info@unitewhitekitchens.com', {
       method: 'POST',
       mode: 'no-cors',
       body: fd
