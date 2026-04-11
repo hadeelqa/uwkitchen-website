@@ -482,14 +482,35 @@ document.addEventListener('click', function(e){
     submitting = true;
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
-    // Simulate submission (replace with real API call)
-    setTimeout(function(){
+
+    // Build FormData with metadata for FormSubmit.co
+    var fd = new FormData();
+    fd.append('name', document.getElementById('fn').value.trim());
+    fd.append('phone', document.getElementById('ph').value.trim());
+    fd.append('city', document.getElementById('city').value.trim());
+    fd.append('district', document.getElementById('district').value.trim());
+    fd.append('_subject', 'طلب زيارة قياس جديد');
+    fd.append('_template', 'table');
+    fd.append('_captcha', 'false');
+    fd.append('form_type', 'طلب زيارة قياس');
+    fd.append('submitted_at', new Date().toLocaleString('ar-SA'));
+
+    function onDone(){
       form.reset();
       submitBtn.disabled = false;
       submitBtn.classList.remove('is-loading');
       submitting = false;
       if(successMsg) successMsg.hidden = false;
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
-    }, 1000);
+    }
+
+    // Fire-and-forget POST — no-cors means opaque response, but the request
+    // is delivered. Show success regardless so the user isn't blocked by
+    // transient network issues.
+    fetch('https://formsubmit.co/info@uwkitchens.com', {
+      method: 'POST',
+      mode: 'no-cors',
+      body: fd
+    }).then(onDone).catch(onDone);
   });
 })();

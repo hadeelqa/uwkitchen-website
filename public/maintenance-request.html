@@ -92,15 +92,12 @@
         <h2 class="cs-form-title">نموذج طلب الصيانة</h2>
         <p class="cs-form-note">الحقول المميّزة بـ (*) إلزامية</p>
       </div>
-      <form id="maintenanceForm" class="cs-form" novalidate data-form="maintenance">
+      <form id="maintenanceForm" class="cs-form" novalidate data-form="maintenance" enctype="multipart/form-data">
         <div class="form-row">
           <div class="form-field"><input type="text" id="m_fn" name="firstName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="m_fn">الاسم الأول *</label><span class="form-error" aria-live="polite"></span></div>
-          <div class="form-field"><input type="text" id="m_mn" name="middleName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="m_mn">الاسم الثاني *</label><span class="form-error" aria-live="polite"></span></div>
-        </div>
-        <div class="form-row">
           <div class="form-field"><input type="text" id="m_ln" name="lastName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="m_ln">اسم العائلة *</label><span class="form-error" aria-live="polite"></span></div>
-          <div class="form-field"><input type="tel" id="m_ph" name="phone" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="m_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
         </div>
+        <div class="form-field"><input type="tel" id="m_ph" name="phone" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="m_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-field"><textarea id="m_desc" name="description" placeholder=" " required aria-required="true" minlength="10" maxlength="1000" rows="4"></textarea><label for="m_desc">وصف المشكلة *</label><span class="form-error" aria-live="polite"></span></div>
 
         <div class="file-field" data-required="true">
@@ -138,15 +135,12 @@
         <h2 class="cs-form-title">نموذج تقديم شكوى</h2>
         <p class="cs-form-note">الحقول المميّزة بـ (*) إلزامية</p>
       </div>
-      <form id="complaintForm" class="cs-form" novalidate data-form="complaint">
+      <form id="complaintForm" class="cs-form" novalidate data-form="complaint" enctype="multipart/form-data">
         <div class="form-row">
           <div class="form-field"><input type="text" id="c_fn" name="firstName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="c_fn">الاسم الأول *</label><span class="form-error" aria-live="polite"></span></div>
-          <div class="form-field"><input type="text" id="c_mn" name="middleName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="c_mn">الاسم الثاني *</label><span class="form-error" aria-live="polite"></span></div>
-        </div>
-        <div class="form-row">
           <div class="form-field"><input type="text" id="c_ln" name="lastName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="c_ln">اسم العائلة *</label><span class="form-error" aria-live="polite"></span></div>
-          <div class="form-field"><input type="tel" id="c_ph" name="phone" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="c_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
         </div>
+        <div class="form-field"><input type="tel" id="c_ph" name="phone" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="c_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
 
         <div class="file-field">
           <input type="file" id="c_contract" name="contract" accept="application/pdf,image/*">
@@ -183,7 +177,7 @@
         <h2 class="cs-form-title">نموذج الاقتراح</h2>
         <p class="cs-form-note">الحقول المميّزة بـ (*) إلزامية</p>
       </div>
-      <form id="suggestionForm" class="cs-form" novalidate data-form="suggestion">
+      <form id="suggestionForm" class="cs-form" novalidate data-form="suggestion" enctype="multipart/form-data">
         <div class="form-field"><input type="text" id="s_name" name="fullName" placeholder=" " required aria-required="true" minlength="3" maxlength="80"><label for="s_name">الاسم الكامل *</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-field"><input type="tel" id="s_ph" name="phone" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="s_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-field"><textarea id="s_desc" name="suggestion" placeholder=" " required aria-required="true" minlength="10" maxlength="2000" rows="5"></textarea><label for="s_desc">شرح المقترح *</label><span class="form-error" aria-live="polite"></span></div>
@@ -289,6 +283,6 @@
   <span class="wa-fab-text">تواصل معنا</span>
 </a>
 
-<script src="/maintenance-request.js?v=1"></script>
+<script src="/maintenance-request.js?v=2"></script>
 </body>
 </html>

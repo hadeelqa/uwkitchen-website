@@ -427,11 +427,11 @@
     </div>
     <div class="form-card" data-animate="fade-up" data-delay="2">
       <form id="contactForm" novalidate>
-        <div class="form-field"><input type="text" id="fn" placeholder=" " required aria-required="true" minlength="2" maxlength="80"><label for="fn">الاسم</label><span class="form-error" aria-live="polite"></span></div>
-        <div class="form-field"><input type="tel" id="ph" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="ph">رقم الجوال</label><span class="form-error" aria-live="polite"></span></div>
+        <div class="form-field"><input type="text" id="fn" name="name" placeholder=" " required aria-required="true" minlength="2" maxlength="80"><label for="fn">الاسم</label><span class="form-error" aria-live="polite"></span></div>
+        <div class="form-field"><input type="tel" id="ph" name="phone" placeholder=" " required aria-required="true" pattern="[0-9\s\+\-]{7,15}" dir="ltr"><label for="ph">رقم الجوال</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-row">
-          <div class="form-field"><input type="text" id="city" placeholder=" " required aria-required="true"><label for="city">المدينة</label><span class="form-error" aria-live="polite"></span></div>
-          <div class="form-field"><input type="text" id="district" placeholder=" " required aria-required="true"><label for="district">الحي</label><span class="form-error" aria-live="polite"></span></div>
+          <div class="form-field"><input type="text" id="city" name="city" placeholder=" " required aria-required="true"><label for="city">المدينة</label><span class="form-error" aria-live="polite"></span></div>
+          <div class="form-field"><input type="text" id="district" name="district" placeholder=" " required aria-required="true"><label for="district">الحي</label><span class="form-error" aria-live="polite"></span></div>
         </div>
         <button type="submit" class="btn btn--primary btn--lg btn--block" id="submitBtn">اطلب زيارة قياس<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
         <div class="form-success" id="formSuccess" role="alert" aria-live="polite" hidden>
