@@ -467,8 +467,8 @@ document.addEventListener('click', function(e){
       if(!el.value.trim()){
         showError(el, errorMsgs[id]);
         valid = false;
-      } else if(id === 'ph' && !/^[\d\s\+\-]{7,15}$/.test(el.value.trim())){
-        showError(el, 'الرجاء إدخال رقم جوال صحيح');
+      } else if(id === 'ph' && !/^05\d{8}$/.test(el.value.trim())){
+        showError(el, 'رقم الجوال لازم يكون 10 أرقام ويبدأ بـ 05');
         valid = false;
       }
     });

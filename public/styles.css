@@ -271,7 +271,7 @@ button{border:none;cursor:pointer;font-family:var(--font)}
 /* ── Focus States (Accessibility) ── */
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--radius-sm)}
 /* ── Cursor pointer on interactive elements ── */
-a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
+a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
 
 /* ═══════════════════════════════════════════
    SCROLL ANIMATIONS - Professional system
@@ -523,8 +523,11 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .contact-proof{display:flex;align-items:center;gap:12px;font-size:13px;color:rgba(255,255,255,.55);margin-top:8px}
 .form-card{display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);backdrop-filter:blur(12px);box-shadow:none;width:100%;max-width:560px}
 .form-card[hidden]{display:none}
+.form-card button[type=submit]{margin-top:var(--space-3)}
 @media(min-width:1024px){.form-card{padding:var(--space-6);flex:1;max-width:520px}}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.form-row{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+@media(min-width:560px){.form-row{grid-template-columns:1fr 1fr}}
+@media(min-width:720px){.form-row:has(>.form-field:nth-child(3)){grid-template-columns:1fr 1fr 1fr}}
 .form-row .form-field{margin-top:0}
 .form-field{position:relative;margin-top:12px}
 .form-field:first-child{margin-top:0}
@@ -724,17 +727,22 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .maps-header .section-subtitle{margin-top:8px}
 .maps-title{color:#fff}
 .branches-grid{max-width:var(--content-max);margin:0 auto}
-.branch-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:border-color var(--duration-normal) var(--ease-out),transform var(--duration-normal) var(--ease-out),box-shadow var(--duration-normal) var(--ease-out)}
-.branch-card--active{border-color:rgba(237,172,110,.3)}
-.branch-card--active:hover{border-color:var(--gold);transform:translateY(-2px)}
+.branch-pair{display:grid;grid-template-columns:1fr;gap:16px;align-items:stretch}
+.branch-pair .branch-info-card{order:1}
+.branch-pair .branch-map-card{order:2}
+@media(min-width:900px){.branch-pair{grid-template-columns:1.25fr 1fr;gap:20px}.branch-pair .branch-map-card{order:1}.branch-pair .branch-info-card{order:2}}
+.branch-map-card,.branch-info-card{background:var(--bg-elevated);border:1px solid rgba(237,172,110,.3);border-radius:var(--radius-md);overflow:hidden;transition:border-color var(--duration-normal) var(--ease-out),transform var(--duration-normal) var(--ease-out),box-shadow var(--duration-normal) var(--ease-out)}
+.branch-map-card{min-height:260px;display:flex}
+.branch-map-card iframe{display:block;width:100%;height:100%;min-height:260px;border:0}
+.branch-info-card{padding:24px 22px;display:flex;flex-direction:column;gap:16px;justify-content:space-between}
+@media(min-width:900px){.branch-info-card{padding:28px 26px}.branch-map-card,.branch-map-card iframe{min-height:320px}}
+.branch-identity{display:flex;flex-direction:column;gap:6px}
+.branch-pair:hover .branch-map-card,.branch-pair:hover .branch-info-card{border-color:var(--gold)}
 .branch-badge{display:inline-block;width:fit-content;padding:4px 12px;background:rgba(237,172,110,.12);color:var(--gold);font-size:11px;font-weight:600;border-radius:var(--radius-full)}
-.branch-city{font-size:18px;font-weight:700;color:var(--text-main)}
-.branch-address{font-size:13px;color:var(--text-sub);line-height:1.6}
-.branch-contacts{display:flex;gap:10px;flex-wrap:wrap}
-.branch-map{border-radius:var(--radius-md);overflow:hidden;margin-top:4px}
-.branch-map iframe{display:block;width:100%;height:180px;border-radius:var(--radius-md)}
+.branch-city{font-size:20px;font-weight:700;color:var(--text-main);margin:0}
+.branch-address{font-size:13px;color:var(--text-sub);line-height:1.6;margin:0}
+.branch-info-card .btn-group{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
 /* Coming Soon - compact inline */
-.branches-cta-wrap{text-align:center;margin-top:32px;max-width:var(--content-max);margin-left:auto;margin-right:auto}
 .branches-coming{text-align:center;margin-top:32px;max-width:var(--content-max);margin-left:auto;margin-right:auto}
 .branches-coming-label{display:block;font-size:13px;color:var(--text-sub);margin-bottom:14px;font-weight:500}
 .branches-coming-list{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
@@ -815,8 +823,8 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .footer-social a:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
 
 /* ── 13. Branch Card Entrance ── */
-.branch-card{transition:all .4s var(--ease-out)}
-.branch-card--active:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.branch-pair{transition:all .4s var(--ease-out)}
+.branch-pair:hover .branch-map-card,.branch-pair:hover .branch-info-card{box-shadow:0 8px 20px rgba(0,0,0,.15)}
 
 /* ── 14. Cert Logo Hover ── */
 .cert-logo{transition:opacity .4s,transform .4s var(--ease-out),filter .4s}
@@ -866,7 +874,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .live-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(220,38,38,.1);color:var(--red-live);font-size:13px;font-weight:600;padding:6px 16px;border-radius:100px;margin-bottom:16px;border:1px solid rgba(220,38,38,.15)}
 .live-dot{width:8px;height:8px;background:var(--red-live);border-radius:50%;display:inline-block;animation:livePulse 1.5s ease-in-out infinite}
 @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
-.live-hero{margin-top:32px;max-width:900px;margin-left:auto;margin-right:auto}
+.live-hero{margin-top:32px}
 .live-hero-visual{position:relative;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9}
 .live-hero-visual img{width:100%;height:100%;object-fit:cover}
 .live-chip{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--radius-full);background:rgba(220,38,38,.85);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:10px;z-index:2;animation:liveGlow 2s ease-in-out infinite}
@@ -1016,7 +1024,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
    ═════════════════════════════════════════════ */
 .cs-hero{padding:120px var(--content-pad) 40px;text-align:center;background:linear-gradient(180deg,var(--purple-dark) 0%,var(--white) 100%)}
 @media(min-width:1024px){.cs-hero{padding:160px var(--content-pad) 56px}}
-.cs-hero-inner{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:12px;align-items:center}
+.cs-hero-inner{margin:0 auto;display:flex;flex-direction:column;gap:12px;align-items:center}
 .cs-hero-title{font-size:var(--text-3xl)}
 
 .cs-forms{padding:40px var(--content-pad) 80px;background:var(--white)}

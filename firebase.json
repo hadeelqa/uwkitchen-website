@@ -19,6 +19,21 @@
         "source": "/home",
         "destination": "/",
         "type": 301
+      },
+      {
+        "source": "/ar/maintenance-request",
+        "destination": "/support",
+        "type": 301
+      },
+      {
+        "source": "/ar/maintenance-request/",
+        "destination": "/support",
+        "type": 301
+      },
+      {
+        "source": "/maintenance-request",
+        "destination": "/support",
+        "type": 301
       }
     ],
     "rewrites": [
@@ -31,15 +46,11 @@
         "destination": "/index.html"
       },
       {
-        "source": "/ar/maintenance-request",
+        "source": "/support",
         "destination": "/maintenance-request.html"
       },
       {
-        "source": "/ar/maintenance-request/",
-        "destination": "/maintenance-request.html"
-      },
-      {
-        "source": "/maintenance-request",
+        "source": "/support/",
         "destination": "/maintenance-request.html"
       }
     ],

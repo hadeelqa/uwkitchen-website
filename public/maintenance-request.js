@@ -52,9 +52,10 @@
   // ─── VALIDATION ───────────────────────────
   var errorMsgs = {
     firstName: 'الرجاء إدخال الاسم الأول',
+    middleName: 'الرجاء إدخال الاسم الأوسط',
     lastName: 'الرجاء إدخال اسم العائلة',
     fullName: 'الرجاء إدخال الاسم الكامل',
-    phone: 'الرجاء إدخال رقم جوال صحيح',
+    phone: 'رقم الجوال لازم يكون 10 أرقام ويبدأ بـ 05',
     description: 'الرجاء كتابة وصف لا يقل عن 10 أحرف',
     suggestion: 'الرجاء كتابة الاقتراح بشكل واضح (10 أحرف فأكثر)',
     contract: 'الرجاء رفع صورة العقد',
@@ -104,7 +105,7 @@
       if(!val){
         showError(el, errorMsgs[el.name] || 'هذا الحقل إلزامي');
         valid = false;
-      } else if(el.type === 'tel' && !/^[\d\s\+\-]{7,15}$/.test(val)){
+      } else if(el.type === 'tel' && !/^05\d{8}$/.test(val)){
         showError(el, errorMsgs.phone);
         valid = false;
       } else if(el.minLength && val.length < el.minLength){
