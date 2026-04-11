@@ -369,7 +369,7 @@ window.addEventListener('scroll',function(){
   }, {passive:true});
 })();
 
-/* ═══════ KITCHEN LIGHTBOX — with focus trap ═══════ */
+/* ═══════ KITCHEN LIGHTBOX - with focus trap ═══════ */
 var _lastFocused = null;
 function openLightbox(src, alt){
   var lb = document.getElementById('lightbox');
@@ -504,7 +504,7 @@ document.addEventListener('click', function(e){
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
     }
 
-    // Fire-and-forget POST — no-cors means opaque response, but the request
+    // Fire-and-forget POST - no-cors means opaque response, but the request
     // is delivered. Show success regardless so the user isn't blocked by
     // transient network issues.
     fetch('https://formsubmit.co/info@uwkitchens.com', {

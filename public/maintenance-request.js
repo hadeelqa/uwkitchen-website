@@ -61,7 +61,7 @@
     media: 'الرجاء رفع صورة أو فيديو'
   };
 
-  // FormSubmit endpoint — first submission will send an activation email
+  // FormSubmit endpoint - first submission will send an activation email
   // to info@uwkitchens.com; after one-click confirm, all submissions deliver.
   var FORMSUBMIT_URL = 'https://formsubmit.co/info@uwkitchens.com';
 
@@ -149,12 +149,12 @@
     var notes = {
       maintenance: 'سيتم الرد خلال 7 أيام عمل',
       complaint: 'سيتم الرد خلال 7 أيام عمل',
-      suggestion: 'شكراً لمشاركتك — نقدّر اقتراحك ونقرأه بعناية'
+      suggestion: 'شكراً لمشاركتك، نقدّر اقتراحك ونقرأه بعناية'
     };
     var descs = {
       maintenance: 'شكراً لتواصلك. فريق الصيانة سيتواصل معك قريباً لمتابعة طلبك.',
       complaint: 'شكراً لإبلاغنا. فريقنا سيدرس الشكوى ويتواصل معك خلال المدة المذكورة.',
-      suggestion: 'شكراً لك — اقتراحات عملائنا تساعدنا على التحسين المستمر.'
+      suggestion: 'شكراً لك، اقتراحات عملائنا تساعدنا على التحسين المستمر.'
     };
 
     document.getElementById('csSuccessTitle').textContent = titles[type];
@@ -221,7 +221,7 @@
       fd.append('submitted_at', new Date().toLocaleString('ar-SA'));
 
       // Fire-and-forget POST (no-cors: opaque response, but request delivered).
-      // We show success UI immediately regardless of response — worst case the
+      // We show success UI immediately regardless of response - worst case the
       // user still has their ticket number and the form arrived at FormSubmit.
       fetch(FORMSUBMIT_URL, {
         method: 'POST',
@@ -231,7 +231,7 @@
         resetFormUI(form, btn);
         showSuccess(type, ticket);
       }).catch(function(){
-        // Network error — still show success to avoid confusing the user;
+        // Network error - still show success to avoid confusing the user;
         // the ticket is client-generated and they can reference it.
         resetFormUI(form, btn);
         showSuccess(type, ticket);

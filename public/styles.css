@@ -20,7 +20,7 @@ body.nav-open{overflow:hidden}
   --bg-secondary:#160b15;
   --bg-elevated:rgba(255,255,255,.04);
   --bg-section-alt:#130a12;
-  --white:#0e040d; /* legacy alias — dark theme bg */
+  --white:#0e040d; /* legacy alias - dark theme bg */
   --bg-dark:#0e040d;
 
   /* ── Text Colors ── */
@@ -115,7 +115,7 @@ body.nav-open{overflow:hidden}
 }
 
 /* ══════════════════════════════════════════
-   BUTTON SYSTEM — Primary / Secondary / Tertiary
+   BUTTON SYSTEM - Primary / Secondary / Tertiary
    Hierarchy: ONE primary per section. Secondary for alt actions.
    Tertiary for low-priority utility or external links.
    ══════════════════════════════════════════ */
@@ -226,37 +226,37 @@ body.nav-open{overflow:hidden}
 
 /* ── Announcement Bar ── */
 
-/* ── Navigation — Glass Morphism ── */
+/* ── Navigation - Glass Morphism ── */
 
-/* ── Hero Section — Refined Overlay ── */
+/* ── Hero Section - Refined Overlay ── */
 
-/* ── Stats Strip — Elevated ── */
+/* ── Stats Strip - Elevated ── */
 
-/* ── Partners — Bigger & Cleaner ── */
+/* ── Partners - Bigger & Cleaner ── */
 
-/* ── Features — Premium Cards ── */
+/* ── Features - Premium Cards ── */
 
-/* ── Process Steps — Refined ── */
+/* ── Process Steps - Refined ── */
 
-/* ── Vid-Hero / Tracking — Balanced Overlay ── */
+/* ── Vid-Hero / Tracking - Balanced Overlay ── */
 
-/* ── Materials Section — Card Refinement ── */
+/* ── Materials Section - Card Refinement ── */
 
-/* ── Factory Section — Elevated Cards ── */
+/* ── Factory Section - Elevated Cards ── */
 
-/* ── Certificates Section — Premium Cards ── */
+/* ── Certificates Section - Premium Cards ── */
 
-/* ── Gallery Section — Polished ── */
+/* ── Gallery Section - Polished ── */
 
-/* ── Testimonials Section — Premium Layout ── */
+/* ── Testimonials Section - Premium Layout ── */
 
 /* ── Maps Section ── */
 
-/* ── Contact Section — Premium Form ── */
+/* ── Contact Section - Premium Form ── */
 
-/* ── Footer — Clean & Refined ── */
+/* ── Footer - Clean & Refined ── */
 
-/* ── Floating FABs — Polished ── */
+/* ── Floating FABs - Polished ── */
 
 /* ── Light Mode Section Title Decorations ── */
 
@@ -274,7 +274,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,.cert-card,.kitchen-item,.partner-logo,.social-link,.footer-social a,.scroll-top,.wa-fab,.play-btn,.vid-play-float,.reality-video-play,.warranty-compact-item,.mat-item,.announce-close,.lightbox-close,.nav-close-mobile{cursor:pointer}
 
 /* ═══════════════════════════════════════════
-   SCROLL ANIMATIONS — Professional system
+   SCROLL ANIMATIONS - Professional system
    ═══════════════════════════════════════════ */
 
 /* Base: all animated elements start hidden */
@@ -313,7 +313,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .announce-close:hover{color:#fff}
 .announce-close svg{width:16px;height:16px}
 
-/* Marquee — force LTR for animation consistency */
+/* Marquee - force LTR for animation consistency */
 .marquee-wrap{width:100%;overflow:hidden;direction:ltr}
 .marquee-track{display:flex;align-items:center;gap:80px;width:max-content;animation:marquee 30s linear infinite}
 .marquee-track:hover{animation-play-state:paused}
@@ -331,7 +331,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 @media(min-width:1024px){.nav-logo img{width:auto;height:52px}}
 .footer-logo{width:auto;height:40px;object-fit:contain}
 @media(min-width:1024px){.footer-logo{height:48px}}
-/* Hamburger button — mobile only */
+/* Hamburger button - mobile only */
 .nav-hamburger{display:flex;flex-direction:column;gap:5px;background:none;padding:8px;cursor:pointer;z-index:61}
 .nav-hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
 .nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
@@ -339,7 +339,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 @media(min-width:1024px){.nav-hamburger{display:none}}
 
-/* Nav links — mobile slide-down, desktop inline */
+/* Nav links - mobile slide-down, desktop inline */
 .nav-links{position:fixed;top:0;right:0;left:0;height:100dvh;background:rgba(14,4,13,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;z-index:55;opacity:0;pointer-events:none;transition:opacity .35s ease}
 .nav-links.open{opacity:1;pointer-events:auto}
 @media(min-width:1024px){.nav-links{position:static;height:auto;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;flex-direction:row;gap:40px;flex:1;justify-content:center;opacity:1;pointer-events:auto}}
@@ -355,7 +355,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 @media(min-width:1024px){.nav-close-mobile{display:none}}
 
 /* ═══════════════════════════════════════════
-   3. HERO — Inspired by premium reference
+   3. HERO - Inspired by premium reference
    ═══════════════════════════════════════════ */
 .hero{position:relative;min-height:calc(100svh - 44px);margin-top:44px;display:flex;align-items:center;overflow:hidden}
 
@@ -364,7 +364,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 @media(min-width:1024px){.hero-text{padding-block:0 0;padding-inline:0;gap:28px}}
 .hero-text-inner{max-width:720px;display:flex;flex-direction:column;align-items:flex-start;gap:20px}
 
-/* Hero entrance animations — staggered */
+/* Hero entrance animations - staggered */
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);font-size:12px;font-weight:400;color:rgba(255,255,255,.6);opacity:0;animation:heroFadeUp .7s .3s cubic-bezier(.22,1,.36,1) forwards}
 .hero-title{text-align:right;opacity:0;animation:heroFadeUp .7s .5s cubic-bezier(.22,1,.36,1) forwards}
 .hero-title .line1{display:block;font-weight:400;color:rgba(255,255,255,.8);font-size:clamp(20px,3vw,28px);line-height:1.4}
@@ -379,7 +379,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 @keyframes heroFadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 
 
-/* Hero image — full background, softer overlay */
+/* Hero image - full background, softer overlay */
 .hero-img{position:absolute;inset:0;width:100%;height:100%;z-index:1}
 .hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
 .hero-img-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(14,4,13,.95) 0%,rgba(14,4,13,.7) 40%,rgba(14,4,13,.45) 70%,rgba(14,4,13,.55) 100%)}
@@ -399,7 +399,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 @media(min-width:640px){.stat-sep{display:block}}
 
 /* ═══════════════════════════════════════════
-   4.5 STATS V2 — Cards over background image
+   4.5 STATS V2 - Cards over background image
    ═══════════════════════════════════════════ */
 .stats-v2{position:relative;padding:64px 0;overflow:hidden;background:var(--bg-primary) url('images/img_2.jpeg') center/cover no-repeat}
 @media(min-width:1024px){.stats-v2{padding:80px 0}}
@@ -600,7 +600,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 
 /* ═══ Cert Strip (merged into Promises) ═══ */
 
-/* ═══════ WARRANTY SECTION — Compact ═══════ */
+/* ═══════ WARRANTY SECTION - Compact ═══════ */
 .warranty-compact{padding:32px 0;background:var(--white)}
 @media(min-width:1024px){.warranty-compact{padding:40px 0}}
 .warranty-compact-inner{max-width:var(--content-max);margin:0 auto;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);padding-block:32px;display:flex;flex-direction:column;gap:20px;align-items:center}
@@ -741,7 +741,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .branches-coming-city{padding:6px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-full);font-size:13px;color:rgba(255,255,255,.4);font-weight:500}
 
 /* ═══════════════════════════════════════════
-   ANIMATION LAYER — Motion Design System
+   ANIMATION LAYER - Motion Design System
    ═══════════════════════════════════════════ */
 
 /* ── 1. Hero Gold Text Shimmer (signature moment) ── */
@@ -754,7 +754,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .nav.scrolled .nav-logo img{height:38px;transition:height .3s var(--ease-out)}
 @media(min-width:1024px){.nav.scrolled .nav-logo img{height:44px}}
 
-/* ── 4. Enhanced Card Hover — Glow Border ── */
+/* ── 4. Enhanced Card Hover - Glow Border ── */
 .process-card::before{content:'';position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(135deg,transparent 30%,rgba(212,136,74,.12) 50%,transparent 70%);opacity:0;transition:opacity .5s var(--ease-out);z-index:-1;pointer-events:none}
 .process-card:hover::before{opacity:1}
 
@@ -960,7 +960,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 .hero-warranty{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(237,172,110,.1);border:1px solid rgba(237,172,110,.25);border-radius:var(--radius-full);color:var(--gold);font-size:13px;font-weight:400}
 .hero-warranty svg{width:18px;height:18px;flex-shrink:0}
 .hero-warranty strong{font-weight:700}
-/* Hero trust chips — small & minimal */
+/* Hero trust chips - small & minimal */
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;opacity:0;animation:heroFadeUp .7s .95s cubic-bezier(.22,1,.36,1) forwards}
 .hero-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-full);color:#fff;font-size:12px;font-weight:400}
 .hero-chip svg{color:var(--gold);stroke:var(--gold)}
@@ -981,7 +981,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-card--active,
 /* ═══════ HERO CTA CALL STYLE ═══════ */
 
 /* ═══════ WARRANTY TERMS ═══════ */
-/* warranty-terms removed — now .warranty-compact-terms */
+/* warranty-terms removed - now .warranty-compact-terms */
 
 /* ═══════ KITCHENS BENTO GRID ═══════ */
 .kitchens-grid-wrap{max-width:var(--content-max);margin:0 auto}

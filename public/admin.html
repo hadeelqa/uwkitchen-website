@@ -597,7 +597,7 @@ function updatePreview(section) {
     pv.innerHTML = '';
     if (!statsData.length) { pv.innerHTML = '<div class="empty-state">لا يوجد إحصائيات</div>'; return; }
     statsData.forEach(function(s) {
-      pv.innerHTML += '<div class="pv-stat"><span class="pv-stat-num">' + escHtml(s.num || '0') + '</span><span class="pv-stat-label">' + escHtml(s.label || '—') + '</span></div>';
+      pv.innerHTML += '<div class="pv-stat"><span class="pv-stat-num">' + escHtml(s.num || '0') + '</span><span class="pv-stat-label">' + escHtml(s.label || '') + '</span></div>';
     });
   }
   else if (section === 'gallery') {
@@ -700,7 +700,7 @@ function loadAllSections() {
       loaders[sec](data);
     });
   }).catch(function() {
-    // Offline or error — load defaults
+    // Offline or error - load defaults
     loadAnnounce(DEFAULTS.announce);
     loadHero(DEFAULTS.hero);
     loadStats(DEFAULTS.stats);

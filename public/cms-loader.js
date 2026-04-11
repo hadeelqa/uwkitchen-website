@@ -1,4 +1,4 @@
-/*  cms-loader.js  — reads Firestore → patches live DOM
+/*  cms-loader.js  - reads Firestore → patches live DOM
     Drop-in: non-blocking. If Firebase fails the static HTML stays intact. */
 (function () {
   /* ── Firebase config (same project as admin.html) ── */
@@ -54,7 +54,7 @@
     setText('.hero-title .line2', d.line2);
     setText('.hero-promise-line1', d.promise1);
     setText('.hero-promise-line2', d.promise2);
-    /* CTA button — keep the pulse dot */
+    /* CTA button - keep the pulse dot */
     if (d.cta) {
       var btn = document.querySelector('.btn-hero--call');
       if (btn) {
@@ -239,6 +239,6 @@
       });
     })
     .catch(function () {
-      /* Silent fail — static HTML is the fallback */
+      /* Silent fail - static HTML is the fallback */
     });
 })();
