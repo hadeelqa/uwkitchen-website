@@ -29,6 +29,18 @@
       {
         "source": "/ar/",
         "destination": "/index.html"
+      },
+      {
+        "source": "/ar/maintenance-request",
+        "destination": "/maintenance-request.html"
+      },
+      {
+        "source": "/ar/maintenance-request/",
+        "destination": "/maintenance-request.html"
+      },
+      {
+        "source": "/maintenance-request",
+        "destination": "/maintenance-request.html"
       }
     ],
     "headers": [
