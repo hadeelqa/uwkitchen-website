@@ -42,8 +42,9 @@ input,textarea,select{font-family:var(--font)}
 .btn-view-site{padding:6px 14px;background:rgba(212,136,74,.1);border:1px solid rgba(212,136,74,.2);border-radius:999px;color:var(--gold);font-size:12px;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
 .btn-view-site:hover{background:rgba(212,136,74,.2)}
 .btn-view-site svg{width:14px;height:14px}
-.btn-menu{display:none;padding:6px;background:none;color:var(--text2)}
+.btn-menu{display:none;padding:6px;background:none;color:var(--text2);flex-shrink:0}
 .btn-menu svg{width:24px;height:24px}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:29}
 
 .dash-body{display:flex;min-height:calc(100vh - 57px)}
 
@@ -56,15 +57,7 @@ input,textarea,select{font-family:var(--font)}
 .nav-item.active svg{opacity:1}
 .nav-item-label{pointer-events:none}
 
-/* Mobile bottom tab bar */
-.mob-tabs{display:none}
-@media(max-width:768px){
-  .mob-tabs{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);z-index:20;padding:4px 0 env(safe-area-inset-bottom,4px);overflow-x:auto;-webkit-overflow-scrolling:touch;gap:0}
-  .mob-tab{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;color:var(--text3);font-size:10px;cursor:pointer;transition:color .2s;border:none;background:none;font-family:var(--font);white-space:nowrap}
-  .mob-tab svg{width:20px;height:20px;opacity:.5;transition:opacity .2s}
-  .mob-tab.active{color:var(--gold)}
-  .mob-tab.active svg{opacity:1;color:var(--gold)}
-}
+/* Mobile bottom tab bar - removed, using side nav instead */
 
 /* Content */
 .dash-content{flex:1;padding:28px 32px;max-width:960px}
@@ -159,6 +152,10 @@ input,textarea,select{font-family:var(--font)}
 .img-preview{width:64px;height:64px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);object-fit:cover;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
 .img-preview img{width:100%;height:100%;object-fit:cover}
 .img-preview-empty{color:var(--text3);font-size:11px;text-align:center;padding:6px}
+.btn-upload{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;background:rgba(212,136,74,.1);border:1px solid rgba(212,136,74,.2);border-radius:8px;color:var(--gold);font-size:12px;font-weight:500;cursor:pointer;transition:background .2s}
+.btn-upload:hover{background:rgba(212,136,74,.18)}
+.btn-upload input[type=file]{display:none}
+.btn-upload.uploading{opacity:.6;pointer-events:none}
 
 /* Action buttons */
 .btn-save{padding:10px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:#fff;font-weight:600;font-size:13px;border-radius:999px;transition:opacity .2s}
@@ -178,13 +175,75 @@ input,textarea,select{font-family:var(--font)}
 .empty-state{text-align:center;padding:32px;color:var(--text3);font-size:13px}
 .empty-state svg{width:32px;height:32px;opacity:.3;margin-bottom:8px;display:block;margin-inline:auto}
 
+/* Tickets nav badge */
+.nav-badge{margin-inline-start:auto;min-width:20px;padding:0 6px;height:18px;display:inline-flex;align-items:center;justify-content:center;background:var(--gold);color:#fff;font-size:10px;font-weight:700;border-radius:999px}
+
+/* Tickets panel */
+.tickets-stats{display:flex;gap:8px;flex-wrap:wrap}
+.t-stat{padding:6px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;font-size:11px;color:var(--text2)}
+.t-stat strong{color:#fff;margin-left:4px}
+
+.tickets-toolbar{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;padding:14px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius)}
+.tickets-filters{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.t-divider{width:1px;height:16px;background:var(--border);margin:0 4px}
+.t-chip{padding:6px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:11px;font-weight:500;transition:all .2s;cursor:pointer;font-family:var(--font)}
+.t-chip:hover{color:#fff;border-color:rgba(255,255,255,.15)}
+.t-chip.active{background:rgba(212,136,74,.12);border-color:rgba(212,136,74,.35);color:var(--gold)}
+.tickets-tools{display:flex;gap:8px;align-items:center}
+.t-search{flex:1;padding:8px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:12px;outline:none;font-family:var(--font)}
+.t-search:focus{border-color:rgba(212,136,74,.4)}
+.t-search::placeholder{color:var(--text3)}
+
+.tickets-table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
+.tickets-table{width:100%;border-collapse:collapse;min-width:720px}
+.tickets-table thead th{padding:12px 14px;background:rgba(255,255,255,.02);border-bottom:1px solid var(--border);text-align:right;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
+.tickets-table tbody td{padding:14px;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px;color:var(--text2);vertical-align:middle}
+.tickets-table tbody tr{cursor:pointer;transition:background .15s}
+.tickets-table tbody tr:hover{background:rgba(255,255,255,.02)}
+.tickets-table tbody tr:last-child td{border-bottom:none}
+.t-ticket-num{font-family:monospace;font-size:11px;color:var(--gold);white-space:nowrap}
+.t-type{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500}
+.t-type--maintenance{background:rgba(59,130,246,.1);color:#60a5fa}
+.t-type--complaint{background:rgba(239,68,68,.1);color:#f87171}
+.t-type--suggestion{background:rgba(168,85,247,.1);color:#c084fc}
+.t-type--inquiry{background:rgba(34,197,94,.1);color:#4ade80}
+.t-customer{color:#fff;font-weight:500;white-space:nowrap}
+.t-phone{font-family:monospace;font-size:12px;direction:ltr;display:inline-block}
+.t-date{font-size:11px;color:var(--text3);white-space:nowrap}
+.t-status-select{padding:4px 10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:11px;font-family:var(--font);cursor:pointer;outline:none}
+.t-status-select.st-new{border-color:rgba(234,179,8,.3);color:#facc15;background:rgba(234,179,8,.08)}
+.t-status-select.st-in-progress{border-color:rgba(59,130,246,.3);color:#60a5fa;background:rgba(59,130,246,.08)}
+.t-status-select.st-closed{border-color:rgba(34,197,94,.3);color:#4ade80;background:rgba(34,197,94,.08)}
+.t-loading,.t-empty{text-align:center;padding:32px!important;color:var(--text3);font-size:13px}
+.t-details-btn{padding:4px 10px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--text2);font-size:11px;cursor:pointer}
+.t-details-btn:hover{border-color:rgba(255,255,255,.2);color:#fff}
+
+/* Ticket detail modal */
+.t-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:200;overflow-y:auto}
+.t-modal.open{display:flex}
+.t-modal-card{width:100%;max-width:600px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.t-modal-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.t-modal-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:4px}
+.t-modal-sub{font-family:monospace;font-size:12px;color:var(--gold)}
+.t-modal-close{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:var(--text2);cursor:pointer}
+.t-modal-close:hover{color:#fff}
+.t-field{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.t-field:last-child{border-bottom:none}
+.t-field-label{min-width:110px;color:var(--text3);font-size:12px}
+.t-field-value{color:#fff;flex:1;word-break:break-word}
+.t-field-value a{color:var(--gold);text-decoration:underline}
+.t-attach-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.t-attach{padding:8px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.t-attach:hover{border-color:rgba(212,136,74,.35)}
+
 /* Responsive */
 @media(max-width:768px){
-  .btn-menu{display:none}
-  .dash-nav{display:none}
-  .nav-overlay{display:none!important}
-  .dash-content{padding:20px 16px 80px}
-  .dash-body{min-height:calc(100vh - 57px - 64px)}
+  .btn-menu{display:block}
+  .dash-nav{position:fixed;top:0;right:-260px;width:240px;height:100vh;z-index:30;padding:16px 0;transition:right .25s ease;border-left:1px solid var(--border);border-right:none}
+  .dash-nav.open{right:0}
+  .nav-overlay.open{display:block}
+  .dash-content{padding:20px 16px 32px}
+  .dash-body{min-height:calc(100vh - 57px)}
   .field-row{grid-template-columns:1fr}
   .pv-hero{flex-direction:column}
   .pv-hero-img{width:100%;height:120px}
@@ -221,7 +280,7 @@ input,textarea,select{font-family:var(--font)}
     <div class="dash-header-right">
       <button class="btn-menu" id="menuBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
       <img src="images/Logo-white.png" alt="Logo" class="dash-logo">
-      <span class="dash-title">إدارة المحتوى</span>
+      <!-- title removed -->
     </div>
     <div style="display:flex;align-items:center;gap:10px">
       <a href="/" target="_blank" class="btn-view-site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>الموقع</a>
@@ -231,19 +290,14 @@ input,textarea,select{font-family:var(--font)}
   </header>
 
   <div class="nav-overlay" id="navOverlay"></div>
-  <!-- Mobile bottom tabs -->
-  <div class="mob-tabs" id="mobTabs">
-    <button class="mob-tab active" data-section="announce"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>الإعلان</button>
-    <button class="mob-tab" data-section="hero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>الهيرو</button>
-    <button class="mob-tab" data-section="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>الأرقام</button>
-    <button class="mob-tab" data-section="gallery"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>المعرض</button>
-    <button class="mob-tab" data-section="testimonials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>التقييمات</button>
-    <button class="mob-tab" data-section="branches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>الفروع</button>
-    <button class="mob-tab" data-section="contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.11 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>التواصل</button>
-  </div>
   <div class="dash-body">
     <nav class="dash-nav" id="dashNav">
-      <div class="nav-item active" data-section="announce">
+      <div class="nav-item active" data-section="tickets">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V9z"/><line x1="13" y1="5" x2="13" y2="7"/><line x1="13" y1="11" x2="13" y2="13"/><line x1="13" y1="17" x2="13" y2="19"/></svg>
+        طلبات الدعم
+        <span class="nav-badge" id="ticketsBadge" hidden>0</span>
+      </div>
+      <div class="nav-item" data-section="announce">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         شريط الإعلان
       </div>
@@ -271,12 +325,89 @@ input,textarea,select{font-family:var(--font)}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.11 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72"/></svg>
         التواصل
       </div>
+      <div class="nav-item" data-section="warranty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        الضمان
+      </div>
+      <div class="nav-item" data-section="process">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        خطوات العمل
+      </div>
+      <div class="nav-item" data-section="live">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        البث المباشر
+      </div>
+      <div class="nav-item" data-section="kitchens">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        مطابخنا
+      </div>
+      <div class="nav-item" data-section="materials">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 22l10-10M16 8l-4 4M22 2l-6 6"/><path d="M15 2v6h6"/></svg>
+        المواد والتقنيات
+      </div>
+      <div class="nav-item" data-section="partners">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        الشركاء
+      </div>
+      <div class="nav-item" data-section="certs">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        الشهادات
+      </div>
     </nav>
 
     <div class="dash-content">
 
+      <!-- TICKETS -->
+      <div class="section-panel active" id="panel-tickets">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h2 class="panel-title">طلبات الدعم</h2>
+            <p class="panel-desc">كل طلبات العملاء من صفحة الدعم ونموذج طلب زيارة القياس</p>
+          </div>
+          <div class="tickets-stats" id="ticketsStats"></div>
+        </div>
+
+        <div class="tickets-toolbar">
+          <div class="tickets-filters">
+            <button class="t-chip active" data-filter="all">الكل</button>
+            <button class="t-chip" data-filter="new">جديد</button>
+            <button class="t-chip" data-filter="in-progress">قيد المعالجة</button>
+            <button class="t-chip" data-filter="closed">مغلق</button>
+            <span class="t-divider"></span>
+            <button class="t-chip" data-type="all">كل الأنواع</button>
+            <button class="t-chip" data-type="maintenance">صيانة</button>
+            <button class="t-chip" data-type="complaint">شكوى</button>
+            <button class="t-chip" data-type="suggestion">اقتراح</button>
+            <button class="t-chip" data-type="inquiry">زيارة قياس</button>
+          </div>
+          <div class="tickets-tools">
+            <input type="search" id="ticketsSearch" class="t-search" placeholder="بحث بالاسم أو الرقم أو الجوال">
+            <button class="btn-card-action" id="ticketsExport">تصدير CSV</button>
+          </div>
+        </div>
+
+        <div class="tickets-table-wrap">
+          <table class="tickets-table">
+            <thead>
+              <tr>
+                <th>التذكرة</th>
+                <th>النوع</th>
+                <th>العميل</th>
+                <th>الجوال</th>
+                <th>التاريخ</th>
+                <th>الحالة</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="ticketsBody">
+              <tr><td colspan="7" class="t-loading">جاري التحميل...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- ANNOUNCE -->
-      <div class="section-panel active" id="panel-announce">
+      <div class="section-panel" id="panel-announce">
         <div class="panel-header">
           <div class="panel-header-text">
             <h2 class="panel-title">شريط الإعلان</h2>
@@ -467,7 +598,100 @@ input,textarea,select{font-family:var(--font)}
         </div>
       </div>
 
+      <!-- WARRANTY -->
+      <div class="section-panel" id="panel-warranty">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">الضمان والمميزات</h2><p class="panel-desc">عناصر الضمان المعروضة في الصفحة الرئيسية</p></div></div>
+        <div class="field"><label class="field-label">العنوان الرئيسي</label><input class="field-input" id="cms-warranty-heading" placeholder="ضمان شامل على كل قطعة"></div>
+        <div class="field"><label class="field-label">ملاحظة الشروط</label><input class="field-input" id="cms-warranty-terms" placeholder="تنطبق الشروط والأحكام"></div>
+        <div class="cards-list" id="warrantyList"></div>
+        <button class="btn-add" onclick="addWarrantyItem()">+ إضافة عنصر ضمان</button>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('warranty')">حفظ التغييرات</button><span class="save-status" id="status-warranty"></span></div>
+      </div>
+
+      <!-- PROCESS -->
+      <div class="section-panel" id="panel-process">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">خطوات العمل</h2><p class="panel-desc">المراحل المعروضة للعميل (كيف نشتغل)</p></div></div>
+        <div class="field"><label class="field-label">النص الصغير (Eyebrow)</label><input class="field-input" id="cms-process-eyebrow" placeholder="خطوات بسيطة"></div>
+        <div class="field"><label class="field-label">العنوان الرئيسي</label><input class="field-input" id="cms-process-heading" placeholder="كيف نشتغل"></div>
+        <div class="cards-list" id="processList"></div>
+        <button class="btn-add" onclick="addProcessStep()">+ إضافة خطوة</button>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('process')">حفظ التغييرات</button><span class="save-status" id="status-process"></span></div>
+      </div>
+
+      <!-- LIVE INSTALL -->
+      <div class="section-panel" id="panel-live">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">البث المباشر</h2><p class="panel-desc">قسم "تابع مطبخك لحظة بلحظة"</p></div></div>
+        <div class="field"><label class="field-label">النص الصغير (Eyebrow)</label><input class="field-input" id="cms-live-eyebrow" placeholder="من الشاشة إلى بيتك"></div>
+        <div class="field"><label class="field-label">العنوان الرئيسي</label><input class="field-input" id="cms-live-heading" placeholder="تابع مطبخك لحظة بلحظة"></div>
+        <div class="field"><label class="field-label">الوصف</label><input class="field-input" id="cms-live-subtitle" placeholder="نظام تتبع مباشر يوريك كل مرحلة..."></div>
+        <div class="field"><label class="field-label">رابط الفيديو (MP4)</label><div style="display:flex;gap:8px;align-items:center"><input class="field-input" id="cms-live-video" placeholder="Videos/Live.mp4" dir="ltr" style="flex:1"><label class="btn-upload"><span>رفع فيديو</span><input type="file" accept="video/*" onchange="uploadSectionFile(this,'cms-live-video','live-video',true)"></label></div></div>
+        <div class="field"><label class="field-label">صورة البوستر</label><div style="display:flex;gap:8px;align-items:center"><input class="field-input" id="cms-live-poster" placeholder="images/img_3.jpeg" dir="ltr" style="flex:1"><label class="btn-upload"><span>رفع صورة</span><input type="file" accept="image/*" onchange="uploadSectionFile(this,'cms-live-poster','live-poster',false)"></label></div></div>
+        <div class="field"><label class="field-label">رابط انستقرام</label><input class="field-input" id="cms-live-instagram" placeholder="https://..." dir="ltr"></div>
+        <div class="field"><label class="field-label">نص زر انستقرام</label><input class="field-input" id="cms-live-igtext" placeholder="تابع البث على انستقرام"></div>
+        <div class="field"><label class="field-label">رابط تيك توك</label><input class="field-input" id="cms-live-tiktok" placeholder="https://..." dir="ltr"></div>
+        <div class="field"><label class="field-label">نص زر تيك توك</label><input class="field-input" id="cms-live-tttext" placeholder="تابع التركيب على تيك توك"></div>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('live')">حفظ التغييرات</button><span class="save-status" id="status-live"></span></div>
+      </div>
+
+      <!-- KITCHENS -->
+      <div class="section-panel" id="panel-kitchens">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">مطابخنا</h2><p class="panel-desc">صور المطابخ المنجزة وروابط السوشيال</p></div></div>
+        <div class="field"><label class="field-label">العنوان</label><input class="field-input" id="cms-kitchens-heading" placeholder="مطابخنا"></div>
+        <div class="field"><label class="field-label">رابط تيك توك</label><input class="field-input" id="cms-kitchens-tiktok" placeholder="https://vt.tiktok.com/..." dir="ltr"></div>
+        <div class="field"><label class="field-label">نص رابط تيك توك</label><input class="field-input" id="cms-kitchens-tttext" placeholder="شاهد مطابخ عملائنا على تيك توك"></div>
+        <div class="cards-list" id="kitchensList"></div>
+        <button class="btn-add" onclick="addKitchenItem()">+ إضافة صورة مطبخ</button>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('kitchens')">حفظ التغييرات</button><span class="save-status" id="status-kitchens"></span></div>
+      </div>
+
+      <!-- MATERIALS -->
+      <div class="section-panel" id="panel-materials">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">المواد والتقنيات</h2><p class="panel-desc">الكلادينج والمواصفات التقنية</p></div></div>
+        <div class="field"><label class="field-label">العنوان الرئيسي</label><input class="field-input" id="cms-materials-heading" placeholder="كلادينج بلس بتقنية النانو"></div>
+        <div class="field"><label class="field-label">الوصف</label><textarea class="field-input" id="cms-materials-subtitle" rows="2" placeholder="المصنع الوحيد في المملكة..."></textarea></div>
+        <h3 style="font-size:14px;color:var(--text2);margin:20px 0 10px">ألوان الكلادينج</h3>
+        <div class="cards-list" id="claddingList"></div>
+        <button class="btn-add" onclick="addCladdingColor()">+ إضافة لون</button>
+        <h3 style="font-size:14px;color:var(--text2);margin:20px 0 10px">المواصفات التقنية</h3>
+        <div class="cards-list" id="matStatsList"></div>
+        <button class="btn-add" onclick="addMatStat()">+ إضافة مواصفة</button>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('materials')">حفظ التغييرات</button><span class="save-status" id="status-materials"></span></div>
+      </div>
+
+      <!-- PARTNERS -->
+      <div class="section-panel" id="panel-partners">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">الشركاء</h2><p class="panel-desc">شعارات الشركاء والموردين</p></div></div>
+        <div class="field"><label class="field-label">العنوان</label><input class="field-input" id="cms-partners-title" placeholder="يثقون في جودتنا"></div>
+        <div class="cards-list" id="partnersList"></div>
+        <button class="btn-add" onclick="addPartner()">+ إضافة شريك</button>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('partners')">حفظ التغييرات</button><span class="save-status" id="status-partners"></span></div>
+      </div>
+
+      <!-- CERTS -->
+      <div class="section-panel" id="panel-certs">
+        <div class="panel-header"><div class="panel-header-text"><h2 class="panel-title">الشهادات</h2><p class="panel-desc">شهادات الجودة والاعتماد</p></div></div>
+        <div class="field"><label class="field-label">النص الصغير (Eyebrow)</label><input class="field-input" id="cms-certs-eyebrow" placeholder="معتمدون ومرخّصون"></div>
+        <div class="field"><label class="field-label">العنوان الرئيسي</label><input class="field-input" id="cms-certs-heading" placeholder="نلتزم بأعلى معايير الجودة..."></div>
+        <div class="cards-list" id="certsList"></div>
+        <button class="btn-add" onclick="addCert()">+ إضافة شهادة</button>
+        <div class="actions-bar"><button class="btn-save" onclick="saveSection('certs')">حفظ التغييرات</button><span class="save-status" id="status-certs"></span></div>
+      </div>
+
     </div>
+  </div>
+</div>
+
+<!-- Ticket detail modal -->
+<div class="t-modal" id="ticketModal">
+  <div class="t-modal-card">
+    <div class="t-modal-head">
+      <div>
+        <div class="t-modal-title" id="tmTitle">تفاصيل الطلب</div>
+        <div class="t-modal-sub" id="tmTicketNum"></div>
+      </div>
+      <button class="t-modal-close" id="tmClose"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div id="tmBody"></div>
   </div>
 </div>
 
@@ -549,26 +773,16 @@ navOverlay.addEventListener('click', function() {
 function switchSection(sec) {
   document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
   document.querySelectorAll('.section-panel').forEach(function(p) { p.classList.remove('active'); });
-  document.querySelectorAll('.mob-tab').forEach(function(t) { t.classList.remove('active'); });
-  // Activate sidebar item
   var sideItem = document.querySelector('.nav-item[data-section="'+sec+'"]');
   if (sideItem) sideItem.classList.add('active');
-  // Activate mobile tab
-  var mobItem = document.querySelector('.mob-tab[data-section="'+sec+'"]');
-  if (mobItem) mobItem.classList.add('active');
-  // Show panel
   document.getElementById('panel-' + sec).classList.add('active');
   dashNav.classList.remove('open');
   navOverlay.classList.remove('open');
-  // Scroll to top
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 document.querySelectorAll('.nav-item').forEach(function(item) {
   item.addEventListener('click', function() { switchSection(item.dataset.section); });
-});
-document.querySelectorAll('.mob-tab').forEach(function(tab) {
-  tab.addEventListener('click', function() { switchSection(tab.dataset.section); });
 });
 
 /* ═══════ TOAST ═══════ */
@@ -693,12 +907,13 @@ function loadAllSections() {
       loaded[doc.id] = doc.data();
     });
     // For each section, use Firestore data or defaults
-    var sections = ['announce','hero','stats','gallery','testimonials','branches','contact'];
-    var loaders = {announce:loadAnnounce, hero:loadHero, stats:loadStats, gallery:loadGallery, testimonials:loadTestimonials, branches:loadBranches, contact:loadContact};
+    var sections = ['announce','hero','stats','gallery','testimonials','branches','contact','warranty','process','live','kitchens','materials','partners','certs'];
+    var loaders = {announce:loadAnnounce, hero:loadHero, stats:loadStats, gallery:loadGallery, testimonials:loadTestimonials, branches:loadBranches, contact:loadContact, warranty:loadWarranty, process:loadProcess, live:loadLive, kitchens:loadKitchens, materials:loadMaterials, partners:loadPartners, certs:loadCerts};
     sections.forEach(function(sec) {
-      var data = loaded[sec] || DEFAULTS[sec];
-      loaders[sec](data);
+      var data = loaded[sec] || DEFAULTS[sec] || {};
+      if(loaders[sec]) loaders[sec](data);
     });
+    subscribeTickets();
   }).catch(function() {
     // Offline or error - load defaults
     loadAnnounce(DEFAULTS.announce);
@@ -708,6 +923,14 @@ function loadAllSections() {
     loadTestimonials(DEFAULTS.testimonials);
     loadBranches(DEFAULTS.branches);
     loadContact(DEFAULTS.contact);
+    loadWarranty(DEFAULTS.warranty || {});
+    loadProcess(DEFAULTS.process || {});
+    loadLive(DEFAULTS.live || {});
+    loadKitchens(DEFAULTS.kitchens || {});
+    loadMaterials(DEFAULTS.materials || {});
+    loadPartners(DEFAULTS.partners || {});
+    loadCerts(DEFAULTS.certs || {});
+    subscribeTickets();
   });
 }
 
@@ -803,6 +1026,67 @@ function uploadGalleryImg(input, idx) {
   });
 }
 
+/* Generic image upload for any section */
+function uploadSectionImg(input, dataArr, idx, field, folder, renderFn) {
+  var file = input.files[0];
+  if (!file) return;
+  var label = input.parentElement;
+  var origText = label.firstChild.textContent || 'رفع صورة';
+  label.classList.add('uploading');
+  label.firstChild.textContent = 'جاري الضغط...';
+  compressImage(file, 1200, 0.75, function(blob) {
+    label.firstChild.textContent = 'جاري الرفع...';
+    var name = folder + '/' + Date.now() + '.webp';
+    var ref = storage.ref('cms/' + name);
+    ref.put(blob, {contentType:'image/webp'}).then(function(snap) {
+      return snap.ref.getDownloadURL();
+    }).then(function(url) {
+      dataArr[idx][field] = url;
+      renderFn();
+      showToast('تم رفع الصورة بنجاح');
+    }).catch(function(err) {
+      showToast('خطأ في الرفع: ' + err.message, true);
+      label.classList.remove('uploading');
+      label.firstChild.textContent = origText;
+    });
+  });
+}
+
+/* Upload for single field inputs (video, poster) */
+function uploadSectionFile(input, inputId, folder, acceptVideo) {
+  var file = input.files[0];
+  if (!file) return;
+  var label = input.parentElement;
+  var origText = label.firstChild.textContent || 'رفع ملف';
+  label.classList.add('uploading');
+  label.firstChild.textContent = 'جاري الرفع...';
+  var isVideo = file.type.startsWith('video/');
+  var ext = file.name.split('.').pop() || (isVideo ? 'mp4' : 'webp');
+  if (!isVideo) {
+    compressImage(file, 1200, 0.75, function(blob) {
+      doUpload(blob, 'image/webp', 'webp');
+    });
+  } else {
+    doUpload(file, file.type, ext);
+  }
+  function doUpload(blob, contentType, extension) {
+    var name = folder + '/' + Date.now() + '.' + extension;
+    var ref = storage.ref('cms/' + name);
+    ref.put(blob, {contentType: contentType}).then(function(snap) {
+      return snap.ref.getDownloadURL();
+    }).then(function(url) {
+      document.getElementById(inputId).value = url;
+      label.classList.remove('uploading');
+      label.firstChild.textContent = origText;
+      showToast('تم الرفع بنجاح');
+    }).catch(function(err) {
+      showToast('خطأ في الرفع: ' + err.message, true);
+      label.classList.remove('uploading');
+      label.firstChild.textContent = origText;
+    });
+  }
+}
+
 /* ═══════ TESTIMONIALS ═══════ */
 var testimonialsData = [];
 function loadTestimonials(data) {
@@ -846,6 +1130,98 @@ function loadContact(data) {
   updatePreview('contact');
 }
 
+/* ═══════ WARRANTY ═══════ */
+function loadWarranty(data) {
+  document.getElementById('cms-warranty-heading').value = data.heading || 'ضمان شامل على كل قطعة';
+  document.getElementById('cms-warranty-terms').value = data.terms || 'تنطبق الشروط والأحكام';
+  warrantyData = data.items || [
+    {name:'هيكل المطبخ', duration:'15 سنة'},
+    {name:'الأدراج', duration:'15 سنة'},
+    {name:'الأسطح', duration:'15 سنة'},
+    {name:'صيانة', duration:'مدى الحياة'}
+  ];
+  renderWarranty();
+}
+
+/* ═══════ PROCESS ═══════ */
+function loadProcess(data) {
+  document.getElementById('cms-process-eyebrow').value = data.eyebrow || 'خطوات بسيطة';
+  document.getElementById('cms-process-heading').value = data.heading || 'كيف نشتغل';
+  processData = data.steps || [
+    {number:'01', title:'الاستشارة المجانية', description:'نزورك في موقعك ونأخذ القياسات بدقة عالية'},
+    {number:'02', title:'التصميم ثلاثي الأبعاد', description:'نصمم مطبخك بتقنية 3D على آيباد وتشوفه قبل ما يتصنع'},
+    {number:'03', title:'التصنيع والمتابعة', description:'تابع كل خطوة عبر نظام التتبع المباشر بشفافية كاملة'},
+    {number:'04', title:'التركيب في 20 يوم', description:'فريق فلبيني متخصص يركّب مطبخك وإلا نعوضك 100 ريال/يوم'}
+  ];
+  renderProcess();
+}
+
+/* ═══════ LIVE INSTALL ═══════ */
+function loadLive(data) {
+  document.getElementById('cms-live-eyebrow').value = data.eyebrow || 'من الشاشة إلى بيتك';
+  document.getElementById('cms-live-heading').value = data.heading || 'تابع مطبخك لحظة بلحظة';
+  document.getElementById('cms-live-subtitle').value = data.subtitle || 'نظام تتبع مباشر يوريك كل مرحلة: من التصميم إلى التركيب';
+  document.getElementById('cms-live-video').value = data.video || 'Videos/Live.mp4';
+  document.getElementById('cms-live-poster').value = data.poster || 'images/img_3.jpeg';
+  document.getElementById('cms-live-instagram').value = data.instagram || '';
+  document.getElementById('cms-live-igtext').value = data.igtext || 'تابع البث على انستقرام';
+  document.getElementById('cms-live-tiktok').value = data.tiktok || '';
+  document.getElementById('cms-live-tttext').value = data.tttext || 'تابع التركيب على تيك توك';
+}
+
+/* ═══════ KITCHENS ═══════ */
+function loadKitchens(data) {
+  document.getElementById('cms-kitchens-heading').value = data.heading || 'مطابخنا';
+  document.getElementById('cms-kitchens-tiktok').value = data.tiktok || '';
+  document.getElementById('cms-kitchens-tttext').value = data.tttext || 'شاهد مطابخ عملائنا على تيك توك';
+  kitchensData = data.items || [];
+  renderKitchens();
+}
+
+/* ═══════ MATERIALS ═══════ */
+function loadMaterials(data) {
+  document.getElementById('cms-materials-heading').value = data.heading || 'كلادينج بلس بتقنية النانو';
+  document.getElementById('cms-materials-subtitle').value = data.subtitle || '';
+  claddingData = data.colors || [
+    {nameAr:'أبيض', nameEn:'White', image:'Cladding Photos/front/front white.webp'},
+    {nameAr:'كابتشينو', nameEn:'Cappuccino', image:'Cladding Photos/front/front cappuccino.webp'},
+    {nameAr:'رمادي', nameEn:'Grey', image:'Cladding Photos/front/front grey.webp'},
+    {nameAr:'تيتانيوم', nameEn:'Titanium', image:'Cladding Photos/front/front titanium.webp'}
+  ];
+  matStatsData = data.stats || [
+    {value:'230kg', label:'قوة التحمل', description:'متانة استثنائية تتحمل الاستخدام اليومي المكثف'},
+    {value:'10nm', label:'تقنية النانو', description:'طبقة حماية متقدمة تمنع الخدوش والبقع'},
+    {value:'5X', label:'صلابة الهيكل', description:'أقوى من الهياكل التقليدية بخمس مرات'},
+    {value:'+90', label:'فني متخصص', description:'فريق مدرّب على أعلى المعايير العالمية'},
+    {value:'6,000m\u00B2', label:'مساحة التصنيع', description:'خطوط إنتاج متطورة بمعدات أوروبية'},
+    {value:'0.1mm', label:'دقة الليزر', description:'قص وتشكيل بدقة متناهية لكل قطعة'}
+  ];
+  renderCladding();
+  renderMatStats();
+}
+
+/* ═══════ PARTNERS ═══════ */
+function loadPartners(data) {
+  document.getElementById('cms-partners-title').value = data.title || 'يثقون في جودتنا';
+  partnersData = data.items || [];
+  renderPartners();
+}
+
+/* ═══════ CERTS ═══════ */
+function loadCerts(data) {
+  document.getElementById('cms-certs-eyebrow').value = data.eyebrow || 'معتمدون ومرخّصون';
+  document.getElementById('cms-certs-heading').value = data.heading || 'نلتزم بأعلى معايير الجودة والسلامة العالمية';
+  certsData = data.items || [
+    {name:'SASO', logo:'images/Quality/Logo=SASO.png'},
+    {name:'CE', logo:'images/Quality/Logo=CE.png'},
+    {name:'BSI', logo:'images/Quality/Logo=bsi.png'},
+    {name:'ASTM', logo:'images/Quality/Logo=ATSM.png'},
+    {name:'CEN', logo:'images/Quality/Logo=CEN.png'},
+    {name:'German Quality', logo:'images/Quality/Logo=german.png'}
+  ];
+  renderCerts();
+}
+
 /* ═══════ SAVE ═══════ */
 function saveSection(section) {
   var data = {};
@@ -878,6 +1254,55 @@ function saveSection(section) {
       email: document.getElementById('cms-contact-email').value,
       address: document.getElementById('cms-contact-address').value
     };
+  } else if (section === 'warranty') {
+    data = {
+      heading: document.getElementById('cms-warranty-heading').value,
+      terms: document.getElementById('cms-warranty-terms').value,
+      items: warrantyData
+    };
+  } else if (section === 'process') {
+    data = {
+      eyebrow: document.getElementById('cms-process-eyebrow').value,
+      heading: document.getElementById('cms-process-heading').value,
+      steps: processData
+    };
+  } else if (section === 'live') {
+    data = {
+      eyebrow: document.getElementById('cms-live-eyebrow').value,
+      heading: document.getElementById('cms-live-heading').value,
+      subtitle: document.getElementById('cms-live-subtitle').value,
+      video: document.getElementById('cms-live-video').value,
+      poster: document.getElementById('cms-live-poster').value,
+      instagram: document.getElementById('cms-live-instagram').value,
+      igtext: document.getElementById('cms-live-igtext').value,
+      tiktok: document.getElementById('cms-live-tiktok').value,
+      tttext: document.getElementById('cms-live-tttext').value
+    };
+  } else if (section === 'kitchens') {
+    data = {
+      heading: document.getElementById('cms-kitchens-heading').value,
+      tiktok: document.getElementById('cms-kitchens-tiktok').value,
+      tttext: document.getElementById('cms-kitchens-tttext').value,
+      items: kitchensData
+    };
+  } else if (section === 'materials') {
+    data = {
+      heading: document.getElementById('cms-materials-heading').value,
+      subtitle: document.getElementById('cms-materials-subtitle').value,
+      colors: claddingData,
+      stats: matStatsData
+    };
+  } else if (section === 'partners') {
+    data = {
+      title: document.getElementById('cms-partners-title').value,
+      items: partnersData
+    };
+  } else if (section === 'certs') {
+    data = {
+      eyebrow: document.getElementById('cms-certs-eyebrow').value,
+      heading: document.getElementById('cms-certs-heading').value,
+      items: certsData
+    };
   }
 
   data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
@@ -902,6 +1327,321 @@ function escHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
+
+/* ═══════════════════════════════════════
+   TICKETS DASHBOARD
+   ═══════════════════════════════════════ */
+var ticketsData = [];
+var ticketsFilter = { status: 'all', type: 'all', query: '' };
+var ticketsUnsub = null;
+
+var TYPE_LABELS = {
+  maintenance: 'صيانة',
+  complaint: 'شكوى',
+  suggestion: 'اقتراح',
+  inquiry: 'زيارة قياس'
+};
+var STATUS_LABELS = {
+  'new': 'جديد',
+  'in-progress': 'قيد المعالجة',
+  'closed': 'مغلق'
+};
+
+function formatDate(ts){
+  if(!ts) return '-';
+  var d = ts.toDate ? ts.toDate() : new Date(ts);
+  var pad = function(n){ return n<10 ? '0'+n : ''+n; };
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+
+function customerName(t){
+  if(t.fullName) return t.fullName;
+  var parts = [t.firstName, t.middleName, t.lastName].filter(Boolean);
+  return parts.length ? parts.join(' ') : '-';
+}
+
+function subscribeTickets(){
+  if(!db) return;
+  if(ticketsUnsub) ticketsUnsub();
+  ticketsUnsub = db.collection('tickets').orderBy('createdAt', 'desc').limit(500)
+    .onSnapshot(function(snap){
+      ticketsData = [];
+      snap.forEach(function(doc){
+        var d = doc.data();
+        d._id = doc.id;
+        ticketsData.push(d);
+      });
+      renderTickets();
+    }, function(err){
+      var body = document.getElementById('ticketsBody');
+      if(body) body.innerHTML = '<tr><td colspan="7" class="t-empty">خطأ في تحميل الطلبات: ' + escHtml(err.message) + '</td></tr>';
+    });
+}
+
+function matchesFilter(t){
+  if(ticketsFilter.status !== 'all' && t.status !== ticketsFilter.status) return false;
+  if(ticketsFilter.type !== 'all' && t.type !== ticketsFilter.type) return false;
+  if(ticketsFilter.query){
+    var q = ticketsFilter.query.toLowerCase();
+    var hay = (customerName(t) + ' ' + (t.phone||'') + ' ' + (t.ticketNumber||'') + ' ' + (t.city||'')).toLowerCase();
+    if(hay.indexOf(q) === -1) return false;
+  }
+  return true;
+}
+
+function renderTickets(){
+  var body = document.getElementById('ticketsBody');
+  if(!body) return;
+  var filtered = ticketsData.filter(matchesFilter);
+
+  // Update stats
+  var stats = document.getElementById('ticketsStats');
+  if(stats){
+    var newCount = ticketsData.filter(function(t){ return t.status === 'new'; }).length;
+    var inProgress = ticketsData.filter(function(t){ return t.status === 'in-progress'; }).length;
+    stats.innerHTML =
+      '<span class="t-stat">إجمالي <strong>' + ticketsData.length + '</strong></span>' +
+      '<span class="t-stat">جديد <strong>' + newCount + '</strong></span>' +
+      '<span class="t-stat">قيد المعالجة <strong>' + inProgress + '</strong></span>';
+  }
+
+  // Update sidebar badge
+  var badge = document.getElementById('ticketsBadge');
+  if(badge){
+    var n = ticketsData.filter(function(t){ return t.status === 'new'; }).length;
+    badge.textContent = n;
+    badge.hidden = n === 0;
+  }
+
+  if(!filtered.length){
+    body.innerHTML = '<tr><td colspan="7" class="t-empty">لا توجد طلبات مطابقة</td></tr>';
+    return;
+  }
+
+  var rows = filtered.map(function(t){
+    var statusClass = 'st-' + (t.status || 'new');
+    var typeClass = 't-type--' + (t.type || 'inquiry');
+    return '<tr data-id="' + escHtml(t._id) + '">' +
+      '<td><span class="t-ticket-num">' + escHtml(t.ticketNumber || t._id) + '</span></td>' +
+      '<td><span class="t-type ' + typeClass + '">' + escHtml(TYPE_LABELS[t.type] || t.type || '-') + '</span></td>' +
+      '<td><span class="t-customer">' + escHtml(customerName(t)) + '</span></td>' +
+      '<td><span class="t-phone">' + escHtml(t.phone || '-') + '</span></td>' +
+      '<td><span class="t-date">' + escHtml(formatDate(t.createdAt)) + '</span></td>' +
+      '<td>' +
+        '<select class="t-status-select ' + statusClass + '" data-id="' + escHtml(t._id) + '" onclick="event.stopPropagation()">' +
+          '<option value="new"' + (t.status==='new'?' selected':'') + '>جديد</option>' +
+          '<option value="in-progress"' + (t.status==='in-progress'?' selected':'') + '>قيد المعالجة</option>' +
+          '<option value="closed"' + (t.status==='closed'?' selected':'') + '>مغلق</option>' +
+        '</select>' +
+      '</td>' +
+      '<td><button class="t-details-btn" data-id="' + escHtml(t._id) + '">تفاصيل</button></td>' +
+    '</tr>';
+  }).join('');
+  body.innerHTML = rows;
+
+  // Wire row clicks
+  body.querySelectorAll('.t-details-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      openTicketModal(btn.dataset.id);
+    });
+  });
+  body.querySelectorAll('tr[data-id]').forEach(function(tr){
+    tr.addEventListener('click', function(){ openTicketModal(tr.dataset.id); });
+  });
+  body.querySelectorAll('.t-status-select').forEach(function(sel){
+    sel.addEventListener('change', function(){
+      var id = sel.dataset.id;
+      var newStatus = sel.value;
+      db.collection('tickets').doc(id).update({
+        status: newStatus,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(function(){ showToast('تم تحديث الحالة'); })
+        .catch(function(err){ showToast('خطأ: ' + err.message, true); });
+    });
+  });
+}
+
+function openTicketModal(id){
+  var t = ticketsData.find(function(x){ return x._id === id; });
+  if(!t) return;
+  document.getElementById('tmTitle').textContent = TYPE_LABELS[t.type] || 'طلب';
+  document.getElementById('tmTicketNum').textContent = t.ticketNumber || id;
+
+  var rows = [];
+  rows.push(['العميل', customerName(t)]);
+  if(t.phone) rows.push(['الجوال', '<span dir="ltr">' + escHtml(t.phone) + '</span>']);
+  if(t.city) rows.push(['المدينة', escHtml(t.city)]);
+  if(t.district) rows.push(['الحي', escHtml(t.district)]);
+  if(t.description) rows.push(['الوصف', escHtml(t.description).replace(/\n/g,'<br>')]);
+  rows.push(['التاريخ', escHtml(formatDate(t.createdAt))]);
+  rows.push(['الحالة', escHtml(STATUS_LABELS[t.status] || t.status || '-')]);
+  rows.push(['المصدر', escHtml(t.source || '-')]);
+
+  if(t.attachments){
+    var links = Object.keys(t.attachments).map(function(key){
+      var a = t.attachments[key];
+      var labels = { contract: 'العقد', media: 'صورة/فيديو' };
+      return '<a class="t-attach" href="' + escHtml(a.url) + '" target="_blank" rel="noopener">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+        escHtml(labels[key] || key) + '</a>';
+    }).join('');
+    rows.push(['المرفقات', '<div class="t-attach-grid">' + links + '</div>']);
+  }
+
+  var html = rows.map(function(r){
+    return '<div class="t-field"><div class="t-field-label">' + r[0] + '</div><div class="t-field-value">' + r[1] + '</div></div>';
+  }).join('');
+  document.getElementById('tmBody').innerHTML = html;
+  document.getElementById('ticketModal').classList.add('open');
+}
+
+document.getElementById('tmClose').addEventListener('click', function(){
+  document.getElementById('ticketModal').classList.remove('open');
+});
+document.getElementById('ticketModal').addEventListener('click', function(e){
+  if(e.target.id === 'ticketModal') e.currentTarget.classList.remove('open');
+});
+
+// Filter chips
+document.querySelectorAll('.tickets-filters .t-chip').forEach(function(chip){
+  chip.addEventListener('click', function(){
+    var key = chip.dataset.filter ? 'filter' : 'type';
+    var val = chip.dataset.filter || chip.dataset.type;
+    var siblings = document.querySelectorAll(key === 'filter'
+      ? '.tickets-filters .t-chip[data-filter]'
+      : '.tickets-filters .t-chip[data-type]');
+    siblings.forEach(function(s){ s.classList.remove('active'); });
+    chip.classList.add('active');
+    if(key === 'filter') ticketsFilter.status = val;
+    else ticketsFilter.type = val;
+    renderTickets();
+  });
+});
+// Search
+var searchEl = document.getElementById('ticketsSearch');
+if(searchEl){
+  searchEl.addEventListener('input', function(){
+    ticketsFilter.query = searchEl.value.trim();
+    renderTickets();
+  });
+}
+// CSV export
+document.getElementById('ticketsExport').addEventListener('click', function(){
+  var filtered = ticketsData.filter(matchesFilter);
+  if(!filtered.length){ showToast('لا توجد طلبات للتصدير', true); return; }
+  var headers = ['رقم التذكرة','النوع','الاسم','الجوال','المدينة','الحي','الوصف','الحالة','التاريخ'];
+  var rows = filtered.map(function(t){
+    return [
+      t.ticketNumber || t._id,
+      TYPE_LABELS[t.type] || t.type || '',
+      customerName(t),
+      t.phone || '',
+      t.city || '',
+      t.district || '',
+      (t.description || '').replace(/\n/g,' '),
+      STATUS_LABELS[t.status] || t.status || '',
+      formatDate(t.createdAt)
+    ];
+  });
+  var csv = '\ufeff' + headers.join(',') + '\n' + rows.map(function(r){
+    return r.map(function(c){ c = String(c||''); return '"' + c.replace(/"/g,'""') + '"'; }).join(',');
+  }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'tickets-' + new Date().toISOString().slice(0,10) + '.csv';
+  link.click();
+});
+
+// Start subscription after auth (handled inside onAuthStateChanged below)
+
+/* ═══════════════════════════════════════
+   NEW SECTIONS: warranty, process, live,
+   kitchens, materials, partners, certs
+   ═══════════════════════════════════════ */
+var warrantyData = [];
+var processData = [];
+var kitchensData = [];
+var claddingData = [];
+var matStatsData = [];
+var partnersData = [];
+var certsData = [];
+
+// ── RENDER HELPERS ──
+function renderList(listId, data, renderFn){
+  var el = document.getElementById(listId);
+  if(!el) return;
+  if(!data.length){ el.innerHTML = '<div class="empty-state">لا توجد عناصر</div>'; return; }
+  el.innerHTML = data.map(function(item, i){ return renderFn(item, i); }).join('');
+}
+
+function cardWrap(i, title, fields, listName){
+  return '<div class="card-item"><div class="card-item-header"><span><span class="card-item-num">'+(i+1)+'</span> <span class="card-item-title">'+escHtml(title)+'</span></span><div class="card-item-actions"><button class="btn-card-action delete" onclick="remove'+listName+'('+i+')">حذف</button></div></div>'+fields+'</div>';
+}
+
+// ── WARRANTY ──
+function renderWarranty(){
+  renderList('warrantyList', warrantyData, function(item, i){
+    return cardWrap(i, item.name || 'عنصر', '<div class="field-row"><div class="field"><label class="field-label">اسم العنصر</label><input class="field-input" value="'+escHtml(item.name||'')+'" oninput="warrantyData['+i+'].name=this.value"></div><div class="field"><label class="field-label">مدة الضمان</label><input class="field-input" value="'+escHtml(item.duration||'')+'" oninput="warrantyData['+i+'].duration=this.value"></div></div>', 'Warranty');
+  });
+}
+function addWarrantyItem(){ warrantyData.push({name:'',duration:''}); renderWarranty(); }
+function removeWarranty(i){ warrantyData.splice(i,1); renderWarranty(); }
+
+// ── PROCESS ──
+function renderProcess(){
+  renderList('processList', processData, function(item, i){
+    return cardWrap(i, item.title || 'خطوة', '<div class="field"><label class="field-label">رقم الخطوة</label><input class="field-input" value="'+escHtml(item.number||'')+'" oninput="processData['+i+'].number=this.value"></div><div class="field"><label class="field-label">العنوان</label><input class="field-input" value="'+escHtml(item.title||'')+'" oninput="processData['+i+'].title=this.value"></div><div class="field"><label class="field-label">الوصف</label><input class="field-input" value="'+escHtml(item.description||'')+'" oninput="processData['+i+'].description=this.value"></div>', 'Process');
+  });
+}
+function addProcessStep(){ processData.push({number:String(processData.length+1).padStart(2,'0'),title:'',description:''}); renderProcess(); }
+function removeProcess(i){ processData.splice(i,1); renderProcess(); }
+
+// ── KITCHENS ──
+function renderKitchens(){
+  renderList('kitchensList', kitchensData, function(item, i){
+    return cardWrap(i, item.alt || 'صورة مطبخ', '<div class="img-upload"><div class="img-preview">' + (item.src ? '<img src="' + escHtml(item.src) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><label class="field-label">رابط الصورة أو ارفع صورة</label><input class="field-input" value="'+escHtml(item.src||'')+'" oninput="kitchensData['+i+'].src=this.value" dir="ltr" placeholder="images/kitchens/..."><label class="btn-upload"><span>رفع صورة</span><input type="file" accept="image/*" onchange="uploadSectionImg(this,kitchensData,'+i+',\'src\',\'kitchens\',renderKitchens)"></label></div></div><div class="field"><label class="field-label">وصف الصورة (alt)</label><input class="field-input" value="'+escHtml(item.alt||'')+'" oninput="kitchensData['+i+'].alt=this.value"></div>', 'Kitchen');
+  });
+}
+function addKitchenItem(){ kitchensData.push({src:'',alt:''}); renderKitchens(); }
+function removeKitchen(i){ kitchensData.splice(i,1); renderKitchens(); }
+
+// ── CLADDING COLORS ──
+function renderCladding(){
+  renderList('claddingList', claddingData, function(item, i){
+    return cardWrap(i, item.nameAr || 'لون', '<div class="field-row"><div class="field"><label class="field-label">الاسم بالعربي</label><input class="field-input" value="'+escHtml(item.nameAr||'')+'" oninput="claddingData['+i+'].nameAr=this.value"></div><div class="field"><label class="field-label">الاسم بالإنجليزي</label><input class="field-input" value="'+escHtml(item.nameEn||'')+'" oninput="claddingData['+i+'].nameEn=this.value" dir="ltr"></div></div><div class="img-upload"><div class="img-preview">' + (item.image ? '<img src="' + escHtml(item.image) + '">' : '<span class="img-preview-empty">لا صورة</span>') + '</div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><label class="field-label">مسار الصورة أو ارفع صورة</label><input class="field-input" value="'+escHtml(item.image||'')+'" oninput="claddingData['+i+'].image=this.value" dir="ltr" placeholder="Cladding Photos/..."><label class="btn-upload"><span>رفع صورة</span><input type="file" accept="image/*" onchange="uploadSectionImg(this,claddingData,'+i+',\'image\',\'cladding\',renderCladding)"></label></div></div>', 'Cladding');
+  });
+}
+function addCladdingColor(){ claddingData.push({nameAr:'',nameEn:'',image:''}); renderCladding(); }
+function removeCladding(i){ claddingData.splice(i,1); renderCladding(); }
+
+// ── MATERIAL STATS ──
+function renderMatStats(){
+  renderList('matStatsList', matStatsData, function(item, i){
+    return cardWrap(i, item.label || 'مواصفة', '<div class="field-row"><div class="field"><label class="field-label">القيمة</label><input class="field-input" value="'+escHtml(item.value||'')+'" oninput="matStatsData['+i+'].value=this.value" dir="ltr"></div><div class="field"><label class="field-label">التسمية</label><input class="field-input" value="'+escHtml(item.label||'')+'" oninput="matStatsData['+i+'].label=this.value"></div></div><div class="field"><label class="field-label">الوصف</label><input class="field-input" value="'+escHtml(item.description||'')+'" oninput="matStatsData['+i+'].description=this.value"></div>', 'MatStat');
+  });
+}
+function addMatStat(){ matStatsData.push({value:'',label:'',description:''}); renderMatStats(); }
+function removeMatStat(i){ matStatsData.splice(i,1); renderMatStats(); }
+
+// ── PARTNERS ──
+function renderPartners(){
+  renderList('partnersList', partnersData, function(item, i){
+    return cardWrap(i, item.name || 'شريك', '<div class="field"><label class="field-label">اسم الشريك</label><input class="field-input" value="'+escHtml(item.name||'')+'" oninput="partnersData['+i+'].name=this.value"></div><div class="img-upload"><div class="img-preview">' + (item.logo ? '<img src="' + escHtml(item.logo) + '">' : '<span class="img-preview-empty">لا شعار</span>') + '</div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><label class="field-label">مسار الشعار أو ارفع صورة</label><input class="field-input" value="'+escHtml(item.logo||'')+'" oninput="partnersData['+i+'].logo=this.value" dir="ltr" placeholder="images/partners/..."><label class="btn-upload"><span>رفع شعار</span><input type="file" accept="image/*" onchange="uploadSectionImg(this,partnersData,'+i+',\'logo\',\'partners\',renderPartners)"></label></div></div>', 'Partner');
+  });
+}
+function addPartner(){ partnersData.push({name:'',logo:''}); renderPartners(); }
+function removePartner(i){ partnersData.splice(i,1); renderPartners(); }
+
+// ── CERTS ──
+function renderCerts(){
+  renderList('certsList', certsData, function(item, i){
+    return cardWrap(i, item.name || 'شهادة', '<div class="field"><label class="field-label">اسم الشهادة</label><input class="field-input" value="'+escHtml(item.name||'')+'" oninput="certsData['+i+'].name=this.value"></div><div class="img-upload"><div class="img-preview">' + (item.logo ? '<img src="' + escHtml(item.logo) + '">' : '<span class="img-preview-empty">لا شعار</span>') + '</div><div style="flex:1;display:flex;flex-direction:column;gap:6px"><label class="field-label">مسار الشعار أو ارفع صورة</label><input class="field-input" value="'+escHtml(item.logo||'')+'" oninput="certsData['+i+'].logo=this.value" dir="ltr" placeholder="images/Quality/..."><label class="btn-upload"><span>رفع شعار</span><input type="file" accept="image/*" onchange="uploadSectionImg(this,certsData,'+i+',\'logo\',\'certs\',renderCerts)"></label></div></div>', 'Cert');
+  });
+}
+function addCert(){ certsData.push({name:'',logo:''}); renderCerts(); }
+function removeCert(i){ certsData.splice(i,1); renderCerts(); }
 </script>
 </body>
 </html>

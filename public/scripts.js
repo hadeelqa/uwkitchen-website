@@ -483,15 +483,22 @@ document.addEventListener('click', function(e){
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
 
-    // Build FormData with metadata for FormSubmit.co
+    var fullName = document.getElementById('fn').value.trim();
+    var phone = document.getElementById('ph').value.trim();
+    var city = document.getElementById('city').value.trim();
+    var district = document.getElementById('district').value.trim();
+    var ticket = 'INQ-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random()*90000);
+
+    // Build FormData for FormSubmit (email backup)
     var fd = new FormData();
-    fd.append('name', document.getElementById('fn').value.trim());
-    fd.append('phone', document.getElementById('ph').value.trim());
-    fd.append('city', document.getElementById('city').value.trim());
-    fd.append('district', document.getElementById('district').value.trim());
-    fd.append('_subject', 'طلب زيارة قياس جديد');
+    fd.append('name', fullName);
+    fd.append('phone', phone);
+    fd.append('city', city);
+    fd.append('district', district);
+    fd.append('_subject', 'طلب زيارة قياس جديد - ' + ticket);
     fd.append('_template', 'table');
     fd.append('_captcha', 'false');
+    fd.append('ticket_number', ticket);
     fd.append('form_type', 'طلب زيارة قياس');
     fd.append('submitted_at', new Date().toLocaleString('ar-SA'));
 
@@ -504,13 +511,33 @@ document.addEventListener('click', function(e){
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
     }
 
-    // Fire-and-forget POST - no-cors means opaque response, but the request
-    // is delivered. Show success regardless so the user isn't blocked by
-    // transient network issues.
+    // Fire-and-forget email via FormSubmit (backup channel).
     fetch('https://formsubmit.co/info@uwkitchens.com', {
       method: 'POST',
       mode: 'no-cors',
       body: fd
-    }).then(onDone).catch(onDone);
+    }).catch(function(){});
+
+    // Save ticket to Firestore (primary channel).
+    var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
+    if(db){
+      db.collection('tickets').doc(ticket).set({
+        ticketNumber: ticket,
+        type: 'inquiry',
+        typeLabel: 'طلب زيارة قياس',
+        status: 'new',
+        fullName: fullName,
+        phone: phone,
+        city: city,
+        district: district,
+        source: 'home-contact',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(onDone).catch(function(err){
+        if(window.console) console.error('Firestore save failed:', err);
+        onDone();
+      });
+    } else {
+      onDone();
+    }
   });
 })();

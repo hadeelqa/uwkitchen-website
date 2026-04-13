@@ -1,0 +1,16 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Ticket attachments: anyone can upload (form submission), only authed admin can read
+    match /tickets/{ticketId}/{allPaths=**} {
+      allow create: if
+        request.resource.size < 25 * 1024 * 1024 &&
+        (request.resource.contentType.matches('image/.*') ||
+         request.resource.contentType.matches('video/.*') ||
+         request.resource.contentType == 'application/pdf');
+      allow read: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
+  }
+}

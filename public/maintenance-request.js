@@ -66,6 +66,10 @@
   // to info@uwkitchens.com; after one-click confirm, all submissions deliver.
   var FORMSUBMIT_URL = 'https://formsubmit.co/info@uwkitchens.com';
 
+  // Firestore + Storage (Firebase SDK loaded in the HTML head)
+  var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
+  var storage = (typeof firebase !== 'undefined' && firebase.storage) ? firebase.storage() : null;
+
   function showError(field, msg){
     field.classList.add('form-field--error');
     field.setAttribute('aria-invalid','true');
@@ -193,6 +197,68 @@
     submitting = false;
   }
 
+  // Upload all file inputs in a form to Storage under tickets/{ticketId}/.
+  // Returns a promise that resolves to an object mapping input name to {url, name, size, type}.
+  // If Storage isn't enabled or fails, we resolve with a metadata-only fallback so the
+  // ticket still saves and the email still delivers the attachments.
+  function uploadAttachments(form, ticketId){
+    if(!storage) return Promise.resolve({});
+    var uploads = [];
+    var result = {};
+    form.querySelectorAll('input[type=file]').forEach(function(input){
+      if(!input.files || !input.files[0]) return;
+      var file = input.files[0];
+      var safeName = file.name.replace(/[^\w\s.\-]/g,'_');
+      var path = 'tickets/' + ticketId + '/' + input.name + '-' + safeName;
+      var task = storage.ref(path).put(file).then(function(snap){
+        return snap.ref.getDownloadURL().then(function(url){
+          result[input.name] = { url: url, name: file.name, size: file.size, type: file.type };
+        });
+      }).catch(function(err){
+        // Storage not enabled or permission denied - fall back to metadata only.
+        if(window.console) console.warn('Storage upload failed, saving metadata only:', err);
+        result[input.name] = { name: file.name, size: file.size, type: file.type, pending: true };
+      });
+      uploads.push(task);
+    });
+    return Promise.all(uploads).then(function(){ return result; });
+  }
+
+  // Write a ticket document to Firestore.
+  function saveTicket(type, ticket, form, attachments){
+    if(!db) return Promise.resolve();
+    var get = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    var base = {
+      ticketNumber: ticket,
+      type: type,
+      typeLabel: typeLabels[type],
+      status: 'new',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      source: 'support-page'
+    };
+    if(type === 'maintenance'){
+      base.firstName = get('m_fn');
+      base.middleName = get('m_mn');
+      base.lastName = get('m_ln');
+      base.phone = get('m_ph');
+      base.description = get('m_desc');
+    } else if(type === 'complaint'){
+      base.firstName = get('c_fn');
+      base.middleName = get('c_mn');
+      base.lastName = get('c_ln');
+      base.phone = get('c_ph');
+      base.description = get('c_desc');
+    } else if(type === 'suggestion'){
+      base.fullName = get('s_name');
+      base.phone = get('s_ph');
+      base.description = get('s_desc');
+    }
+    if(attachments && Object.keys(attachments).length){
+      base.attachments = attachments;
+    }
+    return db.collection('tickets').doc(ticket).set(base);
+  }
+
   document.querySelectorAll('.cs-form').forEach(function(form){
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -212,7 +278,8 @@
       var type = form.dataset.form;
       var ticket = generateTicket(type);
 
-      // Build FormData with all fields + FormSubmit metadata
+      // 1) Upload attachments to Storage, 2) Save ticket doc in Firestore,
+      // 3) Send FormSubmit email in parallel as a backup channel.
       var fd = new FormData(form);
       fd.append('_subject', subjects[type] + ' - ' + ticket);
       fd.append('_template', 'table');
@@ -220,23 +287,21 @@
       fd.append('ticket_number', ticket);
       fd.append('form_type', typeLabels[type]);
       fd.append('submitted_at', new Date().toLocaleString('ar-SA'));
+      fetch(FORMSUBMIT_URL, { method:'POST', mode:'no-cors', body: fd }).catch(function(){});
 
-      // Fire-and-forget POST (no-cors: opaque response, but request delivered).
-      // We show success UI immediately regardless of response - worst case the
-      // user still has their ticket number and the form arrived at FormSubmit.
-      fetch(FORMSUBMIT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: fd
-      }).then(function(){
-        resetFormUI(form, btn);
-        showSuccess(type, ticket);
-      }).catch(function(){
-        // Network error - still show success to avoid confusing the user;
-        // the ticket is client-generated and they can reference it.
-        resetFormUI(form, btn);
-        showSuccess(type, ticket);
-      });
+      uploadAttachments(form, ticket)
+        .then(function(attachments){ return saveTicket(type, ticket, form, attachments); })
+        .then(function(){
+          resetFormUI(form, btn);
+          showSuccess(type, ticket);
+        })
+        .catch(function(err){
+          // Log and still show success: the email already went out via FormSubmit,
+          // so the client has a fallback even if Firestore failed.
+          if(window.console) console.error('Firestore save failed:', err);
+          resetFormUI(form, btn);
+          showSuccess(type, ticket);
+        });
     });
   });
 
