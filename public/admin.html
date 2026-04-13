@@ -202,7 +202,7 @@ input,textarea,select{font-family:var(--font)}
 .tickets-table tbody tr:hover{background:rgba(255,255,255,.02)}
 .tickets-table tbody tr:last-child td{border-bottom:none}
 .t-ticket-num{font-family:monospace;font-size:11px;color:var(--gold);white-space:nowrap}
-.t-type{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500}
+.t-type{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500}
 .t-type--maintenance{background:rgba(59,130,246,.1);color:#60a5fa}
 .t-type--complaint{background:rgba(239,68,68,.1);color:#f87171}
 .t-type--suggestion{background:rgba(168,85,247,.1);color:#c084fc}
@@ -210,10 +210,11 @@ input,textarea,select{font-family:var(--font)}
 .t-customer{color:#fff;font-weight:500;white-space:nowrap}
 .t-phone{font-family:monospace;font-size:12px;direction:ltr;display:inline-block}
 .t-date{font-size:11px;color:var(--text3);white-space:nowrap}
-.t-status-select{padding:4px 10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:11px;font-family:var(--font);cursor:pointer;outline:none}
-.t-status-select.st-new{border-color:rgba(234,179,8,.3);color:#facc15;background:rgba(234,179,8,.08)}
-.t-status-select.st-in-progress{border-color:rgba(59,130,246,.3);color:#60a5fa;background:rgba(59,130,246,.08)}
-.t-status-select.st-closed{border-color:rgba(34,197,94,.3);color:#4ade80;background:rgba(34,197,94,.08)}
+.t-status-select{padding:6px 16px 6px 32px;background:rgba(255,255,255,.04) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23b8adb7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat left 12px center;border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:11px;font-family:var(--font);cursor:pointer;outline:none;appearance:none;-webkit-appearance:none}
+.t-status-select.st-new{border-color:rgba(234,179,8,.3);color:#facc15;background-color:rgba(234,179,8,.08)}
+.t-status-select.st-in-progress{border-color:rgba(59,130,246,.3);color:#60a5fa;background-color:rgba(59,130,246,.08)}
+.t-status-select.st-closed{border-color:rgba(255,255,255,.1);color:var(--text3);background-color:rgba(255,255,255,.03)}
+.t-status-select option{color:#111;background:#fff}
 .t-loading,.t-empty{text-align:center;padding:32px!important;color:var(--text3);font-size:13px}
 .t-details-btn{padding:4px 10px;background:none;border:1px solid var(--border);border-radius:6px;color:var(--text2);font-size:11px;cursor:pointer}
 .t-details-btn:hover{border-color:rgba(255,255,255,.2);color:#fff}
