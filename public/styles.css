@@ -877,6 +877,10 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .live-hero{margin-top:32px}
 .live-hero-visual{position:relative;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9}
 .live-hero-visual img{width:100%;height:100%;object-fit:cover}
+.video-loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(14,4,13,.6);z-index:1}
+.video-loader-spin{width:36px;height:36px;border:3px solid rgba(255,255,255,.15);border-top-color:var(--accent);border-radius:50%;animation:vSpin .7s linear infinite}
+@keyframes vSpin{to{transform:rotate(360deg)}}
+.video-loader[hidden]{display:none}
 .live-chip{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--radius-full);background:rgba(220,38,38,.85);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:10px;z-index:2;animation:liveGlow 2s ease-in-out infinite}
 .live-chip-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:liveChipPulse 1.4s ease-in-out infinite}
 @keyframes liveChipPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}

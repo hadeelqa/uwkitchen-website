@@ -286,7 +286,7 @@
       fd.append('_captcha', 'false');
       fd.append('ticket_number', ticket);
       fd.append('form_type', typeLabels[type]);
-      fd.append('submitted_at', new Date().toLocaleString('ar-SA'));
+      fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
       fetch(FORMSUBMIT_URL, { method:'POST', mode:'no-cors', body: fd }).catch(function(){});
 
       uploadAttachments(form, ticket)

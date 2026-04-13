@@ -32,7 +32,7 @@
 <link rel="stylesheet" href="styles.css?v=64">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 <link rel="preload" as="video" href="Videos/Taking Notes in the factory.mp4" type="video/mp4" fetchpriority="high">
-<link rel="prefetch" as="video" href="Videos/Live.mp4" type="video/mp4">
+<link rel="preload" as="video" href="Videos/Live.mp4?v=2" type="video/mp4">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["LocalBusiness","HomeGoodsStore"],"@id":"https://uwkitchens.com/#business","name":"مطابخ الأبيض المتحدة","alternateName":["United White Kitchens","UW Kitchens"],"url":"https://uwkitchens.com/","logo":"https://uwkitchens.com/images/Logo-white.png","image":["https://uwkitchens.com/images/img_2.jpeg"],"telephone":"+966920031000","email":"info@uwkitchens.com","description":"ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة العربية السعودية. ضمان 15 سنة، تركيب في 20 يوم، أكثر من 17,500 مطبخ منفّذ.","foundingDate":"1994","address":{"@type":"PostalAddress","streetAddress":"طريق الإمام سعود بن عبدالعزيز، حي التعاون","addressLocality":"الرياض","addressRegion":"منطقة الرياض","addressCountry":"SA"},"areaServed":[{"@type":"Country","name":"Saudi Arabia"},{"@type":"City","name":"الرياض"}],"hasMap":"https://share.google/gZLn8CccdF4KwShQ1","sameAs":["https://www.instagram.com/uwkitchens_sa/","https://www.tiktok.com/@uwkitchens_sa","https://x.com/uwkitchens_sa","https://www.snapchat.com/@uwkitchens_sa"],"priceRange":"$$","knowsLanguage":["ar","en"],"slogan":"ثلاثة عقود من الخبرة في تصميم المطابخ"}
 </script>
@@ -252,8 +252,9 @@
     </div>
     <div class="live-hero" data-animate="scale-up" data-delay="1">
       <div class="live-hero-visual">
-        <video autoplay muted loop playsinline preload="auto" poster="images/img_3.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">
-          <source src="Videos/Live.mp4" type="video/mp4">
+        <div class="video-loader" id="liveLoader"><span class="video-loader-spin"></span></div>
+        <video autoplay muted loop playsinline preload="auto" poster="images/img_3.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:inherit" oncanplay="this.previousElementSibling.hidden=true">
+          <source src="Videos/Live.mp4?v=2" type="video/mp4">
         </video>
         <div class="live-chip">
           <span class="live-chip-dot"></span>
@@ -505,6 +506,7 @@
           <a href="#hero">الرئيسية</a>
           <a href="#gallery">أعمالنا</a>
           <a href="#contact">تواصل معنا</a>
+          <a href="/support">الدعم الفني</a>
           <a href="https://profile.uwkitchens.com/books/gkfi/#p=6" target="_blank" rel="noopener">بروفايل الشركة</a>
         </div>
       </div>
