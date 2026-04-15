@@ -210,13 +210,19 @@
       var file = input.files[0];
       var safeName = file.name.replace(/[^\w\s.\-]/g,'_');
       var path = 'tickets/' + ticketId + '/' + input.name + '-' + safeName;
-      var task = storage.ref(path).put(file).then(function(snap){
-        return snap.ref.getDownloadURL().then(function(url){
-          result[input.name] = { url: url, name: file.name, size: file.size, type: file.type };
-        });
-      }).catch(function(err){
-        // Storage not enabled or permission denied - fall back to metadata only.
-        if(window.console) console.warn('Storage upload failed, saving metadata only:', err);
+      // Wrap each upload in a timeout so a non-enabled Storage bucket doesn't hang forever
+      var task = Promise.race([
+        storage.ref(path).put(file).then(function(snap){
+          return snap.ref.getDownloadURL().then(function(url){
+            result[input.name] = { url: url, name: file.name, size: file.size, type: file.type };
+          });
+        }),
+        new Promise(function(_, reject){
+          setTimeout(function(){ reject(new Error('Upload timeout')); }, 8000);
+        })
+      ]).catch(function(err){
+        // Storage not enabled, permission denied, or timeout - fall back to metadata only.
+        if(window.console) console.warn('Storage upload skipped:', err.message || err);
         result[input.name] = { name: file.name, size: file.size, type: file.type, pending: true };
       });
       uploads.push(task);
