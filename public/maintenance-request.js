@@ -1,10 +1,16 @@
-/* ═════════════════════════════════════════════
+/* ==============================================
    MAINTENANCE REQUEST PAGE
-   Tabs, validation, file uploads, ticket system
-   ═════════════════════════════════════════════ */
+   Tabs, validation, Cloudinary uploads, tickets
+   ============================================== */
 
 (function(){
   'use strict';
+
+  // ─── CLOUDINARY CONFIG ────────────────────
+  var CLOUD_NAME = 'dbj4aba8i';
+  var UPLOAD_PRESET = 'uwkitchen_uploads';
+  var CLOUD_URL = 'https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/auto/upload';
+  var MAX_FILE_MB = 100;
 
   // ─── TABS ─────────────────────────────────
   var tabs = document.querySelectorAll('.form-tab');
@@ -28,47 +34,166 @@
     t.addEventListener('click', function(){ switchTab(t.dataset.tab); });
   });
 
-  // ─── FILE FIELDS ──────────────────────────
-  document.querySelectorAll('.file-field input[type=file]').forEach(function(input){
-    input.addEventListener('change', function(){
-      var wrap = input.closest('.file-field');
-      var nameEl = wrap.querySelector('.file-field-name');
-      if(input.files && input.files[0]){
-        var f = input.files[0];
-        var sizeKB = (f.size / 1024).toFixed(0);
-        var sizeTxt = sizeKB > 1024 ? (sizeKB/1024).toFixed(1) + ' MB' : sizeKB + ' KB';
-        nameEl.textContent = f.name + ' · ' + sizeTxt;
-        wrap.classList.add('has-file');
-        wrap.classList.remove('has-error');
-        var err = wrap.querySelector('.form-error');
-        if(err) err.textContent = '';
-      } else {
-        nameEl.textContent = '';
-        wrap.classList.remove('has-file');
+  // ─── CLOUDINARY UPLOAD STATE ──────────────
+  // Each file field stores its upload result here, keyed by input id.
+  var uploadResults = {};
+  // Track active XHR requests so we can abort on delete.
+  var activeUploads = {};
+
+  function formatSize(bytes){
+    var kb = bytes / 1024;
+    return kb > 1024 ? (kb / 1024).toFixed(1) + ' MB' : Math.round(kb) + ' KB';
+  }
+
+  function uploadToCloudinary(input){
+    var file = input.files[0];
+    if(!file) return;
+
+    var wrap = input.closest('.file-field');
+    var nameEl = wrap.querySelector('.file-field-name');
+    var fill = wrap.querySelector('.file-progress-fill');
+    var pText = wrap.querySelector('.file-progress-text');
+    var inputId = input.id;
+
+    // Check file size
+    if(file.size > MAX_FILE_MB * 1024 * 1024){
+      showFileError(wrap, 'حجم الملف يتجاوز ' + MAX_FILE_MB + 'MB');
+      input.value = '';
+      return;
+    }
+
+    // Show file name and uploading state
+    nameEl.textContent = file.name + ' \u00B7 ' + formatSize(file.size);
+    wrap.classList.add('has-file', 'is-uploading');
+    wrap.classList.remove('has-error');
+    var err = wrap.querySelector('.form-error');
+    if(err) err.textContent = '';
+    fill.style.width = '0%';
+    pText.textContent = '\u062C\u0627\u0631\u064A \u0627\u0644\u0631\u0641\u0639...';
+
+    // Build form data for Cloudinary
+    var fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', UPLOAD_PRESET);
+    fd.append('folder', 'tickets');
+
+    var xhr = new XMLHttpRequest();
+    activeUploads[inputId] = xhr;
+
+    xhr.upload.addEventListener('progress', function(e){
+      if(e.lengthComputable){
+        var pct = Math.round((e.loaded / e.total) * 100);
+        fill.style.width = pct + '%';
+        pText.textContent = pct + '%';
       }
     });
+
+    xhr.addEventListener('load', function(){
+      delete activeUploads[inputId];
+      wrap.classList.remove('is-uploading');
+      if(xhr.status >= 200 && xhr.status < 300){
+        try {
+          var res = JSON.parse(xhr.responseText);
+          uploadResults[inputId] = {
+            url: res.secure_url,
+            publicId: res.public_id,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            format: res.format
+          };
+          fill.style.width = '100%';
+          pText.textContent = '\u062A\u0645 \u0627\u0644\u0631\u0641\u0639 \u0628\u0646\u062C\u0627\u062D';
+        } catch(e){
+          uploadFailed(wrap, fill, pText, inputId);
+        }
+      } else {
+        uploadFailed(wrap, fill, pText, inputId);
+      }
+    });
+
+    xhr.addEventListener('error', function(){
+      delete activeUploads[inputId];
+      uploadFailed(wrap, fill, pText, inputId);
+    });
+
+    xhr.addEventListener('abort', function(){
+      delete activeUploads[inputId];
+      wrap.classList.remove('is-uploading');
+    });
+
+    xhr.open('POST', CLOUD_URL);
+    xhr.send(fd);
+  }
+
+  function uploadFailed(wrap, fill, pText, inputId){
+    wrap.classList.remove('is-uploading');
+    fill.style.width = '0%';
+    pText.textContent = '\u0641\u0634\u0644 \u0627\u0644\u0631\u0641\u0639\u060C \u0627\u0636\u063A\u0637 \u0644\u0625\u0639\u0627\u062F\u0629 \u0627\u0644\u0645\u062D\u0627\u0648\u0644\u0629';
+    delete uploadResults[inputId];
+  }
+
+  function clearFileField(wrap){
+    var input = wrap.querySelector('input[type=file]');
+    var inputId = input.id;
+    // Abort active upload if any
+    if(activeUploads[inputId]){
+      activeUploads[inputId].abort();
+      delete activeUploads[inputId];
+    }
+    // Clear state
+    delete uploadResults[inputId];
+    input.value = '';
+    wrap.classList.remove('has-file', 'is-uploading', 'has-error');
+    var nameEl = wrap.querySelector('.file-field-name');
+    if(nameEl) nameEl.textContent = '';
+    var fill = wrap.querySelector('.file-progress-fill');
+    if(fill) fill.style.width = '0%';
+    var pText = wrap.querySelector('.file-progress-text');
+    if(pText) pText.textContent = '';
+    var err = wrap.querySelector('.form-error');
+    if(err) err.textContent = '';
+  }
+
+  // ─── FILE FIELD EVENT LISTENERS ───────────
+  document.querySelectorAll('.file-field').forEach(function(wrap){
+    var input = wrap.querySelector('input[type=file]');
+    var delBtn = wrap.querySelector('.file-delete');
+
+    // On file select: start Cloudinary upload immediately
+    input.addEventListener('change', function(){
+      if(input.files && input.files[0]){
+        uploadToCloudinary(input);
+      } else {
+        clearFileField(wrap);
+      }
+    });
+
+    // Delete button: abort upload and clear
+    if(delBtn){
+      delBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        clearFileField(wrap);
+      });
+    }
   });
 
   // ─── VALIDATION ───────────────────────────
   var errorMsgs = {
-    firstName: 'الرجاء إدخال الاسم الأول',
-    middleName: 'الرجاء إدخال الاسم الأوسط',
-    lastName: 'الرجاء إدخال اسم العائلة',
-    fullName: 'الرجاء إدخال الاسم الكامل',
-    phone: 'رقم الجوال لازم يكون 10 أرقام ويبدأ بـ 05',
-    description: 'الرجاء كتابة وصف لا يقل عن 10 أحرف',
-    suggestion: 'الرجاء كتابة الاقتراح بشكل واضح (10 أحرف فأكثر)',
-    contract: 'الرجاء رفع صورة العقد',
-    media: 'الرجاء رفع صورة أو فيديو'
+    firstName: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0625\u062F\u062E\u0627\u0644 \u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u0623\u0648\u0644',
+    middleName: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0625\u062F\u062E\u0627\u0644 \u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u0623\u0648\u0633\u0637',
+    lastName: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0625\u062F\u062E\u0627\u0644 \u0627\u0633\u0645 \u0627\u0644\u0639\u0627\u0626\u0644\u0629',
+    fullName: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0625\u062F\u062E\u0627\u0644 \u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u0643\u0627\u0645\u0644',
+    phone: '\u0631\u0642\u0645 \u0627\u0644\u062C\u0648\u0627\u0644 \u0644\u0627\u0632\u0645 \u064A\u0643\u0648\u0646 10 \u0623\u0631\u0642\u0627\u0645 \u0648\u064A\u0628\u062F\u0623 \u0628\u0640 05',
+    description: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0643\u062A\u0627\u0628\u0629 \u0648\u0635\u0641 \u0644\u0627 \u064A\u0642\u0644 \u0639\u0646 10 \u0623\u062D\u0631\u0641',
+    suggestion: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0643\u062A\u0627\u0628\u0629 \u0627\u0644\u0627\u0642\u062A\u0631\u0627\u062D \u0628\u0634\u0643\u0644 \u0648\u0627\u0636\u062D (10 \u0623\u062D\u0631\u0641 \u0641\u0623\u0643\u062B\u0631)',
+    contract: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0627\u0644\u0639\u0642\u062F',
+    media: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0623\u0648 \u0641\u064A\u062F\u064A\u0648'
   };
 
-  // FormSubmit endpoint - first submission will send an activation email
-  // to info@uwkitchens.com; after one-click confirm, all submissions deliver.
   var FORMSUBMIT_URL = 'https://formsubmit.co/info@uwkitchens.com';
-
-  // Firestore + Storage (Firebase SDK loaded in the HTML head)
   var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
-  var storage = (typeof firebase !== 'undefined' && firebase.storage) ? firebase.storage() : null;
 
   function showError(field, msg){
     field.classList.add('form-field--error');
@@ -93,7 +218,6 @@
     if(err) err.textContent = '';
   }
 
-  // Clear errors on input
   document.querySelectorAll('.cs-form input, .cs-form textarea').forEach(function(input){
     if(input.type === 'file') return;
     input.addEventListener('input', function(){ clearError(input); });
@@ -101,44 +225,41 @@
 
   function validateForm(form){
     var valid = true;
-    // text inputs / textareas
     form.querySelectorAll('input[required], textarea[required]').forEach(function(el){
       if(el.type === 'file') return;
       clearError(el);
       var val = el.value.trim();
       if(!val){
-        showError(el, errorMsgs[el.name] || 'هذا الحقل إلزامي');
+        showError(el, errorMsgs[el.name] || '\u0647\u0630\u0627 \u0627\u0644\u062D\u0642\u0644 \u0625\u0644\u0632\u0627\u0645\u064A');
         valid = false;
       } else if(el.type === 'tel' && !/^05\d{8}$/.test(val)){
         showError(el, errorMsgs.phone);
         valid = false;
       } else if(el.minLength && val.length < el.minLength){
-        showError(el, errorMsgs[el.name] || 'القيمة قصيرة جداً');
+        showError(el, errorMsgs[el.name] || '\u0627\u0644\u0642\u064A\u0645\u0629 \u0642\u0635\u064A\u0631\u0629 \u062C\u062F\u0627\u064B');
         valid = false;
       }
     });
-    // file inputs
+    // File validation: required fields must have a completed upload
     form.querySelectorAll('.file-field').forEach(function(wrap){
       var input = wrap.querySelector('input[type=file]');
       if(!input.required) return;
       clearFileError(wrap);
-      if(!input.files || !input.files[0]){
-        showFileError(wrap, errorMsgs[input.name] || 'الرجاء رفع ملف');
+      if(!uploadResults[input.id]){
+        showFileError(wrap, errorMsgs[input.name] || '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0645\u0644\u0641');
         valid = false;
       }
+    });
+    // Block submit if any upload is still in progress
+    form.querySelectorAll('.file-field.is-uploading').forEach(function(){
+      valid = false;
     });
     return valid;
   }
 
   // ─── TICKET NUMBER ────────────────────────
-  // Format: PREFIX-YYYY-XXXXX (random 5 digits for now)
-  // Will be replaced with Firestore doc ID / counter later
   function generateTicket(type){
-    var prefixes = {
-      maintenance: 'MAINT',
-      complaint: 'CMPL',
-      suggestion: 'SUG'
-    };
+    var prefixes = { maintenance: 'MAINT', complaint: 'CMPL', suggestion: 'SUG' };
     var year = new Date().getFullYear();
     var rand = Math.floor(10000 + Math.random() * 90000);
     return (prefixes[type] || 'REQ') + '-' + year + '-' + rand;
@@ -147,19 +268,19 @@
   // ─── SUCCESS STATE ────────────────────────
   function showSuccess(type, ticket){
     var titles = {
-      maintenance: 'تم استلام طلب الصيانة',
-      complaint: 'تم استلام الشكوى',
-      suggestion: 'تم استلام الاقتراح'
+      maintenance: '\u062A\u0645 \u0627\u0633\u062A\u0644\u0627\u0645 \u0637\u0644\u0628 \u0627\u0644\u0635\u064A\u0627\u0646\u0629',
+      complaint: '\u062A\u0645 \u0627\u0633\u062A\u0644\u0627\u0645 \u0627\u0644\u0634\u0643\u0648\u0649',
+      suggestion: '\u062A\u0645 \u0627\u0633\u062A\u0644\u0627\u0645 \u0627\u0644\u0627\u0642\u062A\u0631\u0627\u062D'
     };
     var notes = {
-      maintenance: 'سيتم الرد خلال 7 أيام عمل',
-      complaint: 'سيتم الرد خلال 7 أيام عمل',
-      suggestion: 'شكراً لمشاركتك، نقدّر اقتراحك ونقرأه بعناية'
+      maintenance: '\u0633\u064A\u062A\u0645 \u0627\u0644\u0631\u062F \u062E\u0644\u0627\u0644 7 \u0623\u064A\u0627\u0645 \u0639\u0645\u0644',
+      complaint: '\u0633\u064A\u062A\u0645 \u0627\u0644\u0631\u062F \u062E\u0644\u0627\u0644 7 \u0623\u064A\u0627\u0645 \u0639\u0645\u0644',
+      suggestion: '\u0634\u0643\u0631\u0627\u064B \u0644\u0645\u0634\u0627\u0631\u0643\u062A\u0643\u060C \u0646\u0642\u062F\u0651\u0631 \u0627\u0642\u062A\u0631\u0627\u062D\u0643 \u0648\u0646\u0642\u0631\u0623\u0647 \u0628\u0639\u0646\u0627\u064A\u0629'
     };
     var descs = {
-      maintenance: 'شكراً لتواصلك. فريق الصيانة سيتواصل معك قريباً لمتابعة طلبك.',
-      complaint: 'شكراً لإبلاغنا. فريقنا سيدرس الشكوى ويتواصل معك خلال المدة المذكورة.',
-      suggestion: 'شكراً لك، اقتراحات عملائنا تساعدنا على التحسين المستمر.'
+      maintenance: '\u0634\u0643\u0631\u0627\u064B \u0644\u062A\u0648\u0627\u0635\u0644\u0643. \u0641\u0631\u064A\u0642 \u0627\u0644\u0635\u064A\u0627\u0646\u0629 \u0633\u064A\u062A\u0648\u0627\u0635\u0644 \u0645\u0639\u0643 \u0642\u0631\u064A\u0628\u0627\u064B \u0644\u0645\u062A\u0627\u0628\u0639\u0629 \u0637\u0644\u0628\u0643.',
+      complaint: '\u0634\u0643\u0631\u0627\u064B \u0644\u0625\u0628\u0644\u0627\u063A\u0646\u0627. \u0641\u0631\u064A\u0642\u0646\u0627 \u0633\u064A\u062F\u0631\u0633 \u0627\u0644\u0634\u0643\u0648\u0649 \u0648\u064A\u062A\u0648\u0627\u0635\u0644 \u0645\u0639\u0643 \u062E\u0644\u0627\u0644 \u0627\u0644\u0645\u062F\u0629 \u0627\u0644\u0645\u0630\u0643\u0648\u0631\u0629.',
+      suggestion: '\u0634\u0643\u0631\u0627\u064B \u0644\u0643\u060C \u0627\u0642\u062A\u0631\u0627\u062D\u0627\u062A \u0639\u0645\u0644\u0627\u0626\u0646\u0627 \u062A\u0633\u0627\u0639\u062F\u0646\u0627 \u0639\u0644\u0649 \u0627\u0644\u062A\u062D\u0633\u064A\u0646 \u0627\u0644\u0645\u0633\u062A\u0645\u0631.'
     };
 
     document.getElementById('csSuccessTitle').textContent = titles[type];
@@ -174,63 +295,30 @@
 
   // ─── SUBMIT HANDLERS ──────────────────────
   var submitting = false;
-  var subjects = {
-    maintenance: 'طلب صيانة جديد',
-    complaint: 'شكوى جديدة',
-    suggestion: 'اقتراح جديد'
-  };
-  var typeLabels = {
-    maintenance: 'طلب صيانة',
-    complaint: 'شكوى',
-    suggestion: 'اقتراح'
-  };
+  var subjects = { maintenance: '\u0637\u0644\u0628 \u0635\u064A\u0627\u0646\u0629 \u062C\u062F\u064A\u062F', complaint: '\u0634\u0643\u0648\u0649 \u062C\u062F\u064A\u062F\u0629', suggestion: '\u0627\u0642\u062A\u0631\u0627\u062D \u062C\u062F\u064A\u062F' };
+  var typeLabels = { maintenance: '\u0637\u0644\u0628 \u0635\u064A\u0627\u0646\u0629', complaint: '\u0634\u0643\u0648\u0649', suggestion: '\u0627\u0642\u062A\u0631\u0627\u062D' };
 
   function resetFormUI(form, btn){
     form.reset();
     form.querySelectorAll('.file-field').forEach(function(wrap){
-      wrap.classList.remove('has-file');
-      var name = wrap.querySelector('.file-field-name');
-      if(name) name.textContent = '';
+      clearFileField(wrap);
     });
     btn.disabled = false;
     btn.classList.remove('is-loading');
     submitting = false;
   }
 
-  // Upload all file inputs in a form to Storage under tickets/{ticketId}/.
-  // Returns a promise that resolves to an object mapping input name to {url, name, size, type}.
-  // If Storage isn't enabled or fails, we resolve with a metadata-only fallback so the
-  // ticket still saves and the email still delivers the attachments.
-  function uploadAttachments(form, ticketId){
-    if(!storage) return Promise.resolve({});
-    var uploads = [];
-    var result = {};
+  // Collect Cloudinary URLs for all file inputs in the form
+  function getAttachments(form){
+    var attachments = {};
     form.querySelectorAll('input[type=file]').forEach(function(input){
-      if(!input.files || !input.files[0]) return;
-      var file = input.files[0];
-      var safeName = file.name.replace(/[^\w\s.\-]/g,'_');
-      var path = 'tickets/' + ticketId + '/' + input.name + '-' + safeName;
-      // Wrap each upload in a timeout so a non-enabled Storage bucket doesn't hang forever
-      var task = Promise.race([
-        storage.ref(path).put(file).then(function(snap){
-          return snap.ref.getDownloadURL().then(function(url){
-            result[input.name] = { url: url, name: file.name, size: file.size, type: file.type };
-          });
-        }),
-        new Promise(function(_, reject){
-          setTimeout(function(){ reject(new Error('Upload timeout')); }, 8000);
-        })
-      ]).catch(function(err){
-        // Storage not enabled, permission denied, or timeout - fall back to metadata only.
-        if(window.console) console.warn('Storage upload skipped:', err.message || err);
-        result[input.name] = { name: file.name, size: file.size, type: file.type, pending: true };
-      });
-      uploads.push(task);
+      if(uploadResults[input.id]){
+        attachments[input.name] = uploadResults[input.id];
+      }
     });
-    return Promise.all(uploads).then(function(){ return result; });
+    return attachments;
   }
 
-  // Write a ticket document to Firestore.
   function saveTicket(type, ticket, form, attachments){
     if(!db) return Promise.resolve();
     var get = function(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; };
@@ -283,9 +371,9 @@
 
       var type = form.dataset.form;
       var ticket = generateTicket(type);
+      var attachments = getAttachments(form);
 
-      // 1) Upload attachments to Storage, 2) Save ticket doc in Firestore,
-      // 3) Send FormSubmit email in parallel as a backup channel.
+      // Send FormSubmit email (fire-and-forget backup)
       var fd = new FormData(form);
       fd.append('_subject', subjects[type] + ' - ' + ticket);
       fd.append('_template', 'table');
@@ -293,17 +381,19 @@
       fd.append('ticket_number', ticket);
       fd.append('form_type', typeLabels[type]);
       fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
+      // Append Cloudinary URLs to email
+      Object.keys(attachments).forEach(function(key){
+        fd.append(key + '_url', attachments[key].url);
+      });
       fetch(FORMSUBMIT_URL, { method:'POST', mode:'no-cors', body: fd }).catch(function(){});
 
-      uploadAttachments(form, ticket)
-        .then(function(attachments){ return saveTicket(type, ticket, form, attachments); })
+      // Save to Firestore (files already uploaded to Cloudinary)
+      saveTicket(type, ticket, form, attachments)
         .then(function(){
           resetFormUI(form, btn);
           showSuccess(type, ticket);
         })
         .catch(function(err){
-          // Log and still show success: the email already went out via FormSubmit,
-          // so the client has a fallback even if Firestore failed.
           if(window.console) console.error('Firestore save failed:', err);
           resetFormUI(form, btn);
           showSuccess(type, ticket);
@@ -322,7 +412,7 @@
     });
   }
 
-  // ─── ANNOUNCE BAR SCROLL HIDE (reuse logic) ───
+  // ─── ANNOUNCE BAR SCROLL HIDE ─────────────
   var announce = document.getElementById('announce');
   if(announce){
     var lastY = 0;

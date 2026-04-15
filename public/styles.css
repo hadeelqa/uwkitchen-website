@@ -1067,6 +1067,27 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .file-field.has-error label{border-color:rgba(239,68,68,.6);background:rgba(239,68,68,.06)}
 .file-field:focus-within label{border-color:rgba(228,147,93,.5);box-shadow:0 0 0 3px rgba(228,147,93,.12)}
 
+/* ── File upload: progress bar ── */
+.file-progress{display:none;width:100%;margin-top:6px;padding:0 4px}
+.file-progress-bar{height:4px;border-radius:2px;background:rgba(255,255,255,.1);overflow:hidden}
+.file-progress-fill{height:100%;width:0;border-radius:2px;background:var(--gold);transition:width .2s ease}
+.file-progress-text{font-size:10px;color:var(--text-muted);margin-top:3px;text-align:center}
+.file-field.is-uploading .file-progress{display:block}
+.file-field.is-uploading label{pointer-events:none;opacity:.7}
+
+/* ── File upload: delete button ── */
+.file-delete{display:none;position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#ef4444;cursor:pointer;align-items:center;justify-content:center;transition:background var(--duration-fast);z-index:2;padding:0}
+.file-delete:hover{background:rgba(239,68,68,.25)}
+.file-delete svg{width:14px;height:14px;stroke:currentColor;fill:none}
+.file-field.has-file .file-delete{display:flex}
+.file-field.is-uploading .file-delete{display:none}
+
+/* ── Submit button loading spinner ── */
+.btn .btn-spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:btnSpin .6s linear infinite}
+.btn.is-loading .btn-spinner{display:inline-block}
+.btn.is-loading svg:not(.btn-spinner){display:none}
+@keyframes btnSpin{to{transform:rotate(360deg)}}
+
 /* ── Success state ── */
 .cs-success{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:40px 24px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:var(--radius-xl);backdrop-filter:blur(12px);animation:fadeInUp .5s ease}
 .cs-success[hidden]{display:none}

@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="/styles.css?v=62">
+<link rel="stylesheet" href="/styles.css?v=63">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ContactPage","name":"خدمة العملاء | مطابخ الأبيض المتحدة","url":"https://uwkitchens.com/support","inLanguage":"ar","isPartOf":{"@type":"WebSite","name":"مطابخ الأبيض المتحدة","url":"https://uwkitchens.com/"},"about":{"@type":"Organization","name":"مطابخ الأبيض المتحدة","telephone":"+966920031000","email":"info@uwkitchens.com"}}
 </script>
@@ -100,6 +100,8 @@
             <span class="file-field-hint">PDF أو صورة، اضغط للاختيار</span>
             <span class="file-field-name"></span>
           </label>
+          <button type="button" class="file-delete" aria-label="حذف الملف"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <div class="file-progress"><div class="file-progress-bar"><div class="file-progress-fill"></div></div><div class="file-progress-text"></div></div>
           <span class="form-error" aria-live="polite"></span>
         </div>
 
@@ -111,12 +113,15 @@
             <span class="file-field-hint">صورة أو مقطع فيديو، اضغط للاختيار</span>
             <span class="file-field-name"></span>
           </label>
+          <button type="button" class="file-delete" aria-label="حذف الملف"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <div class="file-progress"><div class="file-progress-bar"><div class="file-progress-fill"></div></div><div class="file-progress-text"></div></div>
           <span class="form-error" aria-live="polite"></span>
         </div>
 
         <button type="submit" class="btn btn--primary btn--lg btn--block">
           إرسال طلب الصيانة
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span class="btn-spinner"></span>
         </button>
       </form>
     </div>
@@ -143,6 +148,8 @@
             <span class="file-field-hint">اختياري (PDF أو صورة)</span>
             <span class="file-field-name"></span>
           </label>
+          <button type="button" class="file-delete" aria-label="حذف الملف"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <div class="file-progress"><div class="file-progress-bar"><div class="file-progress-fill"></div></div><div class="file-progress-text"></div></div>
         </div>
 
         <div class="form-field"><textarea id="c_desc" name="description" placeholder=" " required aria-required="true" minlength="10" maxlength="1000" rows="4"></textarea><label for="c_desc">وصف المشكلة *</label><span class="form-error" aria-live="polite"></span></div>
@@ -155,11 +162,14 @@
             <span class="file-field-hint">اختياري (صورة أو فيديو)</span>
             <span class="file-field-name"></span>
           </label>
+          <button type="button" class="file-delete" aria-label="حذف الملف"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <div class="file-progress"><div class="file-progress-bar"><div class="file-progress-fill"></div></div><div class="file-progress-text"></div></div>
         </div>
 
         <button type="submit" class="btn btn--primary btn--lg btn--block">
           إرسال الشكوى
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span class="btn-spinner"></span>
         </button>
       </form>
     </div>
@@ -183,11 +193,14 @@
             <span class="file-field-hint">اختياري، اضغط للاختيار</span>
             <span class="file-field-name"></span>
           </label>
+          <button type="button" class="file-delete" aria-label="حذف الملف"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          <div class="file-progress"><div class="file-progress-bar"><div class="file-progress-fill"></div></div><div class="file-progress-text"></div></div>
         </div>
 
         <button type="submit" class="btn btn--primary btn--lg btn--block">
           إرسال الاقتراح
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          <span class="btn-spinner"></span>
         </button>
       </form>
     </div>
@@ -294,6 +307,6 @@ var firebaseConfig = {
 if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 </script>
 <script src="/scripts.js?v=27"></script>
-<script src="/maintenance-request.js?v=7"></script>
+<script src="/maintenance-request.js?v=9"></script>
 </body>
 </html>
