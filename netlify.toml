@@ -1,4 +1,5 @@
 # netlify.toml - mirrors firebase.json hosting config
+# Last redeploy: 2026-04-16 (post DNS cleanup)
 
 [build]
   publish = "public"
