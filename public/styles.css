@@ -618,10 +618,9 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-compact-item-val{font-size:12px;font-weight:600;color:var(--gold)}
 .warranty-compact-terms{font-size:11px;color:rgba(255,255,255,.25);margin:0;flex-shrink:0}
 
-.warranty-visual{display:grid;grid-template-columns:1fr;gap:16px;margin-top:24px;width:100%}
-@media(min-width:768px){.warranty-visual{grid-template-columns:1fr 1fr;gap:20px}}
-.warranty-visual-media{position:relative;aspect-ratio:4/3;border-radius:var(--radius-xl);overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.warranty-visual-media img,.warranty-visual-media video{width:100%;height:100%;object-fit:cover;display:block}
+.warranty-visual{display:flex;justify-content:center;margin-top:24px;width:100%}
+.warranty-visual-single{max-width:480px;width:100%;aspect-ratio:4/3;border-radius:var(--radius-xl);overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.warranty-visual-single img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ═══════ SERVICE / MAINTENANCE CTA ═══════ */
 .service-cta{padding:60px 16px;background:var(--white)}
