@@ -634,6 +634,8 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-seal-ring{position:absolute;inset:0;width:100%;height:100%;animation:warrantySpin 28s linear infinite}
 @keyframes warrantySpin{to{transform:rotate(360deg)}}
 .warranty-seal-text{fill:url(#sealGold);text-transform:uppercase}
+.warranty-seal-text--top{letter-spacing:3.2px}
+.warranty-seal-text--bot{letter-spacing:4px}
 .warranty-seal-core{position:absolute;inset:20%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(212,136,74,.22) 0%,rgba(212,136,74,.08) 55%,rgba(14,4,13,.6) 100%);border:1.5px solid rgba(212,136,74,.5);box-shadow:inset 0 2px 12px rgba(212,136,74,.2),inset 0 -2px 10px rgba(0,0,0,.35)}
 .warranty-seal-num{font-size:clamp(54px,7.5vw,72px);font-weight:800;line-height:1;letter-spacing:-2px;background:linear-gradient(180deg,#f3c58a 0%,#b5773e 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 2px 8px rgba(212,136,74,.35)}
 .warranty-seal-unit{font-size:16px;font-weight:700;color:#f3c58a;letter-spacing:0;margin-top:2px}
