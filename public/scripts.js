@@ -1,3 +1,15 @@
+/* ═══════ WARRANTY SIDE IMAGE HOVER-TO-PLAY VIDEO ═══════ */
+(function(){
+  var side = document.querySelector('.warranty-side');
+  if(!side) return;
+  var vid = side.querySelector('.warranty-side-vid');
+  if(!vid) return;
+  var play = function(){ try{ vid.playbackRate = 1; vid.play(); }catch(e){} side.classList.add('playing'); };
+  var stop = function(){ vid.pause(); vid.currentTime = 0; side.classList.remove('playing'); };
+  side.addEventListener('mouseenter', play);
+  side.addEventListener('mouseleave', stop);
+})();
+
 /* ═══════ CLADDING COLOR CAROUSEL ═══════ */
 (function(){
   var cards = document.querySelectorAll('[data-cladding-card]');
