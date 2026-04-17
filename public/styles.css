@@ -661,7 +661,8 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .catalog-bignum-label{font-size:clamp(18px,2.5vw,24px);font-weight:500;color:rgba(255,255,255,.55)}
 .catalog-subtitle{font-size:clamp(16px,2vw,20px);font-weight:600;color:#fff;margin:0}
 .catalog-desc{font-size:15px;line-height:1.8;color:rgba(255,255,255,.6);margin:0}
-.catalog-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%}
+.catalog-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%}
+@media(max-width:560px){.catalog-cards{grid-template-columns:1fr}}
 .catalog-card{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:18px 16px;border-radius:var(--radius-lg);background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);transition:all .35s var(--ease-out)}
 .catalog-card:hover{border-color:rgba(212,136,74,.25);background:rgba(255,255,255,.05);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
 .catalog-card svg{width:26px;height:26px;color:var(--gold);flex-shrink:0}
