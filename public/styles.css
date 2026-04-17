@@ -648,7 +648,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-copy{position:relative;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;min-width:0}
 @media(min-width:768px){.warranty-copy{align-items:flex-start;text-align:start}}
 .warranty-copy-eyebrow{display:inline-block;font-size:12px;font-weight:600;color:var(--gold);padding:6px 14px;border:1px solid rgba(212,136,74,.35);border-radius:var(--radius-full);background:rgba(212,136,74,.06)}
-.warranty-copy-title{font-size:clamp(24px,3.4vw,34px);font-weight:800;color:#fff;margin:0;line-height:1.25;letter-spacing:0}
+.warranty-copy-title{font-size:clamp(24px,3.4vw,34px);font-weight:700;color:#fff;margin:0;line-height:1.25;letter-spacing:0}
 .warranty-copy-body{font-size:15px;line-height:1.85;color:rgba(255,255,255,.72);margin:0;max-width:56ch}
 @media (prefers-reduced-motion: reduce){.warranty-seal-ring{animation:none}}
 
@@ -685,7 +685,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .catalog-cover-logo{width:auto;height:42px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
 .catalog-cover-eyebrow{font-size:11px;font-weight:600;color:var(--gold);letter-spacing:0;padding:5px 12px;border:1px solid rgba(212,136,74,.4);border-radius:2px;background:rgba(212,136,74,.05)}
 .catalog-cover-center{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:0 4px}
-.catalog-cover-title{font-size:clamp(30px,3.6vw,40px);font-weight:800;color:#fff;margin:0;line-height:1.15;letter-spacing:0;text-shadow:0 2px 24px rgba(0,0,0,.5)}
+.catalog-cover-title{font-size:clamp(30px,3.6vw,40px);font-weight:700;color:#fff;margin:0;line-height:1.15;letter-spacing:0;text-shadow:0 2px 24px rgba(0,0,0,.5)}
 .catalog-cover-divider{width:48px;height:2px;background:linear-gradient(90deg,rgba(212,136,74,0),var(--gold) 50%,rgba(212,136,74,0));border-radius:2px}
 .catalog-cover-sub{font-size:clamp(14px,1.6vw,17px);font-weight:500;color:rgba(255,255,255,.78);margin:0;letter-spacing:0}
 .catalog-cover-bottom{position:relative;display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid rgba(212,136,74,.18)}
