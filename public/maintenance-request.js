@@ -196,7 +196,8 @@
     media: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0623\u0648 \u0641\u064A\u062F\u064A\u0648'
   };
 
-  var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/info@uwkitchens.com';
+  // FormSubmit AJAX endpoint (hash maps to info@uwkitchens.com)
+  var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/7e9f3fee2b5908c9cff14902a24a31f4';
   var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
 
   function showError(field, msg){

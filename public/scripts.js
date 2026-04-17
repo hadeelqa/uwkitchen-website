@@ -619,8 +619,8 @@ document.addEventListener('click', function(e){
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
     }
 
-    // Send email via FormSubmit AJAX endpoint
-    fetch('https://formsubmit.co/ajax/info@uwkitchens.com', {
+    // Send email via FormSubmit AJAX endpoint (hash = info@uwkitchens.com)
+    fetch('https://formsubmit.co/ajax/7e9f3fee2b5908c9cff14902a24a31f4', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(emailData)
