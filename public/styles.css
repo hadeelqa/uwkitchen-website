@@ -618,33 +618,33 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-compact-item-val{font-size:12px;font-weight:600;color:var(--gold)}
 .warranty-compact-terms{font-size:11px;color:rgba(255,255,255,.25);margin:0;flex-shrink:0}
 
-/* ═══════ WARRANTY SECTION (redesigned) ═══════ */
+/* ═══════ WARRANTY SECTION (stamp card) ═══════ */
 .warranty-section{padding:60px 16px;background:var(--white)}
 @media(min-width:1024px){.warranty-section{padding:80px 24px}}
-.warranty-layout{max-width:var(--content-max);margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
-@media(min-width:768px){.warranty-layout{grid-template-columns:1fr 1fr;gap:48px}}
-.warranty-media{display:flex;flex-direction:column;gap:12px}
-.warranty-hover-player{position:relative;border-radius:var(--radius-xl);overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);cursor:pointer}
-.warranty-hover-img,.warranty-hover-vid{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;transition:opacity .5s ease}
-.warranty-hover-vid{position:absolute;inset:0;width:100%;height:100%;opacity:0}
-.warranty-hover-player.playing .warranty-hover-img{opacity:0}
-.warranty-hover-player.playing .warranty-hover-vid{opacity:1}
-.warranty-content{display:flex;flex-direction:column;gap:18px}
-.warranty-content-head{display:flex;align-items:center;gap:12px}
-.warranty-content-head svg{flex-shrink:0}
-.warranty-content-title{font-size:clamp(22px,3.2vw,30px);font-weight:700;color:#fff;margin:0;line-height:1.25}
-.warranty-content-body{font-size:15px;line-height:1.8;color:rgba(255,255,255,.72);margin:0}
-@media(max-width:767px){.warranty-content{align-items:center;text-align:center}.warranty-content-head{justify-content:center}}
-.warranty-list{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);overflow:hidden}
-.warranty-list-row{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
-.warranty-list-row:last-child{border-bottom:none}
-.warranty-list-row:hover{background:rgba(255,255,255,.03)}
-.warranty-list-name{font-size:15px;color:rgba(255,255,255,.7)}
-.warranty-list-val{font-size:15px;font-weight:700;color:var(--gold)}
-.warranty-list--subtle{border-color:rgba(255,255,255,.05)}
-.warranty-list--subtle .warranty-list-row{padding:12px 20px;border-bottom-color:rgba(255,255,255,.04)}
-.warranty-list--subtle .warranty-list-name{font-size:14px;color:rgba(255,255,255,.45)}
-.warranty-terms{font-size:11px;color:rgba(255,255,255,.25);margin:0}
+.warranty-card{max-width:var(--content-max);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:32px;padding:36px 24px;border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(255,255,255,.035) 0%,rgba(212,136,74,.045) 100%);border:1px solid rgba(212,136,74,.18);box-shadow:0 20px 50px -20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);position:relative;overflow:hidden}
+.warranty-card::before{content:'';position:absolute;inset:-1px;background:radial-gradient(circle at 0% 50%,rgba(212,136,74,.1) 0%,transparent 40%);pointer-events:none}
+@media(min-width:768px){.warranty-card{flex-direction:row;align-items:center;gap:56px;padding:48px 56px;text-align:start}}
+/* -- Stamp / Seal -- */
+.warranty-seal{position:relative;width:clamp(220px,30vw,280px);aspect-ratio:1;flex-shrink:0;transform:rotate(-6deg);transition:transform .6s var(--ease-out);filter:drop-shadow(0 14px 30px rgba(0,0,0,.45)) drop-shadow(0 0 28px rgba(212,136,74,.18))}
+.warranty-card:hover .warranty-seal{transform:rotate(-3deg) scale(1.02)}
+.warranty-seal-ring{position:absolute;inset:0;width:100%;height:100%;animation:warrantySpin 28s linear infinite}
+@keyframes warrantySpin{to{transform:rotate(360deg)}}
+.warranty-seal-text{fill:url(#sealGold);text-transform:uppercase}
+.warranty-seal-core{position:absolute;inset:20%;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(212,136,74,.22) 0%,rgba(212,136,74,.08) 55%,rgba(14,4,13,.6) 100%);border:1.5px solid rgba(212,136,74,.5);box-shadow:inset 0 2px 12px rgba(212,136,74,.2),inset 0 -2px 10px rgba(0,0,0,.35)}
+.warranty-seal-num{font-size:clamp(54px,7.5vw,72px);font-weight:800;line-height:1;letter-spacing:-2px;background:linear-gradient(180deg,#f3c58a 0%,#b5773e 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 2px 8px rgba(212,136,74,.35)}
+.warranty-seal-unit{font-size:16px;font-weight:700;color:#f3c58a;letter-spacing:1px;margin-top:2px}
+.warranty-seal-hairline{width:30px;height:1px;background:linear-gradient(90deg,rgba(212,136,74,0),rgba(212,136,74,.7),rgba(212,136,74,0));margin:8px 0}
+.warranty-seal-tag{font-size:11px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:2px}
+.warranty-seal-sparkle{position:absolute;color:#e8b275;font-size:12px;opacity:.65}
+.warranty-seal-sparkle--l{top:50%;inset-inline-start:8px;transform:translateY(-50%)}
+.warranty-seal-sparkle--r{top:50%;inset-inline-end:8px;transform:translateY(-50%)}
+/* -- Copy -- */
+.warranty-copy{position:relative;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;min-width:0}
+@media(min-width:768px){.warranty-copy{align-items:flex-start;text-align:start}}
+.warranty-copy-eyebrow{display:inline-block;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:4px;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(212,136,74,.35);border-radius:var(--radius-full);background:rgba(212,136,74,.06)}
+.warranty-copy-title{font-size:clamp(24px,3.4vw,34px);font-weight:800;color:#fff;margin:0;line-height:1.25;letter-spacing:-.3px}
+.warranty-copy-body{font-size:15px;line-height:1.85;color:rgba(255,255,255,.72);margin:0;max-width:56ch}
+@media (prefers-reduced-motion: reduce){.warranty-seal-ring{animation:none}}
 
 /* ═══════ CATALOG / COMPANY PROFILE SECTION ═══════ */
 .catalog-section{padding:80px 16px;background:var(--white);position:relative;overflow:hidden}
