@@ -625,11 +625,9 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-card::before{content:'';position:absolute;inset:-1px;background:radial-gradient(circle at 0% 50%,rgba(212,136,74,.1) 0%,transparent 40%);pointer-events:none;z-index:1}
 .warranty-main{position:relative;z-index:2;display:flex;flex-direction:column;gap:28px;align-items:center;text-align:center}
 @media(min-width:768px){.warranty-card{grid-template-columns:4fr 1fr;gap:32px;padding:40px 44px;align-items:stretch}.warranty-main{align-items:flex-start;text-align:start;gap:32px}}
-.warranty-side{position:relative;z-index:2;overflow:hidden;border-radius:var(--radius-lg);min-height:180px;background:rgba(255,255,255,.04);border:1px solid rgba(212,136,74,.15)}
-@media(min-width:768px){.warranty-side{min-height:0}}
-.warranty-side-img,.warranty-side-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.warranty-side-vid{opacity:0;transition:opacity .5s ease}
-.warranty-card.playing .warranty-side-vid{opacity:1}
+.warranty-side{display:none}
+@media(min-width:768px){.warranty-side{display:block;position:relative;z-index:2;overflow:hidden;border-radius:var(--radius-lg);background:rgba(255,255,255,.04);border:1px solid rgba(212,136,74,.15)}}
+.warranty-side-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 /* -- Stamp / Seal -- */
 .warranty-seal{position:relative;width:clamp(220px,30vw,280px);aspect-ratio:1;flex-shrink:0;transform:rotate(-6deg);transition:transform .6s var(--ease-out);filter:drop-shadow(0 14px 30px rgba(0,0,0,.45)) drop-shadow(0 0 28px rgba(212,136,74,.18))}
 .warranty-card:hover .warranty-seal{transform:rotate(-3deg) scale(1.02)}
