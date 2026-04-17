@@ -483,6 +483,26 @@ function closeLightbox(){
   if(prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); lightboxNav(-1); });
   if(nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); lightboxNav(1); });
   if(lbImg) lbImg.addEventListener('click', function(e){ e.stopPropagation(); });
+  // Swipe support for gallery navigation
+  var touchStartX = 0, touchStartY = 0, touchMoved = false;
+  lb.addEventListener('touchstart', function(e){
+    if(!_lbGallery || _lbGallery.length < 2) return;
+    var t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY; touchMoved = false;
+  }, {passive:true});
+  lb.addEventListener('touchmove', function(){ touchMoved = true; }, {passive:true});
+  lb.addEventListener('touchend', function(e){
+    if(!_lbGallery || _lbGallery.length < 2 || !touchMoved) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - touchStartX;
+    var dy = t.clientY - touchStartY;
+    if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    var isRTL = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+    // swipe-left (dx<0) in LTR = next; in RTL = prev
+    var dir = dx < 0 ? 1 : -1;
+    if(isRTL) dir = -dir;
+    lightboxNav(dir);
+  }, {passive:true});
   lb.addEventListener('keydown', function(e){
     if(!lb.classList.contains('active')) return;
     if(e.key === 'Escape'){ closeLightbox(); return; }
@@ -497,12 +517,28 @@ function closeLightbox(){
     }
   });
 })();
-// Attach click to kitchen items (delegated)
+// Attach click to kitchen items (delegated) — build gallery from currently-visible kitchens
 document.addEventListener('click', function(e){
   var item = e.target.closest('.kitchen-item');
   if(!item) return;
-  var img = item.querySelector('img');
-  if(img) openLightbox(img.src, img.alt);
+  var grid = item.parentElement;
+  if(!grid) return;
+  var visible = Array.prototype.filter.call(
+    grid.querySelectorAll('.kitchen-item'),
+    function(el){ return !el.classList.contains('kitchen-item--hidden'); }
+  );
+  var gallery = visible.map(function(el){
+    var im = el.querySelector('img');
+    return im ? { src: im.src, alt: im.alt || '' } : null;
+  }).filter(Boolean);
+  var idx = visible.indexOf(item);
+  if(idx < 0) idx = 0;
+  if(gallery.length){
+    openLightbox(gallery[idx].src, gallery[idx].alt, gallery, idx);
+  } else {
+    var im2 = item.querySelector('img');
+    if(im2) openLightbox(im2.src, im2.alt);
+  }
 });
 
 /* ═══════ FORM VALIDATION ═══════ */
