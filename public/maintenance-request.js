@@ -373,18 +373,33 @@
       var ticket = generateTicket(type);
       var attachments = getAttachments(form);
 
-      // Send FormSubmit email (fire-and-forget backup)
-      var fd = new FormData(form);
+      // Build a clean FormData for the email (exclude raw File inputs; FormSubmit
+      // free tier can't attach them anyway — send Cloudinary URLs instead).
+      var fd = new FormData();
+      var fieldLabels = {
+        firstName: 'الاسم الأول',
+        middleName: 'الاسم الأوسط',
+        lastName: 'اسم العائلة',
+        fullName: 'الاسم الكامل',
+        phone: 'رقم الجوال',
+        description: 'الوصف',
+        suggestion: 'الاقتراح'
+      };
+      Array.prototype.forEach.call(form.elements, function(el){
+        if(!el.name || el.type === 'file' || el.type === 'submit' || el.type === 'button') return;
+        var label = fieldLabels[el.name] || el.name;
+        fd.append(label, el.value);
+      });
+      fd.append('نوع الطلب', typeLabels[type]);
+      fd.append('رقم التذكرة', ticket);
+      fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
+      var attachLabels = { contract: 'رابط العقد', media: 'رابط الصورة / الفيديو' };
+      Object.keys(attachments).forEach(function(key){
+        fd.append(attachLabels[key] || (key + ' URL'), attachments[key].url);
+      });
       fd.append('_subject', subjects[type] + ' - ' + ticket);
       fd.append('_template', 'table');
       fd.append('_captcha', 'false');
-      fd.append('ticket_number', ticket);
-      fd.append('form_type', typeLabels[type]);
-      fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-      // Append Cloudinary URLs to email
-      Object.keys(attachments).forEach(function(key){
-        fd.append(key + '_url', attachments[key].url);
-      });
       fetch(FORMSUBMIT_URL, { method:'POST', mode:'no-cors', body: fd }).catch(function(){});
 
       // Save to Firestore (files already uploaded to Cloudinary)

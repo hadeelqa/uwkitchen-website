@@ -586,16 +586,16 @@ document.addEventListener('click', function(e){
 
     // Build FormData for FormSubmit (email backup)
     var fd = new FormData();
-    fd.append('name', fullName);
-    fd.append('phone', phone);
-    fd.append('city', city);
-    fd.append('district', district);
+    fd.append('الاسم', fullName);
+    fd.append('رقم الجوال', phone);
+    fd.append('المدينة', city);
+    fd.append('الحي', district);
+    fd.append('نوع الطلب', 'طلب زيارة قياس');
+    fd.append('رقم التذكرة', ticket);
+    fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
     fd.append('_subject', 'طلب زيارة قياس جديد - ' + ticket);
     fd.append('_template', 'table');
     fd.append('_captcha', 'false');
-    fd.append('ticket_number', ticket);
-    fd.append('form_type', 'طلب زيارة قياس');
-    fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
 
     function onDone(){
       form.reset();
