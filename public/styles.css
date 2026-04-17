@@ -655,7 +655,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 @media(min-width:960px){.catalog-inner--split{grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:56px}}
 .catalog-body{display:flex;flex-direction:column;gap:28px;text-align:start;align-items:flex-start}
 .catalog-head{display:flex;flex-direction:column;gap:12px}
-.catalog-title{font-size:clamp(22px,3.2vw,32px);font-weight:700;color:#fff;margin:0;line-height:1.3;letter-spacing:-.2px}
+.catalog-title{font-size:clamp(14px,1.6vw,17px);font-weight:500;color:rgba(255,255,255,.5);margin:-4px 0 0;line-height:1.5;letter-spacing:.2px}
 .catalog-bignum{display:flex;align-items:baseline;gap:10px;margin:8px 0 4px;line-height:1}
 .catalog-bignum-value{font-size:clamp(72px,11vw,130px);font-weight:800;color:var(--gold);letter-spacing:-4px;line-height:.9;background:linear-gradient(180deg,var(--gold) 0%,rgba(212,136,74,.55) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 80px rgba(212,136,74,.25)}
 .catalog-bignum-label{font-size:clamp(18px,2.5vw,24px);font-weight:500;color:rgba(255,255,255,.55)}
