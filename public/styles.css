@@ -641,7 +641,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 /* -- Copy -- */
 .warranty-copy{position:relative;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;min-width:0}
 @media(min-width:768px){.warranty-copy{align-items:flex-start;text-align:start}}
-.warranty-copy-eyebrow{display:inline-block;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:4px;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(212,136,74,.35);border-radius:var(--radius-full);background:rgba(212,136,74,.06)}
+.warranty-copy-eyebrow{display:inline-block;font-size:12px;font-weight:600;color:var(--gold);padding:6px 14px;border:1px solid rgba(212,136,74,.35);border-radius:var(--radius-full);background:rgba(212,136,74,.06)}
 .warranty-copy-title{font-size:clamp(24px,3.4vw,34px);font-weight:800;color:#fff;margin:0;line-height:1.25;letter-spacing:-.3px}
 .warranty-copy-body{font-size:15px;line-height:1.85;color:rgba(255,255,255,.72);margin:0;max-width:56ch}
 @media (prefers-reduced-motion: reduce){.warranty-seal-ring{animation:none}}
