@@ -641,6 +641,9 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-list-row:hover{background:rgba(255,255,255,.03)}
 .warranty-list-name{font-size:15px;color:rgba(255,255,255,.7)}
 .warranty-list-val{font-size:15px;font-weight:700;color:var(--gold)}
+.warranty-list--subtle{border-color:rgba(255,255,255,.05)}
+.warranty-list--subtle .warranty-list-row{padding:12px 20px;border-bottom-color:rgba(255,255,255,.04)}
+.warranty-list--subtle .warranty-list-name{font-size:14px;color:rgba(255,255,255,.45)}
 .warranty-terms{font-size:11px;color:rgba(255,255,255,.25);margin:0}
 
 /* ═══════ SERVICE / MAINTENANCE CTA ═══════ */
