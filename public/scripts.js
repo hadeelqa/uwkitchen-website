@@ -2,7 +2,7 @@
 (function(){
   var card = document.getElementById('warrantyHover');
   if(!card) return;
-  var vid = card.querySelector('.warranty-card-bg');
+  var vid = card.querySelector('.warranty-side-vid');
   if(!vid) return;
   var play = function(){ try{ vid.playbackRate = 1.5; vid.play(); }catch(e){} card.classList.add('playing'); };
   var stop = function(){ vid.pause(); vid.currentTime = 0; card.classList.remove('playing'); };
