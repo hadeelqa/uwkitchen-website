@@ -84,7 +84,11 @@
       if(e.lengthComputable){
         var pct = Math.round((e.loaded / e.total) * 100);
         fill.style.width = pct + '%';
-        pText.textContent = pct + '%';
+        if(pct >= 100){
+          pText.textContent = '\u062C\u0627\u0631\u064A \u0627\u0644\u0645\u0639\u0627\u0644\u062C\u0629...';
+        } else {
+          pText.textContent = pct + '%';
+        }
       }
     });
 
@@ -245,14 +249,13 @@
       var input = wrap.querySelector('input[type=file]');
       if(!input.required) return;
       clearFileError(wrap);
-      if(!uploadResults[input.id]){
+      if(wrap.classList.contains('is-uploading')){
+        showFileError(wrap, '\u0627\u0644\u0645\u0644\u0641 \u0642\u064A\u062F \u0627\u0644\u0631\u0641\u0639\u060C \u0627\u0646\u062A\u0638\u0631 \u062D\u062A\u0649 \u064A\u0643\u062A\u0645\u0644');
+        valid = false;
+      } else if(!uploadResults[input.id]){
         showFileError(wrap, errorMsgs[input.name] || '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0645\u0644\u0641');
         valid = false;
       }
-    });
-    // Block submit if any upload is still in progress
-    form.querySelectorAll('.file-field.is-uploading').forEach(function(){
-      valid = false;
     });
     return valid;
   }
