@@ -650,7 +650,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .catalog-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(212,136,74,.08) 0%,transparent 55%);pointer-events:none}
 .catalog-inner{max-width:var(--content-max);margin:0 auto;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:40px}
 .catalog-inner--split{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;text-align:start}
-@media(min-width:960px){.catalog-inner--split{grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:56px}}
+@media(min-width:960px){.catalog-inner--split{grid-template-columns:1fr 1fr;gap:56px}}
 .catalog-body{display:flex;flex-direction:column;gap:28px;text-align:start;align-items:flex-start}
 .catalog-head{display:flex;flex-direction:column;gap:12px}
 .catalog-title{font-size:clamp(14px,1.6vw,17px);font-weight:500;color:rgba(255,255,255,.5);margin:-4px 0 0;line-height:1.5;letter-spacing:.2px}
