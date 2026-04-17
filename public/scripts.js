@@ -596,18 +596,19 @@ document.addEventListener('click', function(e){
     var district = document.getElementById('district').value.trim();
     var ticket = 'INQ-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random()*90000);
 
-    // Build FormData for FormSubmit (email backup)
-    var fd = new FormData();
-    fd.append('الاسم', fullName);
-    fd.append('رقم الجوال', phone);
-    fd.append('المدينة', city);
-    fd.append('الحي', district);
-    fd.append('نوع الطلب', 'طلب زيارة قياس');
-    fd.append('رقم التذكرة', ticket);
-    fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-    fd.append('_subject', 'طلب زيارة قياس جديد - ' + ticket);
-    fd.append('_template', 'table');
-    fd.append('_captcha', 'false');
+    // Build JSON payload for FormSubmit AJAX endpoint
+    var emailData = {
+      'الاسم': fullName,
+      'رقم الجوال': phone,
+      'المدينة': city,
+      'الحي': district,
+      'نوع الطلب': 'طلب زيارة قياس',
+      'رقم التذكرة': ticket,
+      'تاريخ الإرسال': new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}),
+      '_subject': 'طلب زيارة قياس جديد - ' + ticket,
+      '_template': 'table',
+      '_captcha': 'false'
+    };
 
     function onDone(){
       form.reset();
@@ -618,11 +619,11 @@ document.addEventListener('click', function(e){
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
     }
 
-    // Fire-and-forget email via FormSubmit (backup channel).
-    fetch('https://formsubmit.co/info@uwkitchens.com', {
+    // Send email via FormSubmit AJAX endpoint
+    fetch('https://formsubmit.co/ajax/info@uwkitchens.com', {
       method: 'POST',
-      mode: 'no-cors',
-      body: fd
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(emailData)
     }).catch(function(){});
 
     // Save ticket to Firestore (primary channel).

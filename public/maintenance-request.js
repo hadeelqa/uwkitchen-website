@@ -196,7 +196,7 @@
     media: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0623\u0648 \u0641\u064A\u062F\u064A\u0648'
   };
 
-  var FORMSUBMIT_URL = 'https://formsubmit.co/info@uwkitchens.com';
+  var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/info@uwkitchens.com';
   var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
 
   function showError(field, msg){
@@ -376,9 +376,8 @@
       var ticket = generateTicket(type);
       var attachments = getAttachments(form);
 
-      // Build a clean FormData for the email (exclude raw File inputs; FormSubmit
-      // free tier can't attach them anyway — send Cloudinary URLs instead).
-      var fd = new FormData();
+      // Build JSON payload for FormSubmit AJAX endpoint
+      var emailData = {};
       var fieldLabels = {
         firstName: 'الاسم الأول',
         middleName: 'الاسم الأوسط',
@@ -391,19 +390,23 @@
       Array.prototype.forEach.call(form.elements, function(el){
         if(!el.name || el.type === 'file' || el.type === 'submit' || el.type === 'button') return;
         var label = fieldLabels[el.name] || el.name;
-        fd.append(label, el.value);
+        emailData[label] = el.value;
       });
-      fd.append('نوع الطلب', typeLabels[type]);
-      fd.append('رقم التذكرة', ticket);
-      fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
+      emailData['نوع الطلب'] = typeLabels[type];
+      emailData['رقم التذكرة'] = ticket;
+      emailData['تاريخ الإرسال'] = new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
       var attachLabels = { contract: 'رابط العقد', media: 'رابط الصورة / الفيديو' };
       Object.keys(attachments).forEach(function(key){
-        fd.append(attachLabels[key] || (key + ' URL'), attachments[key].url);
+        emailData[attachLabels[key] || (key + ' URL')] = attachments[key].url;
       });
-      fd.append('_subject', subjects[type] + ' - ' + ticket);
-      fd.append('_template', 'table');
-      fd.append('_captcha', 'false');
-      fetch(FORMSUBMIT_URL, { method:'POST', mode:'no-cors', body: fd }).catch(function(){});
+      emailData['_subject'] = subjects[type] + ' - ' + ticket;
+      emailData['_template'] = 'table';
+      emailData['_captcha'] = 'false';
+      fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(emailData)
+      }).catch(function(){});
 
       // Save to Firestore (files already uploaded to Cloudinary)
       saveTicket(type, ticket, form, attachments)
