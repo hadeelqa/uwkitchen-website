@@ -19,6 +19,38 @@
   }, {passive:true});
 })();
 
+/* ═══════ CLADDING COLOR CAROUSEL ═══════ */
+(function(){
+  var cards = document.querySelectorAll('[data-cladding-card]');
+  if(!cards.length) return;
+  cards.forEach(function(card){
+    var slides = card.querySelectorAll('.cladding-slide');
+    var dots = card.querySelectorAll('.cladding-dot');
+    var viewer = card.querySelector('[data-cladding-viewer]');
+    if(!slides.length || !dots.length || !viewer) return;
+    function activate(i){
+      slides.forEach(function(s,idx){ s.classList.toggle('is-active', idx===i); });
+      dots.forEach(function(d,idx){
+        d.classList.toggle('is-active', idx===i);
+        d.setAttribute('aria-selected', idx===i ? 'true' : 'false');
+      });
+    }
+    dots.forEach(function(dot, i){
+      dot.addEventListener('click', function(e){
+        e.stopPropagation();
+        activate(i);
+      });
+    });
+    viewer.addEventListener('click', function(e){
+      if(e.target.closest('.cladding-dot')) return;
+      var active = card.querySelector('.cladding-slide.is-active');
+      if(active && typeof openLightbox === 'function'){
+        openLightbox(active.getAttribute('src'), active.getAttribute('alt') || '');
+      }
+    });
+  });
+})();
+
 /* ═══════ MOBILE NAV ═══════ */
 function closeNav(){
   const nl = document.getElementById('navLinks');
