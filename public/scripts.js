@@ -1,3 +1,24 @@
+/* ═══════ WARRANTY HOVER-TO-PLAY ═══════ */
+(function(){
+  var wp = document.getElementById('warrantyHover');
+  if(!wp) return;
+  var vid = wp.querySelector('.warranty-hover-vid');
+  if(!vid) return;
+  wp.addEventListener('mouseenter', function(){
+    vid.play(); wp.classList.add('playing');
+  });
+  wp.addEventListener('mouseleave', function(){
+    vid.pause(); vid.currentTime = 0; wp.classList.remove('playing');
+  });
+  wp.addEventListener('touchstart', function(){
+    if(wp.classList.contains('playing')){
+      vid.pause(); vid.currentTime = 0; wp.classList.remove('playing');
+    } else {
+      vid.play(); wp.classList.add('playing');
+    }
+  }, {passive:true});
+})();
+
 /* ═══════ MOBILE NAV ═══════ */
 function closeNav(){
   const nl = document.getElementById('navLinks');

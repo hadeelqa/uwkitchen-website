@@ -618,9 +618,30 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-compact-item-val{font-size:12px;font-weight:600;color:var(--gold)}
 .warranty-compact-terms{font-size:11px;color:rgba(255,255,255,.25);margin:0;flex-shrink:0}
 
-.warranty-visual{display:flex;justify-content:center;margin-top:24px;width:100%}
-.warranty-visual-single{max-width:480px;width:100%;aspect-ratio:4/3;border-radius:var(--radius-xl);overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-.warranty-visual-single img{width:100%;height:100%;object-fit:cover;display:block}
+/* ═══════ WARRANTY SECTION (redesigned) ═══════ */
+.warranty-section{padding:60px 16px;background:var(--white)}
+@media(min-width:1024px){.warranty-section{padding:80px 24px}}
+.warranty-layout{max-width:var(--content-max);margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
+@media(min-width:768px){.warranty-layout{grid-template-columns:1fr 1fr;gap:48px}}
+.warranty-media{display:flex;flex-direction:column;gap:12px}
+.warranty-hover-player{position:relative;border-radius:var(--radius-xl);overflow:hidden;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);cursor:pointer}
+.warranty-hover-img,.warranty-hover-vid{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;transition:opacity .5s ease}
+.warranty-hover-vid{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+.warranty-hover-player.playing .warranty-hover-img{opacity:0}
+.warranty-hover-player.playing .warranty-hover-vid{opacity:1}
+.warranty-hover-hint{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border-radius:var(--radius-full);color:#fff;font-size:12px;font-weight:500;transition:opacity .3s;pointer-events:none}
+.warranty-hover-player.playing .warranty-hover-hint{opacity:0}
+.warranty-content{display:flex;flex-direction:column;gap:20px}
+.warranty-content-head{display:flex;align-items:center;gap:12px}
+.warranty-content-head svg{flex-shrink:0}
+.warranty-content-title{font-size:clamp(20px,3vw,26px);font-weight:700;color:#fff;margin:0}
+.warranty-list{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-xl);overflow:hidden}
+.warranty-list-row{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
+.warranty-list-row:last-child{border-bottom:none}
+.warranty-list-row:hover{background:rgba(255,255,255,.03)}
+.warranty-list-name{font-size:15px;color:rgba(255,255,255,.7)}
+.warranty-list-val{font-size:15px;font-weight:700;color:var(--gold)}
+.warranty-terms{font-size:11px;color:rgba(255,255,255,.25);margin:0}
 
 /* ═══════ SERVICE / MAINTENANCE CTA ═══════ */
 .service-cta{padding:60px 16px;background:var(--white)}
