@@ -655,7 +655,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .catalog-head{display:flex;flex-direction:column;gap:12px}
 .catalog-title{font-size:clamp(14px,1.6vw,17px);font-weight:500;color:rgba(255,255,255,.5);margin:-4px 0 0;line-height:1.5;letter-spacing:.2px}
 .catalog-bignum{display:flex;align-items:baseline;gap:10px;margin:8px 0 4px;line-height:1}
-.catalog-bignum-value{font-size:clamp(72px,11vw,130px);font-weight:800;color:var(--gold);letter-spacing:-4px;line-height:.9;background:linear-gradient(180deg,var(--gold) 0%,rgba(212,136,74,.55) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 80px rgba(212,136,74,.25)}
+.catalog-bignum-value{font-size:clamp(56px,8vw,96px);font-weight:800;color:var(--gold);letter-spacing:-3px;line-height:.9;background:linear-gradient(180deg,var(--gold) 0%,rgba(212,136,74,.55) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 80px rgba(212,136,74,.25)}
 .catalog-bignum-label{font-size:clamp(18px,2.5vw,24px);font-weight:500;color:rgba(255,255,255,.55)}
 .catalog-subtitle{font-size:clamp(16px,2vw,20px);font-weight:600;color:#fff;margin:0}
 .catalog-desc{font-size:15px;line-height:1.8;color:rgba(255,255,255,.6);margin:0}
