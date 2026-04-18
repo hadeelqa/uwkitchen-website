@@ -377,8 +377,8 @@
       var ticket = generateTicket(type);
       var attachments = getAttachments(form);
 
-      // Build JSON payload for FormSubmit AJAX endpoint
-      var emailData = {};
+      // Build FormData for FormSubmit AJAX endpoint (FormData avoids CORS preflight)
+      var fd = new FormData();
       var fieldLabels = {
         firstName: 'الاسم الأول',
         middleName: 'الاسم الأوسط',
@@ -391,24 +391,23 @@
       Array.prototype.forEach.call(form.elements, function(el){
         if(!el.name || el.type === 'file' || el.type === 'submit' || el.type === 'button') return;
         var label = fieldLabels[el.name] || el.name;
-        emailData[label] = el.value;
+        fd.append(label, el.value);
       });
-      emailData['نوع الطلب'] = typeLabels[type];
-      emailData['رقم التذكرة'] = ticket;
-      emailData['تاريخ الإرسال'] = new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+      fd.append('نوع الطلب', typeLabels[type]);
+      fd.append('رقم التذكرة', ticket);
+      fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
       var attachLabels = { contract: 'رابط العقد', media: 'رابط الصورة / الفيديو' };
       Object.keys(attachments).forEach(function(key){
-        emailData[attachLabels[key] || (key + ' URL')] = attachments[key].url;
+        fd.append(attachLabels[key] || (key + ' URL'), attachments[key].url);
       });
-      emailData['_subject'] = subjects[type] + ' - ' + ticket;
-      emailData['_template'] = 'table';
-      emailData['_captcha'] = 'false';
-      if(window.console) console.log('[FormSubmit payload]', JSON.parse(JSON.stringify(emailData)));
+      fd.append('_subject', subjects[type] + ' - ' + ticket);
+      fd.append('_template', 'table');
+      fd.append('_captcha', 'false');
       fetch(FORMSUBMIT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(emailData)
-      }).catch(function(){});
+        body: fd
+      }).then(function(r){ if(window.console) console.log('[FormSubmit]', r.status, r.statusText); })
+        .catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
 
       // Save to Firestore (files already uploaded to Cloudinary)
       saveTicket(type, ticket, form, attachments)

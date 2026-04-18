@@ -596,19 +596,18 @@ document.addEventListener('click', function(e){
     var district = document.getElementById('district').value.trim();
     var ticket = 'INQ-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random()*90000);
 
-    // Build JSON payload for FormSubmit AJAX endpoint
-    var emailData = {
-      'الاسم': fullName,
-      'رقم الجوال': phone,
-      'المدينة': city,
-      'الحي': district,
-      'نوع الطلب': 'طلب زيارة قياس',
-      'رقم التذكرة': ticket,
-      'تاريخ الإرسال': new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}),
-      '_subject': 'طلب زيارة قياس جديد - ' + ticket,
-      '_template': 'table',
-      '_captcha': 'false'
-    };
+    // Build FormData for FormSubmit AJAX endpoint (FormData avoids CORS preflight)
+    var fd = new FormData();
+    fd.append('الاسم', fullName);
+    fd.append('رقم الجوال', phone);
+    fd.append('المدينة', city);
+    fd.append('الحي', district);
+    fd.append('نوع الطلب', 'طلب زيارة قياس');
+    fd.append('رقم التذكرة', ticket);
+    fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
+    fd.append('_subject', 'طلب زيارة قياس جديد - ' + ticket);
+    fd.append('_template', 'table');
+    fd.append('_captcha', 'false');
 
     function onDone(){
       form.reset();
@@ -622,9 +621,9 @@ document.addEventListener('click', function(e){
     // Send email via FormSubmit AJAX endpoint (hash = info@uwkitchens.com)
     fetch('https://formsubmit.co/ajax/7e9f3fee2b5908c9cff14902a24a31f4', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(emailData)
-    }).catch(function(){});
+      body: fd
+    }).then(function(r){ if(window.console) console.log('[FormSubmit]', r.status, r.statusText); })
+      .catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
 
     // Save ticket to Firestore (primary channel).
     var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
