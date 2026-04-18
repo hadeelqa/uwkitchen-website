@@ -466,8 +466,9 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .process-card-num{position:absolute;top:16px;left:20px;font-size:48px;font-weight:800;color:rgba(255,255,255,.04);line-height:1;pointer-events:none}
 .process-card-icon{width:52px;height:52px;border-radius:var(--radius-md);background:rgba(237,172,110,.1);border:1px solid rgba(237,172,110,.15);display:flex;align-items:center;justify-content:center}
 .process-card-icon svg{width:24px;height:24px;stroke:var(--gold)}
-.process-card-title{font-weight:600;font-size:17px;color:#fff}
-.process-card-desc{font-weight:400;color:var(--text-sub);font-size:var(--text-xs);line-height:1.7}
+.process-card-title{font-weight:600;font-size:17px;color:#fff;margin:0}
+.process-card-desc{font-weight:400;color:var(--text-sub);font-size:var(--text-xs);line-height:1.7;margin:0}
+.process-card-text{display:flex;flex-direction:column;gap:6px}
 
 /* Video preview */
 .video-preview{position:relative;width:100%;max-width:800px;aspect-ratio:16/9;border-radius:var(--radius-xl);overflow:hidden;background:var(--bg-secondary)}
