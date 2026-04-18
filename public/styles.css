@@ -624,15 +624,15 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 @media(min-width:1024px){.warranty-section{padding:80px 24px}}
 .warranty-card{max-width:var(--content-max);margin:0 auto;display:grid;grid-template-columns:1fr;gap:24px;padding:0;border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(255,255,255,.035) 0%,rgba(212,136,74,.045) 100%);border:1px solid rgba(212,136,74,.18);box-shadow:0 20px 50px -20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);position:relative;overflow:hidden}
 .warranty-card::before{content:'';position:absolute;inset:-1px;background:radial-gradient(circle at 0% 50%,rgba(212,136,74,.1) 0%,transparent 40%);pointer-events:none;z-index:1}
-.warranty-main{position:relative;z-index:2;display:flex;flex-direction:column;gap:28px;align-items:center;text-align:center;padding:28px 20px}
-@media(min-width:768px){.warranty-card{grid-template-columns:3fr 2fr;gap:0;align-items:stretch}.warranty-main{align-items:flex-start;text-align:start;gap:32px;padding:40px 44px}}
+.warranty-main{position:relative;z-index:2;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;padding:24px 20px}
+@media(min-width:768px){.warranty-card{grid-template-columns:3fr 2fr;gap:0;align-items:stretch}.warranty-main{align-items:flex-start;text-align:start;gap:24px;padding:32px 36px}}
 .warranty-side{display:none}
 @media(min-width:768px){.warranty-side{display:block;position:relative;z-index:2;overflow:hidden;align-self:stretch;background:rgba(255,255,255,.04);border-inline-start:1px solid rgba(212,136,74,.2);border-top-right-radius:0;border-bottom-right-radius:0;cursor:pointer}}
 .warranty-side-img,.warranty-side-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-top-right-radius:0;border-bottom-right-radius:0}
 .warranty-side-vid{opacity:0;transition:opacity .5s ease}
 .warranty-side.playing .warranty-side-vid{opacity:1}
 /* -- Stamp / Seal -- */
-.warranty-seal{position:relative;width:clamp(170px,22vw,210px);aspect-ratio:1;flex-shrink:0;transform:rotate(-6deg);transition:transform .6s var(--ease-out);filter:drop-shadow(0 14px 30px rgba(0,0,0,.45)) drop-shadow(0 0 28px rgba(212,136,74,.18))}
+.warranty-seal{position:relative;width:clamp(120px,16vw,160px);aspect-ratio:1;flex-shrink:0;transform:rotate(-6deg);transition:transform .6s var(--ease-out);filter:drop-shadow(0 10px 20px rgba(0,0,0,.4)) drop-shadow(0 0 18px rgba(212,136,74,.15))}
 .warranty-card:hover .warranty-seal{transform:rotate(-3deg) scale(1.02)}
 .warranty-seal-ring{position:absolute;inset:0;width:100%;height:100%;animation:warrantySpin 28s linear infinite}
 @keyframes warrantySpin{to{transform:rotate(360deg)}}
@@ -648,11 +648,11 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-seal-sparkle--l{top:50%;inset-inline-start:8px;transform:translateY(-50%)}
 .warranty-seal-sparkle--r{top:50%;inset-inline-end:8px;transform:translateY(-50%)}
 /* -- Copy -- */
-.warranty-copy{position:relative;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;min-width:0}
+.warranty-copy{position:relative;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;min-width:0}
 @media(min-width:768px){.warranty-copy{align-items:flex-start;text-align:start}}
-.warranty-copy-eyebrow{display:inline-block;font-size:12px;font-weight:600;color:var(--gold);padding:6px 14px;border:1px solid rgba(212,136,74,.35);border-radius:var(--radius-full);background:rgba(212,136,74,.06)}
-.warranty-copy-title{font-size:clamp(24px,3.4vw,34px);font-weight:700;color:#fff;margin:0;line-height:1.25;letter-spacing:0}
-.warranty-copy-body{font-size:15px;line-height:1.85;color:rgba(255,255,255,.72);margin:0;max-width:56ch}
+.warranty-copy-eyebrow{display:inline-block;font-size:11px;font-weight:600;color:var(--gold);padding:5px 12px;border:1px solid rgba(212,136,74,.35);border-radius:var(--radius-full);background:rgba(212,136,74,.06)}
+.warranty-copy-title{font-size:clamp(20px,2.8vw,28px);font-weight:700;color:#fff;margin:0;line-height:1.25;letter-spacing:0}
+.warranty-copy-body{font-size:14px;line-height:1.75;color:rgba(255,255,255,.72);margin:0;max-width:56ch}
 @media (prefers-reduced-motion: reduce){.warranty-seal-ring{animation:none}}
 
 /* ═══════ CATALOG / COMPANY PROFILE SECTION ═══════ */
