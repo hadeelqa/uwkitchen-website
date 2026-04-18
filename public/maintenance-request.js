@@ -403,6 +403,7 @@
       emailData['_subject'] = subjects[type] + ' - ' + ticket;
       emailData['_template'] = 'table';
       emailData['_captcha'] = 'false';
+      if(window.console) console.log('[FormSubmit payload]', JSON.parse(JSON.stringify(emailData)));
       fetch(FORMSUBMIT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
