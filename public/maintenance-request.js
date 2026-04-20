@@ -196,8 +196,11 @@
     media: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0623\u0648 \u0641\u064A\u062F\u064A\u0648'
   };
 
-  // FormSubmit AJAX endpoint (hash maps to info@uwkitchens.com)
-  var FORMSUBMIT_URL = 'https://formsubmit.co/ajax/7e9f3fee2b5908c9cff14902a24a31f4';
+  // FormSubmit regular endpoint (hash maps to info@uwkitchens.com).
+  // NOTE: must be the non-/ajax/ endpoint — the AJAX endpoint does not
+  // support file attachments. We POST with mode:'no-cors' so multipart
+  // /form-data goes through without a CORS preflight.
+  var FORMSUBMIT_URL = 'https://formsubmit.co/7e9f3fee2b5908c9cff14902a24a31f4';
   var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
 
   function showError(field, msg){
@@ -377,7 +380,12 @@
       var ticket = generateTicket(type);
       var attachments = getAttachments(form);
 
-      // Build FormData for FormSubmit AJAX endpoint (FormData avoids CORS preflight)
+      // Build FormData for FormSubmit regular endpoint.
+      // Text fields use Arabic labels so the email table is readable.
+      // File inputs are appended as real attachments (FormSubmit supports
+      // attachments on the non-/ajax/ endpoint only). Cloudinary URLs are
+      // NOT included in the email body — they're stored in Firestore for
+      // the admin panel. This keeps the table compact and readable.
       var fd = new FormData();
       var fieldLabels = {
         firstName: 'الاسم الأول',
@@ -396,18 +404,24 @@
       fd.append('نوع الطلب', typeLabels[type]);
       fd.append('رقم التذكرة', ticket);
       fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-      var attachLabels = { contract: 'رابط العقد', media: 'رابط الصورة / الفيديو' };
-      Object.keys(attachments).forEach(function(key){
-        fd.append(attachLabels[key] || (key + ' URL'), attachments[key].url);
+      // Attach actual files from file inputs (real email attachments).
+      var fileLabels = { contract: 'العقد', media: 'الصورة / الفيديو' };
+      form.querySelectorAll('input[type=file]').forEach(function(input){
+        if(input.files && input.files[0]){
+          var label = fileLabels[input.name] || input.name;
+          fd.append(label, input.files[0], input.files[0].name);
+        }
       });
       fd.append('_subject', subjects[type] + ' - ' + ticket);
       fd.append('_template', 'table');
       fd.append('_captcha', 'false');
+      // no-cors: browser won't read response, but multipart POST still
+      // delivers to FormSubmit (avoids CORS preflight on the non-/ajax/ URL).
       fetch(FORMSUBMIT_URL, {
         method: 'POST',
+        mode: 'no-cors',
         body: fd
-      }).then(function(r){ if(window.console) console.log('[FormSubmit]', r.status, r.statusText); })
-        .catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
+      }).catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
 
       // Save to Firestore (files already uploaded to Cloudinary)
       saveTicket(type, ticket, form, attachments)
