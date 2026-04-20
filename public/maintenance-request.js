@@ -381,11 +381,11 @@
       var attachments = getAttachments(form);
 
       // Build FormData for FormSubmit regular endpoint.
-      // Text fields use Arabic labels so the email table is readable.
-      // File inputs are appended as real attachments (FormSubmit supports
-      // attachments on the non-/ajax/ endpoint only). Cloudinary URLs are
-      // NOT included in the email body — they're stored in Firestore for
-      // the admin panel. This keeps the table compact and readable.
+      // Text fields use Arabic labels so the email is readable.
+      // Small files are appended as real attachments; files over
+      // ATTACH_MAX_MB are sent as Cloudinary URLs instead so the email
+      // doesn't exceed FormSubmit's per-request limit (~25MB).
+      var ATTACH_MAX_MB = 10;
       var fd = new FormData();
       var fieldLabels = {
         firstName: 'الاسم الأول',
@@ -404,16 +404,25 @@
       fd.append('نوع الطلب', typeLabels[type]);
       fd.append('رقم التذكرة', ticket);
       fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-      // Attach actual files from file inputs (real email attachments).
+      // Size-based attachment strategy: small files → real attachment,
+      // large files → Cloudinary URL in the email body.
       var fileLabels = { contract: 'العقد', media: 'الصورة / الفيديو' };
       form.querySelectorAll('input[type=file]').forEach(function(input){
-        if(input.files && input.files[0]){
-          var label = fileLabels[input.name] || input.name;
-          fd.append(label, input.files[0], input.files[0].name);
+        if(!input.files || !input.files[0]) return;
+        var file = input.files[0];
+        var label = fileLabels[input.name] || input.name;
+        if(file.size <= ATTACH_MAX_MB * 1024 * 1024){
+          fd.append(label, file, file.name);
+        } else {
+          var cloud = uploadResults[input.id];
+          var url = cloud && cloud.url;
+          if(url){
+            fd.append('رابط ' + label, url + ' (الملف كبير — افتح الرابط لمشاهدته)');
+          }
         }
       });
       fd.append('_subject', subjects[type] + ' - ' + ticket);
-      fd.append('_template', 'table');
+      fd.append('_template', 'box');
       fd.append('_captcha', 'false');
       // no-cors: browser won't read response, but multipart POST still
       // delivers to FormSubmit (avoids CORS preflight on the non-/ajax/ URL).
