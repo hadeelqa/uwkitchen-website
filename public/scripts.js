@@ -32,7 +32,33 @@
         activate(i);
       });
     });
+    // Touch swipe (mobile): swipe left = next, swipe right = previous
+    var touchStartX = null, touchStartY = null, swipeHandled = false;
+    viewer.addEventListener('touchstart', function(e){
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      swipeHandled = false;
+    }, {passive:true});
+    viewer.addEventListener('touchmove', function(e){
+      if(touchStartX === null) return;
+      var dx = e.touches[0].clientX - touchStartX;
+      var dy = e.touches[0].clientY - touchStartY;
+      // only act if horizontal motion exceeds vertical and passes threshold
+      if(!swipeHandled && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+        swipeHandled = true;
+        var activeIdx = 0;
+        slides.forEach(function(s,i){ if(s.classList.contains('is-active')) activeIdx = i; });
+        var newIdx = dx < 0
+          ? Math.min(slides.length - 1, activeIdx + 1)  // swipe left → next
+          : Math.max(0, activeIdx - 1);                  // swipe right → previous
+        if(newIdx !== activeIdx) activate(newIdx);
+      }
+    }, {passive:true});
+    viewer.addEventListener('touchend', function(){
+      touchStartX = null; touchStartY = null;
+    }, {passive:true});
     viewer.addEventListener('click', function(e){
+      if(swipeHandled) return; // ignore click that came from a swipe
       if(e.target.closest('.cladding-dot')) return;
       if(typeof openLightbox !== 'function') return;
       var gallery = Array.prototype.map.call(slides, function(s){
@@ -152,7 +178,6 @@ if(heroImg && window.innerWidth >= 768){
 const pTrack = document.getElementById('partnersTrack');
 if(pTrack){
   const partners = [
-    {name:'سابك', logo:'images/partners/Property 1=Sabic.svg'},
     {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
     {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
     {name:'رتال', logo:'images/partners/Property 1=Retal.svg'},
@@ -161,8 +186,7 @@ if(pTrack){
     {name:'سمو العقارية', logo:'images/partners/Property 1=Somu.svg'},
     {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
     {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
-    {name:'أساس مكين', logo:'images/partners/makeen.webp'},
-    {name:'الهيئة السعودية للمقاولين', logo:'images/partners/20220513231301!شعار_الهيئة_السعودية_للمقاولين.png'}
+    {name:'أساس مكين', logo:'images/partners/makeen.webp'}
   ];
   for(var c=0;c<2;c++){
     partners.forEach(function(p){
