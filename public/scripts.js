@@ -186,7 +186,18 @@ if(pTrack){
     {name:'سمو العقارية', logo:'images/partners/Property 1=Somu.svg'},
     {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
     {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
-    {name:'أساس مكين', logo:'images/partners/makeen.webp'}
+    {name:'أساس مكين', logo:'images/partners/makeen.webp'},
+    {name:'عبد اللطيف جميل', logo:'images/partners/abdul-latif-jameel.png'},
+    {name:'دار الأركان', logo:'images/partners/dar-arkan.png'},
+    {name:'إعمار', logo:'images/partners/emaar.png'},
+    {name:'أجدان', logo:'images/partners/ajdan.png'},
+    {name:'العجلان', logo:'images/partners/alajlan.png'},
+    {name:'منازل', logo:'images/partners/manazel.png'},
+    {name:'كالما', logo:'images/partners/calma.png'},
+    {name:'الوان', logo:'images/partners/alwan.png'},
+    {name:'تالكو', logo:'images/partners/talco.png'},
+    {name:'إلبا', logo:'images/partners/elba.png'},
+    {name:'بلوم', logo:'images/partners/blum.png'}
   ];
   for(var c=0;c<2;c++){
     partners.forEach(function(p){

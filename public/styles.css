@@ -629,6 +629,11 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .warranty-seal-col{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:24px 12px}
 @media(min-width:768px){.warranty-seal-col{padding:20px 8px;border-inline-end:1px solid rgba(212,136,74,.12)}}
 .warranty-side{display:none}
+/* Mobile-only warranty visual: seal + video shown above copy on phones */
+.warranty-mobile-visual{display:flex;flex-direction:column;align-items:center;gap:16px;padding:24px 20px 8px;position:relative;z-index:2}
+.warranty-mobile-seal{width:120px;height:auto;transform:rotate(-6deg);filter:drop-shadow(0 8px 18px rgba(0,0,0,.4)) drop-shadow(0 0 12px rgba(212,136,74,.18))}
+.warranty-mobile-vid{width:100%;max-width:360px;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius-lg);background:rgba(0,0,0,.3)}
+@media(min-width:768px){.warranty-mobile-visual{display:none}}
 @media(min-width:768px){.warranty-side{display:block;position:relative;z-index:2;overflow:hidden;align-self:stretch;background:rgba(255,255,255,.04);border-inline-start:1px solid rgba(212,136,74,.2);border-top-right-radius:0;border-bottom-right-radius:0;cursor:pointer}}
 .warranty-side-img,.warranty-side-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-top-right-radius:0;border-bottom-right-radius:0}
 .warranty-side-vid{opacity:0;transition:opacity .5s ease}
