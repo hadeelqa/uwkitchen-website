@@ -427,8 +427,10 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .partners-title{font-weight:400;color:var(--text-sub);font-size:18px;padding-inline:var(--content-pad)}
 @media(min-width:1232px){.partners-title{padding-inline:0}}
 .partners-marquee{width:100%;overflow:hidden}
-.partners-grid{display:flex;gap:0;width:max-content;animation:partnersScroll 25s linear infinite}
+.partners-grid{display:flex;gap:0;width:max-content;animation:partnersScroll 60s linear infinite}
 .partners-grid:hover{animation-play-state:paused}
+@media(min-width:768px){.partners-grid{animation-duration:45s}}
+@media(min-width:1024px){.partners-grid{animation-duration:35s}}
 @keyframes partnersScroll{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
 .partner-cell{display:flex;align-items:center;justify-content:center;padding:22px 32px;flex-shrink:0}
 .partner-logo{height:46px;width:auto;max-width:120px;object-fit:contain;opacity:.45;filter:brightness(0) invert(1);transition:opacity .4s,transform .3s}

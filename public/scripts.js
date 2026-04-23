@@ -1,13 +1,15 @@
-/* ═══════ WARRANTY SIDE IMAGE HOVER-TO-PLAY VIDEO ═══════ */
+/* ═══════ LAZY VIDEO PLAYBACK — play only when in view to avoid autoplay throttling ═══════ */
 (function(){
-  var side = document.querySelector('.warranty-side');
-  if(!side) return;
-  var vid = side.querySelector('.warranty-side-vid');
-  if(!vid) return;
-  var play = function(){ try{ vid.playbackRate = 1; vid.play(); }catch(e){} side.classList.add('playing'); };
-  var stop = function(){ vid.pause(); vid.currentTime = 0; side.classList.remove('playing'); };
-  side.addEventListener('mouseenter', play);
-  side.addEventListener('mouseleave', stop);
+  var vids = document.querySelectorAll('.warranty-side-vid, .warranty-mobile-vid, .factory-intro-video video');
+  if(!vids.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var v = e.target;
+      if(e.isIntersecting){ v.play().catch(function(){}); }
+      else { v.pause(); }
+    });
+  },{threshold:0.15});
+  vids.forEach(function(v){ io.observe(v); });
 })();
 
 /* ═══════ CLADDING COLOR CAROUSEL ═══════ */
