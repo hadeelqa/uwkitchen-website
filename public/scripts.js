@@ -1,3 +1,78 @@
+/* ═══════ LAZY VIDEO PLAYBACK — play only when in view to avoid autoplay throttling ═══════ */
+(function(){
+  var vids = document.querySelectorAll('.warranty-side-vid, .warranty-mobile-vid, .factory-intro-video video');
+  if(!vids.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var v = e.target;
+      if(e.isIntersecting){ v.play().catch(function(){}); }
+      else { v.pause(); }
+    });
+  },{threshold:0.15});
+  vids.forEach(function(v){ io.observe(v); });
+})();
+
+/* ═══════ CLADDING COLOR CAROUSEL ═══════ */
+(function(){
+  var cards = document.querySelectorAll('[data-cladding-card]');
+  if(!cards.length) return;
+  cards.forEach(function(card){
+    var slides = card.querySelectorAll('.cladding-slide');
+    var dots = card.querySelectorAll('.cladding-dot');
+    var viewer = card.querySelector('[data-cladding-viewer]');
+    if(!slides.length || !dots.length || !viewer) return;
+    function activate(i){
+      slides.forEach(function(s,idx){ s.classList.toggle('is-active', idx===i); });
+      dots.forEach(function(d,idx){
+        d.classList.toggle('is-active', idx===i);
+        d.setAttribute('aria-selected', idx===i ? 'true' : 'false');
+      });
+    }
+    dots.forEach(function(dot, i){
+      dot.addEventListener('click', function(e){
+        e.stopPropagation();
+        activate(i);
+      });
+    });
+    // Touch swipe (mobile): swipe left = next, swipe right = previous
+    var touchStartX = null, touchStartY = null, swipeHandled = false;
+    viewer.addEventListener('touchstart', function(e){
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      swipeHandled = false;
+    }, {passive:true});
+    viewer.addEventListener('touchmove', function(e){
+      if(touchStartX === null) return;
+      var dx = e.touches[0].clientX - touchStartX;
+      var dy = e.touches[0].clientY - touchStartY;
+      // only act if horizontal motion exceeds vertical and passes threshold
+      if(!swipeHandled && Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+        swipeHandled = true;
+        var activeIdx = 0;
+        slides.forEach(function(s,i){ if(s.classList.contains('is-active')) activeIdx = i; });
+        var newIdx = dx < 0
+          ? Math.min(slides.length - 1, activeIdx + 1)  // swipe left → next
+          : Math.max(0, activeIdx - 1);                  // swipe right → previous
+        if(newIdx !== activeIdx) activate(newIdx);
+      }
+    }, {passive:true});
+    viewer.addEventListener('touchend', function(){
+      touchStartX = null; touchStartY = null;
+    }, {passive:true});
+    viewer.addEventListener('click', function(e){
+      if(swipeHandled) return; // ignore click that came from a swipe
+      if(e.target.closest('.cladding-dot')) return;
+      if(typeof openLightbox !== 'function') return;
+      var gallery = Array.prototype.map.call(slides, function(s){
+        return { src: s.getAttribute('src'), alt: s.getAttribute('alt') || '' };
+      });
+      var activeIdx = 0;
+      slides.forEach(function(s,i){ if(s.classList.contains('is-active')) activeIdx = i; });
+      openLightbox(gallery[activeIdx].src, gallery[activeIdx].alt, gallery, activeIdx);
+    });
+  });
+})();
+
 /* ═══════ MOBILE NAV ═══════ */
 function closeNav(){
   const nl = document.getElementById('navLinks');
@@ -105,7 +180,6 @@ if(heroImg && window.innerWidth >= 768){
 const pTrack = document.getElementById('partnersTrack');
 if(pTrack){
   const partners = [
-    {name:'سابك', logo:'images/partners/Property 1=Sabic.svg'},
     {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
     {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
     {name:'رتال', logo:'images/partners/Property 1=Retal.svg'},
@@ -115,7 +189,17 @@ if(pTrack){
     {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
     {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
     {name:'أساس مكين', logo:'images/partners/makeen.webp'},
-    {name:'الهيئة السعودية للمقاولين', logo:'images/partners/20220513231301!شعار_الهيئة_السعودية_للمقاولين.png'}
+    {name:'عبد اللطيف جميل', logo:'images/partners/abdul-latif-jameel.png'},
+    {name:'دار الأركان', logo:'images/partners/dar-arkan.png'},
+    {name:'إعمار', logo:'images/partners/emaar.png'},
+    {name:'أجدان', logo:'images/partners/ajdan.png'},
+    {name:'العجلان', logo:'images/partners/alajlan.png'},
+    {name:'منازل', logo:'images/partners/manazel.png'},
+    {name:'كالما', logo:'images/partners/calma.png'},
+    {name:'الوان', logo:'images/partners/alwan.png'},
+    {name:'تالكو', logo:'images/partners/talco.png'},
+    {name:'إلبا', logo:'images/partners/elba.png'},
+    {name:'بلوم', logo:'images/partners/blum.png'}
   ];
   for(var c=0;c<2;c++){
     partners.forEach(function(p){
@@ -199,58 +283,32 @@ fillRowDOM('testRow2', row2Data);
 const kitchensGrid = document.getElementById('kitchensGrid');
 if(kitchensGrid){
   const kitchenPhotos = [
-    {src:'images/kitchens/kitchen-01.webp', alt:'مطبخ عصري أبيض'},
-    {src:'images/kitchens/kitchen-02.webp', alt:'مطبخ خشبي حديث'},
-    {src:'images/kitchens/kitchen-03.webp', alt:'مطبخ رمادي أنيق'},
-    {src:'images/kitchens/kitchen-04.webp', alt:'مطبخ كلاسيكي فاتح'},
-    {src:'images/kitchens/kitchen-05.webp', alt:'مطبخ مودرن مع جزيرة'},
-    {src:'images/kitchens/kitchen-06.webp', alt:'مطبخ داكن فاخر'},
-    {src:'images/kitchens/kitchen-07.webp', alt:'مطبخ بيج مع إضاءة'},
-    {src:'images/kitchens/kitchen-08.webp', alt:'مطبخ خشب ورخام'},
-    {src:'images/kitchens/kitchen-09.webp', alt:'مطبخ أبيض واسع'},
-    {src:'images/kitchens/kitchen-10.webp', alt:'مطبخ عملي مدمج'},
-    {src:'images/kitchens/kitchen-11.webp', alt:'مطبخ زاوية حديث'},
-    {src:'images/kitchens/kitchen-12.webp', alt:'مطبخ رخام فاخر'},
-    {src:'images/kitchens/kitchen-13.webp', alt:'مطبخ خشبي دافئ'},
-    {src:'images/kitchens/kitchen-14.webp', alt:'مطبخ مفتوح عصري'},
-    {src:'images/kitchens/kitchen-15.webp', alt:'مطبخ أبيض مع رفوف'},
-    {src:'images/kitchens/kitchen-16.webp', alt:'مطبخ رمادي مع جزيرة'},
-    {src:'images/kitchens/kitchen-17.webp', alt:'مطبخ كريمي أنيق'},
-    {src:'images/kitchens/kitchen-18.webp', alt:'مطبخ خشب طبيعي'},
-    {src:'images/kitchens/kitchen-19.webp', alt:'مطبخ مودرن داكن'},
-    {src:'images/kitchens/kitchen-20.webp', alt:'مطبخ فسيح مع بار'},
-    {src:'images/kitchens/kitchen-21.webp', alt:'مطبخ أبيض كلاسيكي'},
-    {src:'images/kitchens/kitchen-22.webp', alt:'مطبخ رمادي مع إضاءة'},
-    {src:'images/kitchens/kitchen-23.webp', alt:'مطبخ خشب وأبيض'},
-    {src:'images/kitchens/kitchen-24.webp', alt:'مطبخ زجاج وخشب'},
-    {src:'images/kitchens/kitchen-25.webp', alt:'مطبخ عصري مفتوح'},
-    {src:'images/kitchens/kitchen-26.webp', alt:'مطبخ بيج فاتح'},
-    {src:'images/kitchens/kitchen-27.webp', alt:'مطبخ مع خزائن عالية'},
-    {src:'images/kitchens/kitchen-28.webp', alt:'مطبخ رخام أبيض'},
-    {src:'images/kitchens/kitchen-29.webp', alt:'مطبخ خشبي مع جزيرة'},
-    {src:'images/kitchens/kitchen-30.webp', alt:'مطبخ رمادي فاخر'},
-    {src:'images/kitchens/kitchen-31.webp', alt:'مطبخ حديث بإنارة'},
-    {src:'images/kitchens/kitchen-32.webp', alt:'مطبخ أبيض وذهبي'},
-    {src:'images/kitchens/kitchen-33.webp', alt:'مطبخ مدمج عملي'},
-    {src:'images/kitchens/kitchen-34.webp', alt:'مطبخ واسع مع بار'},
-    {src:'images/kitchens/kitchen-35.webp', alt:'مطبخ كريمي مع رخام'},
-    {src:'images/kitchens/kitchen-36.webp', alt:'مطبخ خشبي أنيق'},
-    {src:'images/kitchens/kitchen-37.webp', alt:'مطبخ أبيض بتصميم L'},
-    {src:'images/kitchens/kitchen-38.webp', alt:'مطبخ رمادي مع خشب'},
-    {src:'images/kitchens/kitchen-39.webp', alt:'مطبخ فاتح مع إضاءة'},
-    {src:'images/kitchens/kitchen-40.webp', alt:'مطبخ كلاسيكي فخم'},
-    {src:'images/kitchens/kitchen-41.webp', alt:'مطبخ مودرن مع زجاج'},
-    {src:'images/kitchens/kitchen-42.webp', alt:'مطبخ خشب داكن'},
-    {src:'images/kitchens/kitchen-43.webp', alt:'مطبخ أبيض مع جزيرة كبيرة'},
-    {src:'images/kitchens/kitchen-44.webp', alt:'مطبخ رمادي عصري'},
-    {src:'images/kitchens/kitchen-45.webp', alt:'مطبخ بيج مع رفوف مضيئة'},
-    {src:'images/kitchens/kitchen-46.webp', alt:'مطبخ خشب فاتح'},
-    {src:'images/kitchens/kitchen-47.webp', alt:'مطبخ أبيض مع رخام رمادي'},
-    {src:'images/kitchens/kitchen-48.webp', alt:'مطبخ عملي زاوية'},
-    {src:'images/kitchens/kitchen-49.webp', alt:'مطبخ فاخر مع إنارة'},
-    {src:'images/kitchens/kitchen-50.webp', alt:'مطبخ حديث مع بار جلوس'},
+    {src:'images/kitchens/featured/01-classic-white-gas.webp', alt:'مطبخ كلاسيكي أبيض'},
+    {src:'images/kitchens/featured/02-modern-walnut-galley.webp', alt:'مطبخ خشب جوز مودرن'},
+    {src:'images/kitchens/featured/03-dark-matte-island.webp', alt:'مطبخ داكن مات بجزيرة'},
+    {src:'images/kitchens/featured/04-minimal-white-cooktop.webp', alt:'مطبخ أبيض مينيمال'},
+    {src:'images/kitchens/featured/05-shaker-white-island.webp', alt:'مطبخ شيكر أبيض'},
+    {src:'images/kitchens/featured/06-walnut-marble-barstools.webp', alt:'مطبخ جوز ورخام بكراسي بار'},
+    {src:'images/kitchens/featured/07-grey-glass-cabinets.webp', alt:'مطبخ رمادي بخزائن زجاج'},
+    {src:'images/kitchens/more/01.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/02.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/03.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/04.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/05.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/06.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/07.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/08.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/09.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/15.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/16.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/19.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/21.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/22.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/25.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/27.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/28.webp', alt:'مطبخ من تنفيذنا'},
   ];
-  var initialCount = 8;
+  var initialCount = 7;
   function buildItem(p, idx){
     var div = document.createElement('div');
     div.className = 'kitchen-item';
@@ -369,18 +427,65 @@ window.addEventListener('scroll',function(){
   }, {passive:true});
 })();
 
-/* ═══════ KITCHEN LIGHTBOX - with focus trap ═══════ */
+/* ═══════ KITCHEN LIGHTBOX - with focus trap + gallery nav ═══════ */
 var _lastFocused = null;
-function openLightbox(src, alt){
+var _lbGallery = null;
+var _lbIndex = 0;
+function _lbRenderDots(){
+  var dotsEl = document.getElementById('lightboxDots');
+  if(!dotsEl) return;
+  if(!_lbGallery || _lbGallery.length < 2){ dotsEl.hidden = true; dotsEl.innerHTML=''; return; }
+  dotsEl.hidden = false;
+  dotsEl.innerHTML='';
+  _lbGallery.forEach(function(item, i){
+    var b = document.createElement('button');
+    b.type='button';
+    b.setAttribute('aria-label','صورة '+(i+1));
+    if(i===_lbIndex) b.className='is-active';
+    b.addEventListener('click', function(e){ e.stopPropagation(); lightboxGoto(i); });
+    dotsEl.appendChild(b);
+  });
+}
+function _lbShowIndex(i){
+  if(!_lbGallery || !_lbGallery.length) return;
+  _lbIndex = (i + _lbGallery.length) % _lbGallery.length;
+  var img = document.getElementById('lightboxImg');
+  var item = _lbGallery[_lbIndex];
+  if(img && item){ img.src = item.src; img.alt = item.alt || ''; }
+  var dotsEl = document.getElementById('lightboxDots');
+  if(dotsEl){
+    var dots = dotsEl.querySelectorAll('button');
+    dots.forEach(function(d,idx){ d.classList.toggle('is-active', idx===_lbIndex); });
+  }
+}
+function lightboxGoto(i){ _lbShowIndex(i); }
+function lightboxNav(dir){ _lbShowIndex(_lbIndex + dir); }
+function openLightbox(src, alt, gallery, startIndex){
   var lb = document.getElementById('lightbox');
   var img = document.getElementById('lightboxImg');
   if(!lb || !img) return;
   _lastFocused = document.activeElement;
-  img.src = src;
-  img.alt = alt || '';
+  if(Array.isArray(gallery) && gallery.length){
+    _lbGallery = gallery;
+    _lbIndex = typeof startIndex === 'number' ? startIndex : 0;
+  } else {
+    _lbGallery = null;
+    _lbIndex = 0;
+  }
+  var prevBtn = document.getElementById('lightboxPrev');
+  var nextBtn = document.getElementById('lightboxNext');
+  var hasGallery = _lbGallery && _lbGallery.length > 1;
+  if(prevBtn) prevBtn.hidden = !hasGallery;
+  if(nextBtn) nextBtn.hidden = !hasGallery;
+  _lbRenderDots();
+  if(hasGallery){
+    _lbShowIndex(_lbIndex);
+  } else {
+    img.src = src;
+    img.alt = alt || '';
+  }
   lb.classList.add('active');
   document.body.style.overflow = 'hidden';
-  // Focus close button for keyboard accessibility
   var closeBtn = document.getElementById('lightboxClose');
   if(closeBtn) setTimeout(function(){ closeBtn.focus(); }, 100);
 }
@@ -389,40 +494,79 @@ function closeLightbox(){
   if(!lb) return;
   lb.classList.remove('active');
   document.body.style.overflow = '';
-  // Restore focus to the element that opened the lightbox
+  _lbGallery = null;
   if(_lastFocused) _lastFocused.focus();
 }
-// Lightbox event listeners (no inline handlers)
 (function(){
   var lb = document.getElementById('lightbox');
   var closeBtn = document.getElementById('lightboxClose');
   var lbImg = document.getElementById('lightboxImg');
+  var prevBtn = document.getElementById('lightboxPrev');
+  var nextBtn = document.getElementById('lightboxNext');
   if(!lb) return;
-  // Close on background click
   lb.addEventListener('click', function(e){
     if(e.target === lb) closeLightbox();
   });
-  // Close button click
   if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
-  // Prevent close when clicking image
+  if(prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); lightboxNav(-1); });
+  if(nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); lightboxNav(1); });
   if(lbImg) lbImg.addEventListener('click', function(e){ e.stopPropagation(); });
-  // Focus trap inside lightbox
+  // Swipe support for gallery navigation
+  var touchStartX = 0, touchStartY = 0, touchMoved = false;
+  lb.addEventListener('touchstart', function(e){
+    if(!_lbGallery || _lbGallery.length < 2) return;
+    var t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY; touchMoved = false;
+  }, {passive:true});
+  lb.addEventListener('touchmove', function(){ touchMoved = true; }, {passive:true});
+  lb.addEventListener('touchend', function(e){
+    if(!_lbGallery || _lbGallery.length < 2 || !touchMoved) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - touchStartX;
+    var dy = t.clientY - touchStartY;
+    if(Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    var isRTL = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+    // swipe-left (dx<0) in LTR = next; in RTL = prev
+    var dir = dx < 0 ? 1 : -1;
+    if(isRTL) dir = -dir;
+    lightboxNav(dir);
+  }, {passive:true});
   lb.addEventListener('keydown', function(e){
     if(!lb.classList.contains('active')) return;
     if(e.key === 'Escape'){ closeLightbox(); return; }
+    if(_lbGallery && _lbGallery.length > 1){
+      var isRTL = document.documentElement.dir === 'rtl' || document.body.dir === 'rtl';
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); lightboxNav(isRTL ? 1 : -1); return; }
+      if(e.key === 'ArrowRight'){ e.preventDefault(); lightboxNav(isRTL ? -1 : 1); return; }
+    }
     if(e.key === 'Tab'){
-      // Trap focus to the close button only
       e.preventDefault();
       if(closeBtn) closeBtn.focus();
     }
   });
 })();
-// Attach click to kitchen items (delegated)
+// Attach click to kitchen items (delegated) — build gallery from currently-visible kitchens
 document.addEventListener('click', function(e){
   var item = e.target.closest('.kitchen-item');
   if(!item) return;
-  var img = item.querySelector('img');
-  if(img) openLightbox(img.src, img.alt);
+  var grid = item.parentElement;
+  if(!grid) return;
+  var visible = Array.prototype.filter.call(
+    grid.querySelectorAll('.kitchen-item'),
+    function(el){ return !el.classList.contains('kitchen-item--hidden'); }
+  );
+  var gallery = visible.map(function(el){
+    var im = el.querySelector('img');
+    return im ? { src: im.src, alt: im.alt || '' } : null;
+  }).filter(Boolean);
+  var idx = visible.indexOf(item);
+  if(idx < 0) idx = 0;
+  if(gallery.length){
+    openLightbox(gallery[idx].src, gallery[idx].alt, gallery, idx);
+  } else {
+    var im2 = item.querySelector('img');
+    if(im2) openLightbox(im2.src, im2.alt);
+  }
 });
 
 /* ═══════ FORM VALIDATION ═══════ */
@@ -489,18 +633,18 @@ document.addEventListener('click', function(e){
     var district = document.getElementById('district').value.trim();
     var ticket = 'INQ-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random()*90000);
 
-    // Build FormData for FormSubmit (email backup)
+    // Build FormData for FormSubmit AJAX endpoint (FormData avoids CORS preflight)
     var fd = new FormData();
-    fd.append('name', fullName);
-    fd.append('phone', phone);
-    fd.append('city', city);
-    fd.append('district', district);
+    fd.append('الاسم', fullName);
+    fd.append('رقم الجوال', phone);
+    fd.append('المدينة', city);
+    fd.append('الحي', district);
+    fd.append('نوع الطلب', 'طلب زيارة قياس');
+    fd.append('رقم التذكرة', ticket);
+    fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
     fd.append('_subject', 'طلب زيارة قياس جديد - ' + ticket);
     fd.append('_template', 'table');
     fd.append('_captcha', 'false');
-    fd.append('ticket_number', ticket);
-    fd.append('form_type', 'طلب زيارة قياس');
-    fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
 
     function onDone(){
       form.reset();
@@ -511,12 +655,12 @@ document.addEventListener('click', function(e){
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
     }
 
-    // Fire-and-forget email via FormSubmit (backup channel).
-    fetch('https://formsubmit.co/info@uwkitchens.com', {
+    // Send email via FormSubmit AJAX endpoint (hash = info@uwkitchens.com)
+    fetch('https://formsubmit.co/ajax/7e9f3fee2b5908c9cff14902a24a31f4', {
       method: 'POST',
-      mode: 'no-cors',
       body: fd
-    }).catch(function(){});
+    }).then(function(r){ if(window.console) console.log('[FormSubmit]', r.status, r.statusText); })
+      .catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
 
     // Save ticket to Firestore (primary channel).
     var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;

@@ -84,7 +84,11 @@
       if(e.lengthComputable){
         var pct = Math.round((e.loaded / e.total) * 100);
         fill.style.width = pct + '%';
-        pText.textContent = pct + '%';
+        if(pct >= 100){
+          pText.textContent = '\u062C\u0627\u0631\u064A \u0627\u0644\u0645\u0639\u0627\u0644\u062C\u0629...';
+        } else {
+          pText.textContent = pct + '%';
+        }
       }
     });
 
@@ -192,7 +196,11 @@
     media: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0623\u0648 \u0641\u064A\u062F\u064A\u0648'
   };
 
-  var FORMSUBMIT_URL = 'https://formsubmit.co/info@uwkitchens.com';
+  // FormSubmit regular endpoint (hash maps to info@uwkitchens.com).
+  // NOTE: must be the non-/ajax/ endpoint — the AJAX endpoint does not
+  // support file attachments. We POST with mode:'no-cors' so multipart
+  // /form-data goes through without a CORS preflight.
+  var FORMSUBMIT_URL = 'https://formsubmit.co/7e9f3fee2b5908c9cff14902a24a31f4';
   var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
 
   function showError(field, msg){
@@ -245,14 +253,13 @@
       var input = wrap.querySelector('input[type=file]');
       if(!input.required) return;
       clearFileError(wrap);
-      if(!uploadResults[input.id]){
+      if(wrap.classList.contains('is-uploading')){
+        showFileError(wrap, '\u0627\u0644\u0645\u0644\u0641 \u0642\u064A\u062F \u0627\u0644\u0631\u0641\u0639\u060C \u0627\u0646\u062A\u0638\u0631 \u062D\u062A\u0649 \u064A\u0643\u062A\u0645\u0644');
+        valid = false;
+      } else if(!uploadResults[input.id]){
         showFileError(wrap, errorMsgs[input.name] || '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0645\u0644\u0641');
         valid = false;
       }
-    });
-    // Block submit if any upload is still in progress
-    form.querySelectorAll('.file-field.is-uploading').forEach(function(){
-      valid = false;
     });
     return valid;
   }
@@ -373,19 +380,57 @@
       var ticket = generateTicket(type);
       var attachments = getAttachments(form);
 
-      // Send FormSubmit email (fire-and-forget backup)
-      var fd = new FormData(form);
-      fd.append('_subject', subjects[type] + ' - ' + ticket);
-      fd.append('_template', 'table');
-      fd.append('_captcha', 'false');
-      fd.append('ticket_number', ticket);
-      fd.append('form_type', typeLabels[type]);
-      fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-      // Append Cloudinary URLs to email
-      Object.keys(attachments).forEach(function(key){
-        fd.append(key + '_url', attachments[key].url);
+      // Build FormData for FormSubmit regular endpoint.
+      // Text fields use Arabic labels so the email is readable.
+      // Small files are appended as real attachments; files over
+      // ATTACH_MAX_MB are sent as Cloudinary URLs instead so the email
+      // doesn't exceed FormSubmit's per-request limit (~25MB).
+      var ATTACH_MAX_MB = 10;
+      var fd = new FormData();
+      var fieldLabels = {
+        firstName: 'الاسم الأول',
+        middleName: 'الاسم الأوسط',
+        lastName: 'اسم العائلة',
+        fullName: 'الاسم الكامل',
+        phone: 'رقم الجوال',
+        description: 'الوصف',
+        suggestion: 'الاقتراح'
+      };
+      Array.prototype.forEach.call(form.elements, function(el){
+        if(!el.name || el.type === 'file' || el.type === 'submit' || el.type === 'button') return;
+        var label = fieldLabels[el.name] || el.name;
+        fd.append(label, el.value);
       });
-      fetch(FORMSUBMIT_URL, { method:'POST', mode:'no-cors', body: fd }).catch(function(){});
+      fd.append('نوع الطلب', typeLabels[type]);
+      fd.append('رقم التذكرة', ticket);
+      fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
+      // Size-based attachment strategy: small files → real attachment,
+      // large files → Cloudinary URL in the email body.
+      var fileLabels = { contract: 'العقد', media: 'الصورة / الفيديو' };
+      form.querySelectorAll('input[type=file]').forEach(function(input){
+        if(!input.files || !input.files[0]) return;
+        var file = input.files[0];
+        var label = fileLabels[input.name] || input.name;
+        if(file.size <= ATTACH_MAX_MB * 1024 * 1024){
+          fd.append(label, file, file.name);
+        } else {
+          var cloud = uploadResults[input.id];
+          var url = cloud && cloud.url;
+          if(url){
+            fd.append('رابط ' + label, url + ' (الملف كبير — افتح الرابط لمشاهدته)');
+          }
+        }
+      });
+      fd.append('_subject', subjects[type] + ' - ' + ticket);
+      fd.append('_template', 'box');
+      fd.append('_captcha', 'false');
+      // no-cors: browser won't read response, but multipart POST still
+      // delivers to FormSubmit (avoids CORS preflight on the non-/ajax/ URL).
+      fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: fd
+      }).catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
 
       // Save to Firestore (files already uploaded to Cloudinary)
       saveTicket(type, ticket, form, attachments)

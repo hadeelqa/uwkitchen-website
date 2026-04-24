@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="/styles.css?v=63">
+<link rel="stylesheet" href="/styles.css?v=81">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ContactPage","name":"خدمة العملاء | مطابخ الأبيض المتحدة","url":"https://uwkitchens.com/support","inLanguage":"ar","isPartOf":{"@type":"WebSite","name":"مطابخ الأبيض المتحدة","url":"https://uwkitchens.com/"},"about":{"@type":"Organization","name":"مطابخ الأبيض المتحدة","telephone":"+966920031000","email":"info@uwkitchens.com"}}
 </script>
@@ -140,6 +140,8 @@
         </div>
         <div class="form-field"><input type="tel" id="c_ph" name="phone" placeholder="05xxxxxxxx" required aria-required="true" pattern="05[0-9]{8}" maxlength="10" inputmode="numeric" dir="ltr"><label for="c_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
 
+        <div class="form-field"><textarea id="c_desc" name="description" placeholder=" " required aria-required="true" minlength="10" maxlength="1000" rows="4"></textarea><label for="c_desc">وصف المشكلة *</label><span class="form-error" aria-live="polite"></span></div>
+
         <div class="file-field">
           <input type="file" id="c_contract" name="contract" accept="application/pdf,image/*">
           <label for="c_contract">
@@ -151,8 +153,6 @@
           <button type="button" class="file-delete" aria-label="حذف الملف"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
           <div class="file-progress"><div class="file-progress-bar"><div class="file-progress-fill"></div></div><div class="file-progress-text"></div></div>
         </div>
-
-        <div class="form-field"><textarea id="c_desc" name="description" placeholder=" " required aria-required="true" minlength="10" maxlength="1000" rows="4"></textarea><label for="c_desc">وصف المشكلة *</label><span class="form-error" aria-live="polite"></span></div>
 
         <div class="file-field">
           <input type="file" id="c_media" name="media" accept="image/*,video/*">
@@ -306,7 +306,7 @@ var firebaseConfig = {
 };
 if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 </script>
-<script src="/scripts.js?v=27"></script>
+<script src="/scripts.js?v=32"></script>
 <script src="/maintenance-request.js?v=9"></script>
 </body>
 </html>

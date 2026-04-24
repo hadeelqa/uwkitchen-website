@@ -444,8 +444,8 @@ input,textarea,select{font-family:var(--font)}
               <div class="pv-hero-text">
                 <div class="pv-hero-line1" id="pv-hero-line1">+30 عام من الخبرة</div>
                 <div class="pv-hero-line2" id="pv-hero-line2">في تصميم المطابخ</div>
-                <div class="pv-hero-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg><span id="pv-hero-promise1">تركيب 20 يوم أو تعويض</span></div>
-                <div class="pv-hero-promise" style="opacity:.6"><span id="pv-hero-promise2">100 ر.س تعويض عن كل يوم تأخير – بالعقد</span></div>
+                <div class="pv-hero-promise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg><span id="pv-hero-promise1">ضمان 15 سنة شامل</span></div>
+                <div class="pv-hero-promise" style="opacity:.6"><span id="pv-hero-promise2">على كل قطعة من مطبخك – بعقدٍ رسمي من المصنع</span></div>
                 <div class="pv-hero-cta" id="pv-hero-cta">استشاري المبيعات متاح الآن</div>
               </div>
               <div class="pv-hero-img"><img src="images/img_2.jpeg" alt=""></div>
@@ -462,11 +462,11 @@ input,textarea,select{font-family:var(--font)}
         </div>
         <div class="field">
           <label class="field-label">نص الوعد</label>
-          <input class="field-input" id="cms-hero-promise1" placeholder="تركيب 20 يوم أو تعويض" oninput="updatePreview('hero')">
+          <input class="field-input" id="cms-hero-promise1" placeholder="ضمان 15 سنة شامل" oninput="updatePreview('hero')">
         </div>
         <div class="field">
           <label class="field-label">تفاصيل الوعد</label>
-          <input class="field-input" id="cms-hero-promise2" placeholder="100 ر.س تعويض عن كل يوم تأخير – بالعقد" oninput="updatePreview('hero')">
+          <input class="field-input" id="cms-hero-promise2" placeholder="على كل قطعة من مطبخك – بعقدٍ رسمي من المصنع" oninput="updatePreview('hero')">
         </div>
         <div class="field">
           <label class="field-label">نص الزر</label>
@@ -803,8 +803,8 @@ function updatePreview(section) {
   else if (section === 'hero') {
     document.getElementById('pv-hero-line1').textContent = document.getElementById('cms-hero-line1').value || '+30 عام من الخبرة';
     document.getElementById('pv-hero-line2').textContent = document.getElementById('cms-hero-line2').value || 'في تصميم المطابخ';
-    document.getElementById('pv-hero-promise1').textContent = document.getElementById('cms-hero-promise1').value || 'تركيب 20 يوم أو تعويض';
-    document.getElementById('pv-hero-promise2').textContent = document.getElementById('cms-hero-promise2').value || '100 ر.س تعويض عن كل يوم تأخير – بالعقد';
+    document.getElementById('pv-hero-promise1').textContent = document.getElementById('cms-hero-promise1').value || 'ضمان 15 سنة شامل';
+    document.getElementById('pv-hero-promise2').textContent = document.getElementById('cms-hero-promise2').value || 'على كل قطعة من مطبخك – بعقدٍ رسمي من المصنع';
     document.getElementById('pv-hero-cta').textContent = document.getElementById('cms-hero-cta').value || 'استشاري المبيعات متاح الآن';
   }
   else if (section === 'stats') {
@@ -856,8 +856,8 @@ var DEFAULTS = {
   hero: {
     line1: '+30 عام من الخبرة',
     line2: 'في تصميم المطابخ',
-    promise1: 'تركيب 20 يوم أو تعويض',
-    promise2: '100 ر.س تعويض عن كل يوم تأخير – بالعقد',
+    promise1: 'ضمان 15 سنة شامل',
+    promise2: 'على كل قطعة من مطبخك – بعقدٍ رسمي من المصنع',
     cta: 'استشاري المبيعات متاح الآن'
   },
   stats: { items: [
@@ -1152,7 +1152,7 @@ function loadProcess(data) {
     {number:'01', title:'الاستشارة المجانية', description:'نزورك في موقعك ونأخذ القياسات بدقة عالية'},
     {number:'02', title:'التصميم ثلاثي الأبعاد', description:'نصمم مطبخك بتقنية 3D على آيباد وتشوفه قبل ما يتصنع'},
     {number:'03', title:'التصنيع والمتابعة', description:'تابع كل خطوة عبر نظام التتبع المباشر بشفافية كاملة'},
-    {number:'04', title:'التركيب في 20 يوم', description:'فريق فلبيني متخصص يركّب مطبخك وإلا نعوضك 100 ريال/يوم'}
+    {number:'04', title:'التركيب في 20 يوم', description:'فريق تركيب متخصص يسلّمك مطبخك في وقته، وإلا نعوّضك 100 ريال عن كل يوم تأخير'}
   ];
   renderProcess();
 }
