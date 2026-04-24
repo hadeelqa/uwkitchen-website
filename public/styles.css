@@ -1000,8 +1000,9 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .factory-intro{background:var(--bg-primary);padding:72px 0}
 @media(min-width:1024px){.factory-intro{padding:100px 0}}
 .factory-intro-inner{max-width:var(--content-max);margin:0 auto}
-.factory-intro-video{position:relative;margin-top:32px;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.factory-intro-video{position:relative;margin-top:32px;border-radius:var(--radius-xl);overflow:hidden;aspect-ratio:16/9;box-shadow:0 20px 60px rgba(0,0,0,.4);background:#0a0308}
 .factory-intro-video video{width:100%;height:100%;object-fit:cover;display:block}
+.factory-intro-video .video-loader{background:rgba(10,3,8,.85)}
 .live-chip{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--radius-full);background:rgba(220,38,38,.85);backdrop-filter:blur(8px);color:#fff;font-weight:700;font-size:10px;z-index:2;animation:liveGlow 2s ease-in-out infinite}
 .live-chip-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:liveChipPulse 1.4s ease-in-out infinite}
 @keyframes liveChipPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
