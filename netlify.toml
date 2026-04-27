@@ -4,6 +4,12 @@
 [build]
   publish = "public"
 
+# Disable smart secret-detection: Firebase web API keys (AIza…) are
+# safe to expose by design — security is enforced by Firestore rules,
+# not the key itself. Explicit env-var scanning stays on.
+[build.environment]
+  SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
+
 # Pretty URLs (cleanUrls)
 [build.processing]
   skip_processing = false
