@@ -403,14 +403,27 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
   transition:transform .55s var(--ease-out),filter .55s var(--ease-out);
 }
 @media(min-width:768px){.hero-warranty-stamp{width:120px;top:14%;left:6%}}
-@media(min-width:1024px){.hero-warranty-stamp{width:140px;top:18%;left:7%}}
+@media(min-width:1024px){
+  .hero-warranty-stamp{
+    width:140px;
+    top:50%;
+    left:7%;
+    transform:translateY(-50%) rotate(-8deg);
+    animation-name:heroStampInCentered;
+  }
+}
 @media(min-width:1440px){.hero-warranty-stamp{width:155px}}
 @keyframes heroStampIn{
   0%{opacity:0;transform:rotate(-25deg) scale(.55)}
   100%{opacity:1;transform:rotate(-8deg) scale(1)}
 }
+@keyframes heroStampInCentered{
+  0%{opacity:0;transform:translateY(-50%) rotate(-25deg) scale(.55)}
+  100%{opacity:1;transform:translateY(-50%) rotate(-8deg) scale(1)}
+}
 @media(prefers-reduced-motion:reduce){
   .hero-warranty-stamp{animation:none;opacity:1;transform:rotate(-8deg)}
+  @media(min-width:1024px){.hero-warranty-stamp{transform:translateY(-50%) rotate(-8deg)}}
 }
 
 /* ═══════════════════════════════════════════
