@@ -386,28 +386,31 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .hero-img-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(14,4,13,.98) 0%,rgba(14,4,13,.82) 40%,rgba(14,4,13,.6) 70%,rgba(14,4,13,.7) 100%)}
 @media(min-width:1024px){.hero-img-overlay{background:radial-gradient(ellipse 70% 70% at 100% 100%,rgba(14,4,13,.92) 0%,rgba(14,4,13,.6) 40%,transparent 70%),linear-gradient(to right,rgba(14,4,13,1) 0%,rgba(14,4,13,.98) 20%,rgba(14,4,13,.9) 45%,rgba(14,4,13,.55) 80%,rgba(14,4,13,.4) 100%),linear-gradient(to top,rgba(14,4,13,.85) 0%,transparent 35%),linear-gradient(to bottom,rgba(14,4,13,.7) 0%,transparent 25%)}}
 
-/* Warranty stamp floating on the LEFT side of the hero (opposite the RTL text column) */
+/* Warranty stamp.
+   Mobile/tablet: in document flow as the first hero-text-inner child (sits above منذ 1997).
+   Desktop (>=1024): floats absolutely centered in the left half of the viewport. */
 .hero-warranty-stamp{
-  position:absolute;
   z-index:3;
-  width:90px;
+  width:130px;
   height:auto;
-  top:14%;
-  left:6%;
-  right:auto;
+  margin:0 0 4px;
   transform:rotate(-8deg);
+  transform-origin:top right;
   filter:drop-shadow(0 12px 24px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(212,136,74,.22));
   opacity:0;
   animation:heroStampIn .9s 1s cubic-bezier(.22,1,.36,1) forwards;
   pointer-events:none;
   transition:transform .55s var(--ease-out),filter .55s var(--ease-out);
 }
-@media(min-width:768px){.hero-warranty-stamp{width:120px;top:14%;left:6%}}
+@media(min-width:768px){.hero-warranty-stamp{width:140px}}
 @media(min-width:1024px){
   .hero-warranty-stamp{
+    position:absolute;
     width:160px;
     top:50%;
     left:25%;
+    margin:0;
+    transform-origin:center;
     transform:translate(-50%,-50%) rotate(-8deg);
     animation-name:heroStampInLeftCenter;
   }
