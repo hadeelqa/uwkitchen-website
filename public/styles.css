@@ -358,6 +358,10 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
    3. HERO - Inspired by premium reference
    ═══════════════════════════════════════════ */
 .hero{position:relative;min-height:calc(100svh - 44px);margin-top:44px;display:flex;align-items:center;overflow:hidden}
+@media(min-width:1024px){
+  .hero{display:grid;grid-template-columns:1fr 1fr;align-items:center}
+  .hero-text{grid-column:1;max-width:none;margin:0}
+}
 
 /* RTL: text over full-width background image */
 .hero-text{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:28px;padding:120px var(--content-pad) 60px;position:relative;z-index:3;width:100%;max-width:var(--content-max);margin:0 auto}
@@ -405,25 +409,29 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 @media(min-width:768px){.hero-warranty-stamp{width:120px;top:14%;left:6%}}
 @media(min-width:1024px){
   .hero-warranty-stamp{
-    width:140px;
-    top:50%;
-    left:7%;
-    transform:translateY(-50%) rotate(-8deg);
-    animation-name:heroStampInCentered;
+    /* unset mobile absolute positioning; sit naturally in the grid track */
+    position:static;
+    top:auto;
+    left:auto;
+    width:160px;
+    grid-column:2;
+    justify-self:center;
+    align-self:center;
+    transform:rotate(-8deg);
+    animation-name:heroStampInDesktop;
   }
 }
-@media(min-width:1440px){.hero-warranty-stamp{width:155px}}
+@media(min-width:1440px){.hero-warranty-stamp{width:180px}}
 @keyframes heroStampIn{
   0%{opacity:0;transform:rotate(-25deg) scale(.55)}
   100%{opacity:1;transform:rotate(-8deg) scale(1)}
 }
-@keyframes heroStampInCentered{
-  0%{opacity:0;transform:translateY(-50%) rotate(-25deg) scale(.55)}
-  100%{opacity:1;transform:translateY(-50%) rotate(-8deg) scale(1)}
+@keyframes heroStampInDesktop{
+  0%{opacity:0;transform:rotate(-25deg) scale(.55)}
+  100%{opacity:1;transform:rotate(-8deg) scale(1)}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-warranty-stamp{animation:none;opacity:1;transform:rotate(-8deg)}
-  @media(min-width:1024px){.hero-warranty-stamp{transform:translateY(-50%) rotate(-8deg)}}
 }
 
 /* ═══════════════════════════════════════════
