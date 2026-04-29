@@ -363,6 +363,12 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .hero-text{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:28px;padding:120px var(--content-pad) 60px;position:relative;z-index:3;width:100%;max-width:var(--content-max);margin:0 auto}
 @media(min-width:1024px){.hero-text{padding-block:0 0;padding-inline:0;gap:28px}}
 .hero-text-inner{max-width:720px;display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+@media(max-width:767px){
+  .hero-text-inner{gap:14px}
+  /* Hide standalone "منذ 1997" badge and inline it after line1 instead */
+  .hero-badge{display:none}
+  .hero-title .line1::after{content:' منذ 1997';font-weight:300;opacity:.85;margin-inline-start:6px}
+}
 
 /* Hero entrance animations - staggered */
 .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-sm);font-size:12px;font-weight:400;color:rgba(255,255,255,.6);opacity:0;animation:heroFadeUp .7s .3s cubic-bezier(.22,1,.36,1) forwards}
@@ -391,9 +397,9 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
    Desktop (>=1024): floats absolutely centered in the left half of the viewport. */
 .hero-warranty-stamp{
   z-index:3;
-  width:130px;
+  width:100px;
   height:auto;
-  margin:0 0 4px;
+  margin:0 0 2px;
   transform:rotate(-8deg);
   transform-origin:top right;
   filter:drop-shadow(0 12px 24px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(212,136,74,.22));
@@ -402,7 +408,7 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
   pointer-events:none;
   transition:transform .55s var(--ease-out),filter .55s var(--ease-out);
 }
-@media(min-width:768px){.hero-warranty-stamp{width:140px}}
+@media(min-width:768px){.hero-warranty-stamp{width:130px}}
 @media(min-width:1024px){
   .hero-warranty-stamp{
     position:absolute;
@@ -1156,6 +1162,12 @@ html[dir="rtl"] .lightbox-next,body[dir="rtl"] .lightbox-next{right:auto;left:24
 /* Hero trust chips - small & minimal */
 .hero-chips{display:flex;flex-wrap:wrap;gap:8px;opacity:0;animation:heroFadeUp .7s .95s cubic-bezier(.22,1,.36,1) forwards}
 .hero-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(14,4,13,.55);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-full);color:#fff;font-size:12px;font-weight:400;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+@media(max-width:767px){
+  .hero-chips{gap:0;flex-wrap:nowrap;font-size:11px}
+  .hero-chip{padding:0;background:transparent;border:none;backdrop-filter:none;-webkit-backdrop-filter:none;font-size:inherit;gap:0}
+  .hero-chip svg{display:none}
+  .hero-chip:not(:last-child)::after{content:'•';margin:0 8px;color:rgba(255,255,255,.4);font-size:10px}
+}
 [hidden]{display:none!important}
 .hero-chip svg{color:var(--gold);stroke:var(--gold)}
 /* Promise card (legacy - kept for rollback) */
