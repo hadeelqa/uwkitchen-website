@@ -77,8 +77,9 @@ input,textarea,select{font-family:var(--font)}
 .preview-label svg{width:14px;height:14px;opacity:.5}
 .preview-body{padding:20px;background:var(--bg3)}
 
-/* Preview: Announce */
-.pv-announce{background:var(--gold);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Preview: Announce - matches the live burgundy bar with dot separators */
+.pv-announce{background:#461642;color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl}
+.pv-announce .pv-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#d4884a;margin:0 8px;vertical-align:middle}
 
 /* Preview: Hero */
 .pv-hero{display:flex;align-items:center;gap:20px;direction:rtl}
@@ -417,11 +418,15 @@ input,textarea,select{font-family:var(--font)}
         </div>
         <div class="preview-wrap">
           <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
-          <div class="preview-body"><div class="pv-announce" id="pv-announce">عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً</div></div>
+          <div class="preview-body"><div class="pv-announce" id="pv-announce"></div></div>
         </div>
         <div class="field">
-          <label class="field-label">نص الإعلان</label>
-          <textarea class="field-input" id="cms-announce-text" rows="3" placeholder="عرض شهر أبريل: تصميم مجاني..." oninput="updatePreview('announce')"></textarea>
+          <label class="field-label">السطر الأول</label>
+          <input class="field-input" id="cms-announce-text" placeholder="عرض شهر أبريل: خصم 30%" oninput="updatePreview('announce')">
+        </div>
+        <div class="field">
+          <label class="field-label">السطر الثاني (اختياري)</label>
+          <input class="field-input" id="cms-announce-text2" placeholder="عملاء الموقع كود 1,200 ريال: UW12" oninput="updatePreview('announce')">
         </div>
         <div class="actions-bar">
           <button class="btn-save" onclick="saveSection('announce')">حفظ التغييرات</button>
@@ -798,7 +803,17 @@ function showToast(msg, isError) {
 function updatePreview(section) {
   if (section === 'announce') {
     var txt = document.getElementById('cms-announce-text').value;
-    document.getElementById('pv-announce').textContent = txt || 'نص الإعلان هنا...';
+    var txt2 = document.getElementById('cms-announce-text2').value;
+    var pv = document.getElementById('pv-announce');
+    pv.innerHTML = '';
+    var dot1 = document.createElement('span'); dot1.className = 'pv-dot';
+    pv.appendChild(dot1);
+    pv.appendChild(document.createTextNode(txt || 'نص الإعلان هنا...'));
+    if (txt2) {
+      var dot2 = document.createElement('span'); dot2.className = 'pv-dot';
+      pv.appendChild(dot2);
+      pv.appendChild(document.createTextNode(txt2));
+    }
   }
   else if (section === 'hero') {
     document.getElementById('pv-hero-line1').textContent = document.getElementById('cms-hero-line1').value || '+30 عام من الخبرة';
@@ -852,30 +867,51 @@ function updatePreview(section) {
 
 /* ═══════ DEFAULT DATA (mirrors current site content) ═══════ */
 var DEFAULTS = {
-  announce: { text: 'عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً' },
+  announce: {
+    text: 'عرض شهر أبريل: خصم 30%',
+    text2: 'عملاء الموقع كود 1,200 ريال: UW12'
+  },
   hero: {
     line1: '+30 عام من الخبرة',
     line2: 'في تصميم المطابخ',
-    promise1: 'ضمان 15 سنة شامل',
-    promise2: 'على كل قطعة من مطبخك – بعقدٍ رسمي من المصنع',
+    promise1: 'تركيب 20 يوم أو تعويض',
+    promise2: '100 ر.س تعويض عن كل يوم تأخير - بالعقد',
     cta: 'استشاري المبيعات متاح الآن'
   },
+  /* Mirrors index.html stats-v2-grid order/values. */
   stats: { items: [
     {num:'4.8', label:'تقييم عملائنا'},
     {num:'+17,500', label:'مطبخ منفّذ'},
     {num:'25', label:'قطاع'},
-    {num:'7', label:'مدن'},
-    {num:'20', label:'يوم فقط'}
+    {num:'24/7', label:'صيانة'},
+    {num:'100%', label:'كلادينج'}
   ]},
+  /* Mirrors the hardcoded list in scripts.js so admin opens to what visitors see. */
   gallery: { items: [
-    {src:'images/kitchens/kitchen-01.webp', alt:'مطبخ عصري أبيض'},
-    {src:'images/kitchens/kitchen-02.webp', alt:'مطبخ خشبي حديث'},
-    {src:'images/kitchens/kitchen-03.webp', alt:'مطبخ رمادي أنيق'},
-    {src:'images/kitchens/kitchen-04.webp', alt:'مطبخ كلاسيكي فاتح'},
-    {src:'images/kitchens/kitchen-05.webp', alt:'مطبخ مودرن مع جزيرة'},
-    {src:'images/kitchens/kitchen-06.webp', alt:'مطبخ داكن فاخر'},
-    {src:'images/kitchens/kitchen-07.webp', alt:'مطبخ بيج مع إضاءة'},
-    {src:'images/kitchens/kitchen-08.webp', alt:'مطبخ خشب ورخام'}
+    {src:'images/kitchens/featured/01-classic-white-gas.webp', alt:'مطبخ كلاسيكي أبيض'},
+    {src:'images/kitchens/featured/02-modern-walnut-galley.webp', alt:'مطبخ خشب جوز مودرن'},
+    {src:'images/kitchens/featured/03-dark-matte-island.webp', alt:'مطبخ داكن مات بجزيرة'},
+    {src:'images/kitchens/featured/04-minimal-white-cooktop.webp', alt:'مطبخ أبيض مينيمال'},
+    {src:'images/kitchens/featured/05-shaker-white-island.webp', alt:'مطبخ شيكر أبيض'},
+    {src:'images/kitchens/featured/06-walnut-marble-barstools.webp', alt:'مطبخ جوز ورخام بكراسي بار'},
+    {src:'images/kitchens/featured/07-grey-glass-cabinets.webp', alt:'مطبخ رمادي بخزائن زجاج'},
+    {src:'images/kitchens/more/01.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/02.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/03.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/04.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/05.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/06.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/07.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/08.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/09.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/15.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/16.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/19.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/21.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/22.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/25.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/27.webp', alt:'مطبخ من تنفيذنا'},
+    {src:'images/kitchens/more/28.webp', alt:'مطبخ من تنفيذنا'}
   ]},
   testimonials: { items: [
     {name:'أبو عبدالله', initials:'أ', quote:'من أفضل الشركات اللي تعاملت معهم. التصميم طلع أحلى من اللي تخيلته والتركيب كان سريع واحترافي.'},
@@ -897,6 +933,47 @@ var DEFAULTS = {
     whatsapp: '966920031000',
     email: 'info@uwkitchens.com',
     address: 'طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض'
+  },
+  /* Mirrors the partners array in scripts.js so the panel opens populated. */
+  partners: {
+    title: 'يثقون في جودتنا',
+    items: [
+      {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
+      {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
+      {name:'رتال', logo:'images/partners/Property 1=Retal.svg'},
+      {name:'المهيدب', logo:'images/partners/al-muhaidib.png'},
+      {name:'تلال', logo:'images/partners/Telal-Real-Estate.png'},
+      {name:'سمو العقارية', logo:'images/partners/Property 1=Somu.svg'},
+      {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
+      {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
+      {name:'أساس مكين', logo:'images/partners/makeen.webp'},
+      {name:'عبد اللطيف جميل', logo:'images/partners/abdul-latif-jameel.png'},
+      {name:'دار الأركان', logo:'images/partners/dar-arkan.png'},
+      {name:'إعمار', logo:'images/partners/emaar.png'},
+      {name:'أجدان', logo:'images/partners/ajdan.png'},
+      {name:'العجلان', logo:'images/partners/alajlan.png'},
+      {name:'منازل', logo:'images/partners/manazel.png'},
+      {name:'كالما', logo:'images/partners/calma.png'},
+      {name:'الوان', logo:'images/partners/alwan.png'},
+      {name:'تالكو', logo:'images/partners/talco.png'},
+      {name:'إلبا', logo:'images/partners/elba.png'},
+      {name:'بلوم', logo:'images/partners/blum.png'}
+    ]
+  },
+  /* Mirrors the cert-logos-grid in index.html (8 logos including the new ones). */
+  certs: {
+    eyebrow: 'معتمدون ومرخّصون',
+    heading: 'نلتزم بأعلى معايير الجودة والسلامة العالمية',
+    items: [
+      {name:'SASO', logo:'images/Quality/Logo=SASO.png'},
+      {name:'CE', logo:'images/Quality/Logo=CE.png'},
+      {name:'BSI', logo:'images/Quality/Logo=bsi.png'},
+      {name:'ASTM', logo:'images/Quality/Logo=ATSM.png'},
+      {name:'CEN', logo:'images/Quality/Logo=CEN.png'},
+      {name:'German Quality', logo:'images/Quality/Logo=german.png'},
+      {name:'شهادة CE للجودة', logo:'images/Quality/Logo=CE-Quality.jpg'},
+      {name:'المركز السعودي لكفاءة الطاقة', logo:'images/Quality/Logo=Kafaah.png'}
+    ]
   }
 };
 
@@ -938,6 +1015,7 @@ function loadAllSections() {
 /* ═══════ ANNOUNCE ═══════ */
 function loadAnnounce(data) {
   document.getElementById('cms-announce-text').value = data.text || '';
+  document.getElementById('cms-announce-text2').value = data.text2 || '';
   updatePreview('announce');
 }
 
@@ -954,7 +1032,7 @@ function loadHero(data) {
 /* ═══════ STATS ═══════ */
 var statsData = [];
 function loadStats(data) {
-  statsData = data.items || [];
+  statsData = (data.items && data.items.length) ? data.items : DEFAULTS.stats.items.slice();
   renderStats();
 }
 function renderStats() {
@@ -971,7 +1049,7 @@ function removeStat(i) { statsData.splice(i, 1); renderStats(); }
 /* ═══════ GALLERY ═══════ */
 var galleryData = [];
 function loadGallery(data) {
-  galleryData = data.items || [];
+  galleryData = (data.items && data.items.length) ? data.items : DEFAULTS.gallery.items.slice();
   renderGallery();
 }
 function renderGallery() {
@@ -1091,7 +1169,7 @@ function uploadSectionFile(input, inputId, folder, acceptVideo) {
 /* ═══════ TESTIMONIALS ═══════ */
 var testimonialsData = [];
 function loadTestimonials(data) {
-  testimonialsData = data.items || [];
+  testimonialsData = (data.items && data.items.length) ? data.items : DEFAULTS.testimonials.items.slice();
   renderTestimonials();
 }
 function renderTestimonials() {
@@ -1108,7 +1186,7 @@ function removeTestimonial(i) { testimonialsData.splice(i, 1); renderTestimonial
 /* ═══════ BRANCHES ═══════ */
 var branchesData = [];
 function loadBranches(data) {
-  branchesData = data.items || [];
+  branchesData = (data.items && data.items.length) ? data.items : DEFAULTS.branches.items.slice();
   renderBranches();
 }
 function renderBranches() {
@@ -1203,23 +1281,17 @@ function loadMaterials(data) {
 
 /* ═══════ PARTNERS ═══════ */
 function loadPartners(data) {
-  document.getElementById('cms-partners-title').value = data.title || 'يثقون في جودتنا';
-  partnersData = data.items || [];
+  document.getElementById('cms-partners-title').value = data.title || DEFAULTS.partners.title;
+  /* Fall back to the default partner list if Firestore has nothing or an empty array */
+  partnersData = (data.items && data.items.length) ? data.items : DEFAULTS.partners.items.slice();
   renderPartners();
 }
 
 /* ═══════ CERTS ═══════ */
 function loadCerts(data) {
-  document.getElementById('cms-certs-eyebrow').value = data.eyebrow || 'معتمدون ومرخّصون';
-  document.getElementById('cms-certs-heading').value = data.heading || 'نلتزم بأعلى معايير الجودة والسلامة العالمية';
-  certsData = data.items || [
-    {name:'SASO', logo:'images/Quality/Logo=SASO.png'},
-    {name:'CE', logo:'images/Quality/Logo=CE.png'},
-    {name:'BSI', logo:'images/Quality/Logo=bsi.png'},
-    {name:'ASTM', logo:'images/Quality/Logo=ATSM.png'},
-    {name:'CEN', logo:'images/Quality/Logo=CEN.png'},
-    {name:'German Quality', logo:'images/Quality/Logo=german.png'}
-  ];
+  document.getElementById('cms-certs-eyebrow').value = data.eyebrow || DEFAULTS.certs.eyebrow;
+  document.getElementById('cms-certs-heading').value = data.heading || DEFAULTS.certs.heading;
+  certsData = (data.items && data.items.length) ? data.items : DEFAULTS.certs.items.slice();
   renderCerts();
 }
 
@@ -1231,7 +1303,10 @@ function saveSection(section) {
   btn.textContent = 'جاري الحفظ...';
 
   if (section === 'announce') {
-    data = { text: document.getElementById('cms-announce-text').value };
+    data = {
+      text: document.getElementById('cms-announce-text').value,
+      text2: document.getElementById('cms-announce-text2').value
+    };
   } else if (section === 'hero') {
     data = {
       line1: document.getElementById('cms-hero-line1').value,

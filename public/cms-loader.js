@@ -30,20 +30,15 @@
     if (!d.text) return;
     var items = document.querySelectorAll('.marquee-item');
     items.forEach(function (el) {
-      /* Keep dots structure, replace text content between dots */
-      var dots = el.querySelectorAll('.marquee-dot');
-      if (dots.length >= 2) {
-        /* Rebuild: dot + text + dot + "احجز الآن" + dot + brand */
-        el.innerHTML = '';
-        var dot1 = document.createElement('span'); dot1.className = 'marquee-dot';
+      /* Rebuild: dot + text [+ dot + text2 if present] */
+      el.innerHTML = '';
+      var dot1 = document.createElement('span'); dot1.className = 'marquee-dot';
+      el.appendChild(dot1);
+      el.appendChild(document.createTextNode(d.text));
+      if (d.text2) {
         var dot2 = document.createElement('span'); dot2.className = 'marquee-dot';
-        var dot3 = document.createElement('span'); dot3.className = 'marquee-dot';
-        el.appendChild(dot1);
-        el.appendChild(document.createTextNode(d.text));
         el.appendChild(dot2);
-        el.appendChild(document.createTextNode('احجز الآن'));
-        el.appendChild(dot3);
-        el.appendChild(document.createTextNode('مطابخ الأبيض المتحدة'));
+        el.appendChild(document.createTextNode(d.text2));
       }
     });
   }
@@ -52,22 +47,9 @@
   function applyHero(d) {
     setText('.hero-title .line1', d.line1);
     setText('.hero-title .line2', d.line2);
-    /* The legacy promise card has been removed from the design. Map its
-       admin fields onto the current hero-chips so existing content keeps
-       working: promise1 -> chip 1, promise2 -> chip 2. */
-    var chips = document.querySelectorAll('.hero-chip');
-    if (d.promise1 && chips[0]) {
-      var svg1 = chips[0].querySelector('svg');
-      chips[0].textContent = '';
-      if (svg1) chips[0].appendChild(svg1);
-      chips[0].appendChild(document.createTextNode(d.promise1));
-    }
-    if (d.promise2 && chips[1]) {
-      var svg2 = chips[1].querySelector('svg');
-      chips[1].textContent = '';
-      if (svg2) chips[1].appendChild(svg2);
-      chips[1].appendChild(document.createTextNode(d.promise2));
-    }
+    /* Promise card is back in the design - map promise1/promise2 onto its lines */
+    setText('.hero-promise-line1', d.promise1);
+    setText('.hero-promise-line2', d.promise2);
     /* CTA button is the first link inside .hero-cta-wrap; keep the pulse dot */
     if (d.cta) {
       var btn = document.querySelector('.hero-cta-wrap .btn');
