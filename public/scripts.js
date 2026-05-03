@@ -181,7 +181,13 @@ if(heroImg && window.innerWidth >= 768){
 /* ═══════ PARTNERS (lazy loaded) ═══════
    Single source of truth for the partner list lives in cms-defaults.js.
    Falls back to a tiny inline list ONLY if cms-defaults.js failed to
-   load — keeps the page from rendering an empty marquee in that edge case. */
+   load - keeps the page from rendering an empty marquee in that edge case.
+
+   Quality fix (2026-05): SVG logos are fetched and inlined into the DOM
+   so they stay as vectors all the way to render. CSS filter on <img src=svg>
+   forces the browser to rasterize the SVG before applying the filter,
+   which produces visible pixelation on retina screens. Inlining + currentColor
+   keeps everything sharp at any DPR.  PNG/WebP logos still use <img> + filter. */
 const pTrack = document.getElementById('partnersTrack');
 if(pTrack){
   const partners = (window.CMS_DEFAULTS && window.CMS_DEFAULTS.partners && window.CMS_DEFAULTS.partners.items)
@@ -190,10 +196,40 @@ if(pTrack){
       {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
       {name:'رتال', logo:'images/partners/Property 1=Retal.svg'}
     ];
-  for(var c=0;c<2;c++){
-    partners.forEach(function(p){
-      var cell = document.createElement('div');
-      cell.className = 'partner-cell';
+
+  // Cache fetched SVG markup so duplicates (we render the list twice for
+  // the marquee loop) don't fire 2x network requests.
+  var svgCache = {};
+  function loadSvg(url){
+    if(svgCache[url]) return svgCache[url];
+    svgCache[url] = fetch(url).then(function(r){ return r.text(); }).catch(function(){ return null; });
+    return svgCache[url];
+  }
+
+  function makeCell(p){
+    var cell = document.createElement('div');
+    cell.className = 'partner-cell';
+    var isSvg = /\.svg(\?|$)/i.test(p.logo);
+    if(isSvg){
+      // Placeholder span keeps marquee width stable while SVG loads
+      var holder = document.createElement('span');
+      holder.className = 'partner-logo partner-logo--svg';
+      holder.setAttribute('role','img');
+      holder.setAttribute('aria-label', p.name);
+      cell.appendChild(holder);
+      loadSvg(p.logo).then(function(svgText){
+        if(!svgText) return;
+        // Strip any hardcoded width/height so CSS controls sizing,
+        // and force currentColor so the parent's color wins.
+        var clean = svgText
+          .replace(/<\?xml[\s\S]*?\?>/, '')
+          .replace(/<!DOCTYPE[\s\S]*?>/, '')
+          .replace(/\swidth="[^"]*"/i, '')
+          .replace(/\sheight="[^"]*"/i, '')
+          .replace(/fill="(?!none")[^"]*"/gi, 'fill="currentColor"');
+        holder.innerHTML = clean;
+      });
+    }else{
       var img = document.createElement('img');
       img.className = 'partner-logo';
       img.alt = p.name;
@@ -201,7 +237,13 @@ if(pTrack){
       img.decoding = 'async';
       img.src = p.logo;
       cell.appendChild(img);
-      pTrack.appendChild(cell);
+    }
+    return cell;
+  }
+
+  for(var c=0;c<2;c++){
+    partners.forEach(function(p){
+      pTrack.appendChild(makeCell(p));
     });
   }
 }
