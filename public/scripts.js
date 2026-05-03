@@ -34,7 +34,9 @@
         activate(i);
       });
     });
-    // Touch swipe (mobile): swipe left = next, swipe right = previous
+    // Touch swipe (mobile, RTL): swipe right = next, swipe left = previous
+    // RTL reading flow puts the next item to the LEFT, so a natural finger
+    // motion to the RIGHT advances forward (matches the page's reading direction).
     var touchStartX = null, touchStartY = null, swipeHandled = false;
     viewer.addEventListener('touchstart', function(e){
       touchStartX = e.touches[0].clientX;
@@ -50,9 +52,9 @@
         swipeHandled = true;
         var activeIdx = 0;
         slides.forEach(function(s,i){ if(s.classList.contains('is-active')) activeIdx = i; });
-        var newIdx = dx < 0
-          ? Math.min(slides.length - 1, activeIdx + 1)  // swipe left → next
-          : Math.max(0, activeIdx - 1);                  // swipe right → previous
+        var newIdx = dx > 0
+          ? Math.min(slides.length - 1, activeIdx + 1)  // swipe right → next (RTL)
+          : Math.max(0, activeIdx - 1);                  // swipe left → previous (RTL)
         if(newIdx !== activeIdx) activate(newIdx);
       }
     }, {passive:true});
