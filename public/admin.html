@@ -878,12 +878,13 @@ var DEFAULTS = {
     promise2: '100 ر.س تعويض عن كل يوم تأخير - بالعقد',
     cta: 'استشاري المبيعات متاح الآن'
   },
+  /* Mirrors index.html stats-v2-grid order/values. */
   stats: { items: [
     {num:'4.8', label:'تقييم عملائنا'},
     {num:'+17,500', label:'مطبخ منفّذ'},
     {num:'25', label:'قطاع'},
-    {num:'7', label:'مدن'},
-    {num:'20', label:'يوم فقط'}
+    {num:'24/7', label:'صيانة'},
+    {num:'100%', label:'كلادينج'}
   ]},
   /* Mirrors the hardcoded list in scripts.js so admin opens to what visitors see. */
   gallery: { items: [
@@ -932,6 +933,47 @@ var DEFAULTS = {
     whatsapp: '966920031000',
     email: 'info@uwkitchens.com',
     address: 'طريق الإمام سعود بن عبدالعزيز، حي التعاون، الرياض'
+  },
+  /* Mirrors the partners array in scripts.js so the panel opens populated. */
+  partners: {
+    title: 'يثقون في جودتنا',
+    items: [
+      {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
+      {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
+      {name:'رتال', logo:'images/partners/Property 1=Retal.svg'},
+      {name:'المهيدب', logo:'images/partners/al-muhaidib.png'},
+      {name:'تلال', logo:'images/partners/Telal-Real-Estate.png'},
+      {name:'سمو العقارية', logo:'images/partners/Property 1=Somu.svg'},
+      {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
+      {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
+      {name:'أساس مكين', logo:'images/partners/makeen.webp'},
+      {name:'عبد اللطيف جميل', logo:'images/partners/abdul-latif-jameel.png'},
+      {name:'دار الأركان', logo:'images/partners/dar-arkan.png'},
+      {name:'إعمار', logo:'images/partners/emaar.png'},
+      {name:'أجدان', logo:'images/partners/ajdan.png'},
+      {name:'العجلان', logo:'images/partners/alajlan.png'},
+      {name:'منازل', logo:'images/partners/manazel.png'},
+      {name:'كالما', logo:'images/partners/calma.png'},
+      {name:'الوان', logo:'images/partners/alwan.png'},
+      {name:'تالكو', logo:'images/partners/talco.png'},
+      {name:'إلبا', logo:'images/partners/elba.png'},
+      {name:'بلوم', logo:'images/partners/blum.png'}
+    ]
+  },
+  /* Mirrors the cert-logos-grid in index.html (8 logos including the new ones). */
+  certs: {
+    eyebrow: 'معتمدون ومرخّصون',
+    heading: 'نلتزم بأعلى معايير الجودة والسلامة العالمية',
+    items: [
+      {name:'SASO', logo:'images/Quality/Logo=SASO.png'},
+      {name:'CE', logo:'images/Quality/Logo=CE.png'},
+      {name:'BSI', logo:'images/Quality/Logo=bsi.png'},
+      {name:'ASTM', logo:'images/Quality/Logo=ATSM.png'},
+      {name:'CEN', logo:'images/Quality/Logo=CEN.png'},
+      {name:'German Quality', logo:'images/Quality/Logo=german.png'},
+      {name:'شهادة CE للجودة', logo:'images/Quality/Logo=CE-Quality.jpg'},
+      {name:'المركز السعودي لكفاءة الطاقة', logo:'images/Quality/Logo=Kafaah.png'}
+    ]
   }
 };
 
@@ -990,7 +1032,7 @@ function loadHero(data) {
 /* ═══════ STATS ═══════ */
 var statsData = [];
 function loadStats(data) {
-  statsData = data.items || [];
+  statsData = (data.items && data.items.length) ? data.items : DEFAULTS.stats.items.slice();
   renderStats();
 }
 function renderStats() {
@@ -1007,7 +1049,7 @@ function removeStat(i) { statsData.splice(i, 1); renderStats(); }
 /* ═══════ GALLERY ═══════ */
 var galleryData = [];
 function loadGallery(data) {
-  galleryData = data.items || [];
+  galleryData = (data.items && data.items.length) ? data.items : DEFAULTS.gallery.items.slice();
   renderGallery();
 }
 function renderGallery() {
@@ -1127,7 +1169,7 @@ function uploadSectionFile(input, inputId, folder, acceptVideo) {
 /* ═══════ TESTIMONIALS ═══════ */
 var testimonialsData = [];
 function loadTestimonials(data) {
-  testimonialsData = data.items || [];
+  testimonialsData = (data.items && data.items.length) ? data.items : DEFAULTS.testimonials.items.slice();
   renderTestimonials();
 }
 function renderTestimonials() {
@@ -1144,7 +1186,7 @@ function removeTestimonial(i) { testimonialsData.splice(i, 1); renderTestimonial
 /* ═══════ BRANCHES ═══════ */
 var branchesData = [];
 function loadBranches(data) {
-  branchesData = data.items || [];
+  branchesData = (data.items && data.items.length) ? data.items : DEFAULTS.branches.items.slice();
   renderBranches();
 }
 function renderBranches() {
@@ -1239,23 +1281,17 @@ function loadMaterials(data) {
 
 /* ═══════ PARTNERS ═══════ */
 function loadPartners(data) {
-  document.getElementById('cms-partners-title').value = data.title || 'يثقون في جودتنا';
-  partnersData = data.items || [];
+  document.getElementById('cms-partners-title').value = data.title || DEFAULTS.partners.title;
+  /* Fall back to the default partner list if Firestore has nothing or an empty array */
+  partnersData = (data.items && data.items.length) ? data.items : DEFAULTS.partners.items.slice();
   renderPartners();
 }
 
 /* ═══════ CERTS ═══════ */
 function loadCerts(data) {
-  document.getElementById('cms-certs-eyebrow').value = data.eyebrow || 'معتمدون ومرخّصون';
-  document.getElementById('cms-certs-heading').value = data.heading || 'نلتزم بأعلى معايير الجودة والسلامة العالمية';
-  certsData = data.items || [
-    {name:'SASO', logo:'images/Quality/Logo=SASO.png'},
-    {name:'CE', logo:'images/Quality/Logo=CE.png'},
-    {name:'BSI', logo:'images/Quality/Logo=bsi.png'},
-    {name:'ASTM', logo:'images/Quality/Logo=ATSM.png'},
-    {name:'CEN', logo:'images/Quality/Logo=CEN.png'},
-    {name:'German Quality', logo:'images/Quality/Logo=german.png'}
-  ];
+  document.getElementById('cms-certs-eyebrow').value = data.eyebrow || DEFAULTS.certs.eyebrow;
+  document.getElementById('cms-certs-heading').value = data.heading || DEFAULTS.certs.heading;
+  certsData = (data.items && data.items.length) ? data.items : DEFAULTS.certs.items.slice();
   renderCerts();
 }
 
