@@ -52,11 +52,25 @@
   function applyHero(d) {
     setText('.hero-title .line1', d.line1);
     setText('.hero-title .line2', d.line2);
-    setText('.hero-promise-line1', d.promise1);
-    setText('.hero-promise-line2', d.promise2);
-    /* CTA button - keep the pulse dot */
+    /* The legacy promise card has been removed from the design. Map its
+       admin fields onto the current hero-chips so existing content keeps
+       working: promise1 -> chip 1, promise2 -> chip 2. */
+    var chips = document.querySelectorAll('.hero-chip');
+    if (d.promise1 && chips[0]) {
+      var svg1 = chips[0].querySelector('svg');
+      chips[0].textContent = '';
+      if (svg1) chips[0].appendChild(svg1);
+      chips[0].appendChild(document.createTextNode(d.promise1));
+    }
+    if (d.promise2 && chips[1]) {
+      var svg2 = chips[1].querySelector('svg');
+      chips[1].textContent = '';
+      if (svg2) chips[1].appendChild(svg2);
+      chips[1].appendChild(document.createTextNode(d.promise2));
+    }
+    /* CTA button is the first link inside .hero-cta-wrap; keep the pulse dot */
     if (d.cta) {
-      var btn = document.querySelector('.btn-hero--call');
+      var btn = document.querySelector('.hero-cta-wrap .btn');
       if (btn) {
         var dot = btn.querySelector('.pulse-dot');
         btn.textContent = '';
@@ -214,19 +228,11 @@
 
   /* ═══════ WARRANTY ═══════ */
   function applyWarranty(d) {
-    if(d.heading) setText('.warranty-compact h2', d.heading);
-    if(d.terms) setText('.warranty-note', d.terms);
-    if(!d.items || !d.items.length) return;
-    var list = document.querySelector('.warranty-compact-list');
-    if(!list) return;
-    list.innerHTML = '';
-    d.items.forEach(function(item){
-      var el = document.createElement('div');
-      el.className = 'warranty-compact-item';
-      el.setAttribute('data-animate','fade-up');
-      el.innerHTML = '<span class="warranty-compact-years">' + escHtml(item.duration) + '</span><span class="warranty-compact-label">' + escHtml(item.name) + '</span>';
-      list.appendChild(el);
-    });
+    /* Selectors updated for the new warranty-section/warranty-card layout. */
+    if(d.heading) setText('.warranty-copy-title', d.heading);
+    if(d.terms) setText('.warranty-copy-body', d.terms);
+    /* Items list intentionally not rebuilt - the new design uses a video,
+       not a per-item list. Admin can still save it; site just ignores it. */
   }
 
   /* ═══════ PROCESS ═══════ */
@@ -234,7 +240,8 @@
     if(d.eyebrow) setText('.process .section-eyebrow', d.eyebrow);
     if(d.heading) setText('.process .section-title', d.heading);
     if(!d.steps || !d.steps.length) return;
-    var grid = document.querySelector('.process-grid');
+    /* Container is .process-cards (was .process-grid in legacy markup). */
+    var grid = document.querySelector('.process-cards');
     if(!grid) return;
     grid.innerHTML = '';
     d.steps.forEach(function(s, i){
@@ -242,7 +249,12 @@
       card.className = 'process-card';
       card.setAttribute('data-animate','fade-up');
       card.setAttribute('data-delay', String(i+1));
-      card.innerHTML = '<span class="process-num">' + escHtml(s.number) + '</span><h3 class="process-title">' + escHtml(s.title) + '</h3><p class="process-desc">' + escHtml(s.description) + '</p>';
+      card.innerHTML =
+        '<div class="process-card-num">' + escHtml(s.number) + '</div>' +
+        '<div class="process-card-text">' +
+          '<h3 class="process-card-title">' + escHtml(s.title) + '</h3>' +
+          '<p class="process-card-desc">' + escHtml(s.description) + '</p>' +
+        '</div>';
       grid.appendChild(card);
     });
   }
@@ -251,22 +263,24 @@
   function applyLive(d) {
     if(d.eyebrow) setText('.live-install .section-eyebrow', d.eyebrow);
     if(d.heading) setText('.live-install .section-title', d.heading);
-    if(d.subtitle) setText('.live-install .section-subtitle', d.subtitle);
+    /* subtitle was removed from the new design - skip silently if admin sets it */
     if(d.video){
-      var source = document.querySelector('.live-hero-visual video source');
-      if(source){ source.src = d.video; source.parentElement.load(); }
+      /* New markup uses an inline <video src=""> not <source>; both forms supported. */
+      var src = document.querySelector('.live-hero-visual video source');
+      var vid = document.querySelector('.live-hero-visual video');
+      if(src){ src.src = d.video; src.parentElement.load(); }
+      else if(vid){ vid.src = d.video; vid.load(); }
     }
     if(d.poster){
-      var vid = document.querySelector('.live-hero-visual video');
-      if(vid) vid.poster = d.poster;
+      var vid2 = document.querySelector('.live-hero-visual video');
+      if(vid2) vid2.poster = d.poster;
     }
     if(d.instagram){
-      var igLink = document.querySelector('.live-install .btn--secondary[href*="instagram"]');
-      if(!igLink) igLink = document.querySelector('.live-install a[href*="instagram"]');
+      var igLink = document.querySelector('.live-install a[href*="instagram"]');
       if(igLink){ igLink.href = d.instagram; }
     }
     if(d.igtext){
-      var igBtn = document.querySelector('.live-install .btn--secondary');
+      var igBtn = document.querySelector('.live-install a[href*="instagram"]');
       if(igBtn){
         var svg = igBtn.querySelector('svg');
         igBtn.textContent = '';
@@ -274,20 +288,7 @@
         igBtn.appendChild(document.createTextNode('\n        ' + d.igtext + '\n      '));
       }
     }
-    if(d.tiktok){
-      var ttLink = document.querySelector('.live-install .btn--tertiary[href*="tiktok"]');
-      if(!ttLink) ttLink = document.querySelector('.live-install a[href*="tiktok"]');
-      if(ttLink){ ttLink.href = d.tiktok; }
-    }
-    if(d.tttext){
-      var ttBtn = document.querySelector('.live-install .btn--tertiary');
-      if(ttBtn){
-        var svg2 = ttBtn.querySelector('svg');
-        ttBtn.textContent = '';
-        if(svg2) ttBtn.appendChild(svg2);
-        ttBtn.appendChild(document.createTextNode('\n        ' + d.tttext + '\n      '));
-      }
-    }
+    /* TikTok button was removed from the live-install section. Skip d.tiktok / d.tttext. */
   }
 
   /* ═══════ KITCHENS ═══════ */
@@ -309,19 +310,10 @@
   function applyMaterials(d) {
     if(d.heading) setText('.materials .section-title', d.heading);
     if(d.subtitle) setText('.materials .section-subtitle', d.subtitle);
-    if(d.colors && d.colors.length){
-      var grid = document.querySelector('.cladding-colors');
-      if(grid){
-        grid.innerHTML = '';
-        d.colors.forEach(function(c){
-          var card = document.createElement('div');
-          card.className = 'cladding-color-card';
-          card.setAttribute('data-animate','fade-up');
-          card.innerHTML = '<div class="cladding-color-img"><img src="' + escHtml(c.image) + '" alt="' + escHtml(c.nameAr) + '" loading="lazy"></div><div class="cladding-color-name"><span>' + escHtml(c.nameAr) + '</span><span class="cladding-color-en">' + escHtml(c.nameEn) + '</span></div>';
-          grid.appendChild(card);
-        });
-      }
-    }
+    /* Cladding colors are intentionally NOT rebuilt from CMS anymore.
+       The new design uses 4-image carousels per color with custom data
+       attributes and dot navigation. A flat rebuild would destroy that.
+       Color edits are now code-managed; admin's old colors form is ignored. */
     if(d.stats && d.stats.length){
       var matGrid = document.querySelector('.mat-grid');
       if(matGrid){
@@ -339,18 +331,20 @@
 
   /* ═══════ PARTNERS ═══════ */
   function applyPartners(d) {
-    if(d.title) setText('.partners .section-subtitle', d.title);
+    /* Heading selector updated: was .partners .section-subtitle, now uses .partners-title */
+    if(d.title) setText('.partners-title', d.title);
     if(!d.items || !d.items.length) return;
     var track = document.getElementById('partnersTrack');
     if(!track) return;
     track.innerHTML = '';
-    // Triple for seamless marquee
-    for(var r=0; r<3; r++){
+    /* Match the structure scripts.js builds: .partner-cell wrapping img.partner-logo.
+       Double for seamless marquee (matches scripts.js loop). */
+    for(var r=0; r<2; r++){
       d.items.forEach(function(p){
-        var el = document.createElement('div');
-        el.className = 'partner-logo';
-        el.innerHTML = '<img src="' + escHtml(p.logo) + '" alt="' + escHtml(p.name) + '" loading="lazy">';
-        track.appendChild(el);
+        var cell = document.createElement('div');
+        cell.className = 'partner-cell';
+        cell.innerHTML = '<img src="' + escHtml(p.logo) + '" alt="' + escHtml(p.name) + '" class="partner-logo" loading="lazy">';
+        track.appendChild(cell);
       });
     }
   }
@@ -360,15 +354,16 @@
     if(d.eyebrow) setText('.certs-section .section-eyebrow', d.eyebrow);
     if(d.heading) setText('.certs-section .section-title', d.heading);
     if(!d.items || !d.items.length) return;
-    var grid = document.querySelector('.cert-grid');
+    /* Container selector updated: was .cert-grid, now .cert-logos-grid.
+       Card markup also updated: .cert-logo-cell > img.cert-logo. */
+    var grid = document.querySelector('.cert-logos-grid');
     if(!grid) return;
     grid.innerHTML = '';
     d.items.forEach(function(c){
-      var card = document.createElement('div');
-      card.className = 'cert-card';
-      card.setAttribute('data-animate','fade-up');
-      card.innerHTML = '<img src="' + escHtml(c.logo) + '" alt="' + escHtml(c.name) + '" loading="lazy">';
-      grid.appendChild(card);
+      var cell = document.createElement('div');
+      cell.className = 'cert-logo-cell';
+      cell.innerHTML = '<img src="' + escHtml(c.logo) + '" alt="' + escHtml(c.name) + '" class="cert-logo" loading="lazy">';
+      grid.appendChild(cell);
     });
   }
 
