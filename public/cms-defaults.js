@@ -26,12 +26,13 @@
    Phase status (2026-05):
    ───────────────────────
      [✓] Phase 1: file created, exported as window.CMS_DEFAULTS
-     [ ] Phase 2: scripts.js partners list reads from here
+     [✓] Phase 2: scripts.js partners list reads from here
      [ ] Phase 3: admin.html DEFAULTS reads from here
      [ ] Phase 4: cms-loader.js fallback reads from here
 
-   Until all phases land, this file is read-only reference. Changing
-   content here does NOT update the live site yet.
+   Editing this file's `partners` block now updates the live site
+   directly. Other sections (announce, hero, stats, etc.) are still
+   reference-only until Phase 3-4 land.
    ════════════════════════════════════════════════════════════════ */
 
 window.CMS_DEFAULTS = {

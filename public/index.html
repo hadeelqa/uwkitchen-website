@@ -697,7 +697,9 @@ var firebaseConfig = {
 };
 if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 </script>
-<script src="scripts.js?v=33"></script>
+<!-- Single-source CMS defaults (must load before scripts.js and cms-loader.js) -->
+<script src="cms-defaults.js?v=1"></script>
+<script src="scripts.js?v=34"></script>
 <script>
 // Stats background video - IO-triggered with fallback
 (function(){
