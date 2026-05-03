@@ -47,22 +47,9 @@
   function applyHero(d) {
     setText('.hero-title .line1', d.line1);
     setText('.hero-title .line2', d.line2);
-    /* The legacy promise card has been removed from the design. Map its
-       admin fields onto the current hero-chips so existing content keeps
-       working: promise1 -> chip 1, promise2 -> chip 2. */
-    var chips = document.querySelectorAll('.hero-chip');
-    if (d.promise1 && chips[0]) {
-      var svg1 = chips[0].querySelector('svg');
-      chips[0].textContent = '';
-      if (svg1) chips[0].appendChild(svg1);
-      chips[0].appendChild(document.createTextNode(d.promise1));
-    }
-    if (d.promise2 && chips[1]) {
-      var svg2 = chips[1].querySelector('svg');
-      chips[1].textContent = '';
-      if (svg2) chips[1].appendChild(svg2);
-      chips[1].appendChild(document.createTextNode(d.promise2));
-    }
+    /* Promise card is back in the design - map promise1/promise2 onto its lines */
+    setText('.hero-promise-line1', d.promise1);
+    setText('.hero-promise-line2', d.promise2);
     /* CTA button is the first link inside .hero-cta-wrap; keep the pulse dot */
     if (d.cta) {
       var btn = document.querySelector('.hero-cta-wrap .btn');
