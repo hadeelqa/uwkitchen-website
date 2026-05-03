@@ -178,31 +178,18 @@ if(heroImg && window.innerWidth >= 768){
   },{passive:true});
 }
 
-/* ═══════ PARTNERS (lazy loaded) ═══════ */
+/* ═══════ PARTNERS (lazy loaded) ═══════
+   Single source of truth for the partner list lives in cms-defaults.js.
+   Falls back to a tiny inline list ONLY if cms-defaults.js failed to
+   load — keeps the page from rendering an empty marquee in that edge case. */
 const pTrack = document.getElementById('partnersTrack');
 if(pTrack){
-  const partners = [
-    {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
-    {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
-    {name:'رتال', logo:'images/partners/Property 1=Retal.svg'},
-    {name:'المهيدب', logo:'images/partners/al-muhaidib.png'},
-    {name:'تلال', logo:'images/partners/Telal-Real-Estate.png'},
-    {name:'سمو العقارية', logo:'images/partners/Property 1=Somu.svg'},
-    {name:'الماجدية', logo:'images/partners/Property 1=Almajdiah.svg'},
-    {name:'الدرعية', logo:'images/partners/Property 1=Diriyah company 1.svg'},
-    {name:'أساس مكين', logo:'images/partners/makeen.webp'},
-    {name:'عبد اللطيف جميل', logo:'images/partners/abdul-latif-jameel.png'},
-    {name:'دار الأركان', logo:'images/partners/dar-arkan.png'},
-    {name:'إعمار', logo:'images/partners/emaar.png'},
-    {name:'أجدان', logo:'images/partners/ajdan.png'},
-    {name:'العجلان', logo:'images/partners/alajlan.png'},
-    {name:'منازل', logo:'images/partners/manazel.png'},
-    {name:'كالما', logo:'images/partners/calma.png'},
-    {name:'الوان', logo:'images/partners/alwan.png'},
-    {name:'تالكو', logo:'images/partners/talco.png'},
-    {name:'إلبا', logo:'images/partners/elba.png'},
-    {name:'بلوم', logo:'images/partners/blum.png'}
-  ];
+  const partners = (window.CMS_DEFAULTS && window.CMS_DEFAULTS.partners && window.CMS_DEFAULTS.partners.items)
+    || [
+      {name:'روشن', logo:'images/partners/Property 1=Roshn.svg'},
+      {name:'سنومي', logo:'images/partners/Property 1=Cenomi.svg'},
+      {name:'رتال', logo:'images/partners/Property 1=Retal.svg'}
+    ];
   for(var c=0;c<2;c++){
     partners.forEach(function(p){
       var cell = document.createElement('div');
