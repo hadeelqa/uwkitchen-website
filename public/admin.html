@@ -77,8 +77,9 @@ input,textarea,select{font-family:var(--font)}
 .preview-label svg{width:14px;height:14px;opacity:.5}
 .preview-body{padding:20px;background:var(--bg3)}
 
-/* Preview: Announce */
-.pv-announce{background:var(--gold);color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Preview: Announce - matches the live burgundy bar with dot separators */
+.pv-announce{background:#461642;color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl}
+.pv-announce .pv-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#d4884a;margin:0 8px;vertical-align:middle}
 
 /* Preview: Hero */
 .pv-hero{display:flex;align-items:center;gap:20px;direction:rtl}
@@ -417,11 +418,15 @@ input,textarea,select{font-family:var(--font)}
         </div>
         <div class="preview-wrap">
           <div class="preview-header"><span class="preview-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>معاينة</span></div>
-          <div class="preview-body"><div class="pv-announce" id="pv-announce">عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً</div></div>
+          <div class="preview-body"><div class="pv-announce" id="pv-announce"></div></div>
         </div>
         <div class="field">
-          <label class="field-label">نص الإعلان</label>
-          <textarea class="field-input" id="cms-announce-text" rows="3" placeholder="عرض شهر أبريل: تصميم مجاني..." oninput="updatePreview('announce')"></textarea>
+          <label class="field-label">السطر الأول</label>
+          <input class="field-input" id="cms-announce-text" placeholder="عرض شهر أبريل: خصم 30%" oninput="updatePreview('announce')">
+        </div>
+        <div class="field">
+          <label class="field-label">السطر الثاني (اختياري)</label>
+          <input class="field-input" id="cms-announce-text2" placeholder="عملاء الموقع كود 1,200 ريال: UW12" oninput="updatePreview('announce')">
         </div>
         <div class="actions-bar">
           <button class="btn-save" onclick="saveSection('announce')">حفظ التغييرات</button>
@@ -798,7 +803,17 @@ function showToast(msg, isError) {
 function updatePreview(section) {
   if (section === 'announce') {
     var txt = document.getElementById('cms-announce-text').value;
-    document.getElementById('pv-announce').textContent = txt || 'نص الإعلان هنا...';
+    var txt2 = document.getElementById('cms-announce-text2').value;
+    var pv = document.getElementById('pv-announce');
+    pv.innerHTML = '';
+    var dot1 = document.createElement('span'); dot1.className = 'pv-dot';
+    pv.appendChild(dot1);
+    pv.appendChild(document.createTextNode(txt || 'نص الإعلان هنا...'));
+    if (txt2) {
+      var dot2 = document.createElement('span'); dot2.className = 'pv-dot';
+      pv.appendChild(dot2);
+      pv.appendChild(document.createTextNode(txt2));
+    }
   }
   else if (section === 'hero') {
     document.getElementById('pv-hero-line1').textContent = document.getElementById('cms-hero-line1').value || '+30 عام من الخبرة';
@@ -852,7 +867,10 @@ function updatePreview(section) {
 
 /* ═══════ DEFAULT DATA (mirrors current site content) ═══════ */
 var DEFAULTS = {
-  announce: { text: 'عرض شهر أبريل: تصميم مجاني + تركيب مضمون في 20 يوماً' },
+  announce: {
+    text: 'عرض شهر أبريل: خصم 30%',
+    text2: 'عملاء الموقع كود 1,200 ريال: UW12'
+  },
   hero: {
     line1: '+30 عام من الخبرة',
     line2: 'في تصميم المطابخ',
@@ -938,6 +956,7 @@ function loadAllSections() {
 /* ═══════ ANNOUNCE ═══════ */
 function loadAnnounce(data) {
   document.getElementById('cms-announce-text').value = data.text || '';
+  document.getElementById('cms-announce-text2').value = data.text2 || '';
   updatePreview('announce');
 }
 
@@ -1231,7 +1250,10 @@ function saveSection(section) {
   btn.textContent = 'جاري الحفظ...';
 
   if (section === 'announce') {
-    data = { text: document.getElementById('cms-announce-text').value };
+    data = {
+      text: document.getElementById('cms-announce-text').value,
+      text2: document.getElementById('cms-announce-text2').value
+    };
   } else if (section === 'hero') {
     data = {
       line1: document.getElementById('cms-hero-line1').value,

@@ -30,20 +30,15 @@
     if (!d.text) return;
     var items = document.querySelectorAll('.marquee-item');
     items.forEach(function (el) {
-      /* Keep dots structure, replace text content between dots */
-      var dots = el.querySelectorAll('.marquee-dot');
-      if (dots.length >= 2) {
-        /* Rebuild: dot + text + dot + "احجز الآن" + dot + brand */
-        el.innerHTML = '';
-        var dot1 = document.createElement('span'); dot1.className = 'marquee-dot';
+      /* Rebuild: dot + text [+ dot + text2 if present] */
+      el.innerHTML = '';
+      var dot1 = document.createElement('span'); dot1.className = 'marquee-dot';
+      el.appendChild(dot1);
+      el.appendChild(document.createTextNode(d.text));
+      if (d.text2) {
         var dot2 = document.createElement('span'); dot2.className = 'marquee-dot';
-        var dot3 = document.createElement('span'); dot3.className = 'marquee-dot';
-        el.appendChild(dot1);
-        el.appendChild(document.createTextNode(d.text));
         el.appendChild(dot2);
-        el.appendChild(document.createTextNode('احجز الآن'));
-        el.appendChild(dot3);
-        el.appendChild(document.createTextNode('مطابخ الأبيض المتحدة'));
+        el.appendChild(document.createTextNode(d.text2));
       }
     });
   }
