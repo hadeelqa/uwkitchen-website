@@ -27,12 +27,17 @@
    ───────────────────────
      [✓] Phase 1: file created, exported as window.CMS_DEFAULTS
      [✓] Phase 2: scripts.js partners list reads from here
-     [ ] Phase 3: admin.html DEFAULTS reads from here
-     [ ] Phase 4: cms-loader.js fallback reads from here
+     [✓] Phase 3: admin.html DEFAULTS reads from here
+     [✓] Phase 4: cms-loader.js empty-Firestore fallback path
+                   (achieved transitively — its appliers no-op on empty
+                    items, leaving the static HTML that scripts.js
+                    already built from CMS_DEFAULTS)
 
-   Editing this file's `partners` block now updates the live site
-   directly. Other sections (announce, hero, stats, etc.) are still
-   reference-only until Phase 3-4 land.
+   Result: editing any block in this file now updates BOTH
+   - what visitors see on the live site (via scripts.js + cms-loader)
+   - what the admin panel pre-fills when no Firestore data exists.
+
+   No more drift. Edit once, propagated everywhere on next deploy.
    ════════════════════════════════════════════════════════════════ */
 
 window.CMS_DEFAULTS = {
