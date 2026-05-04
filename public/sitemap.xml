@@ -3,17 +3,22 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://uwkitchens.com/</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://uwkitchens.com/images/img_2.jpeg</image:loc>
       <image:title>مطابخ الأبيض المتحدة، مصنع مطابخ في الرياض</image:title>
+      <image:caption>ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة العربية السعودية</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://uwkitchens.com/images/og-card.jpg</image:loc>
+      <image:title>مطابخ الأبيض المتحدة - ضمان 15 سنة وتركيب 20 يوم</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://uwkitchens.com/support</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

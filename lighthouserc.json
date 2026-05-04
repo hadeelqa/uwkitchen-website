@@ -1,0 +1,43 @@
+{
+  "_comment": "Lighthouse CI thresholds. Adjust after gathering baseline scores from a few real runs.",
+  "ci": {
+    "collect": {
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "cpuSlowdownMultiplier": 1
+        },
+        "skipAudits": ["uses-http2"]
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.85 }],
+        "categories:accessibility": ["error", { "minScore": 0.90 }],
+        "categories:best-practices": ["warn", { "minScore": 0.90 }],
+        "categories:seo": ["error", { "minScore": 0.95 }],
+
+        "uses-text-compression": "warn",
+        "uses-responsive-images": "warn",
+        "offscreen-images": "warn",
+        "modern-image-formats": "warn",
+
+        "color-contrast": "error",
+        "image-alt": "error",
+        "html-has-lang": "error",
+        "meta-description": "error",
+        "viewport": "error",
+
+        "errors-in-console": "off",
+        "csp-xss": "off",
+        "is-on-https": "off"
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

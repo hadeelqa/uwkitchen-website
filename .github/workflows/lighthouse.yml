@@ -1,0 +1,55 @@
+# ─────────────────────────────────────────────────────────────────
+# Lighthouse CI on pull requests
+# ─────────────────────────────────────────────────────────────────
+# Runs Lighthouse against the Netlify deploy preview URL whenever a
+# PR is opened or updated.  Posts results back as a comment with
+# Performance, Accessibility, Best Practices, and SEO scores.
+#
+# Why this matters
+# ----------------
+# Performance regressions slip in easily on a static site without a
+# build step (a stray 5MB image, a render-blocking script, a missing
+# preconnect).  This catches those before merge.
+#
+# How it works
+# ------------
+# 1. Wait for Netlify's deploy preview to be ready.
+# 2. Run Lighthouse 3 times against the preview URL and average.
+# 3. Compare scores against thresholds in lighthouserc.json.
+# 4. Post a sticky PR comment with the scores.
+#
+# Thresholds are intentionally conservative on first setup - tighten
+# them once we know the project's baseline.
+# ─────────────────────────────────────────────────────────────────
+name: Lighthouse CI
+
+on:
+  pull_request:
+    branches:
+      - master
+      - preview
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Netlify deploy preview
+        # Netlify sets the deploy URL on a check named "netlify/uwkitchen/deploy-preview"
+        # roughly 30-60s after a push.  This action polls until it's ready.
+        uses: jakepartusch/wait-for-netlify-action@v1.4
+        id: netlify
+        with:
+          site_name: uwkitchen
+          max_timeout: 300
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ steps.netlify.outputs.url }}
+            ${{ steps.netlify.outputs.url }}/support
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

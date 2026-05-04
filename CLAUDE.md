@@ -178,20 +178,29 @@ Because Firestore is read first, editing only the code does NOT update the live 
 
 ### When the user asks Claude to edit any CMS section copy
 
-Claude MUST execute this sequence before reporting done:
+Claude MUST execute this **Pull -> Edit -> Sync -> Push** sequence before reporting done:
 
-1. Edit `public/cms-defaults.js` with the new value (canonical source)
-2. Run the sync script to mirror that section to Firestore:
+1. **Pull first.** Run the pull script to refresh `cms-defaults.js` with whatever the client has edited from admin.html since the last code update:
    ```bash
+   python scripts/pull-firestore-to-defaults.py --dry-run   # preview
+   python scripts/pull-firestore-to-defaults.py             # write
+   ```
+   If the dry-run shows nothing meaningful changed, skip the write. If it shows client edits Claude wasn't aware of, accept them as the new baseline before applying any further changes. This step prevents silently overwriting client work.
+
+2. **Edit `public/cms-defaults.js`** with the new value on top of the freshly-pulled baseline.
+
+3. **Sync** the change back to Firestore:
+   ```bash
+   python scripts/sync-defaults-to-firestore.py --section <name> --diff
    python scripts/sync-defaults-to-firestore.py --section <name>
    ```
-   Sections are: `announce`, `hero`, `stats`, `gallery`, `testimonials`, `branches`, `contact`, `partners`, `certs`.
+   Sections are: `announce`, `hero`, `stats`, `gallery`, `testimonials`, `branches`, `contact`, `partners`, `certs`. The `--diff` mode prints field-level changes before writing.
 
-   Optionally add `--diff` first to preview what fields will change, or `--dry-run` to skip the Firestore connection entirely.
-3. Commit the cms-defaults.js change and push to `preview` (Netlify rebuilds the static fallback)
-4. Confirm to the user that BOTH the code and Firestore now hold the new value (the live site reflects the change immediately because Firestore is updated; the next deploy ships the matching code).
+4. **Push.** Commit the cms-defaults.js change to `preview` and push. Netlify rebuilds the static fallback while Firestore (already updated by step 3) immediately reflects the change on the live site.
 
-Never edit only one store. Never rely on Netlify rebuild alone for content changes — Firestore wins on read.
+5. **Confirm** to the user that both code and Firestore hold the new value.
+
+Never edit only one store. Never skip the pull step - that's how the 2026-05-04 announce/stats/testimonials drift happened (code overwrote client edits silently). Never rely on Netlify rebuild alone for content changes - Firestore wins on read.
 
 ### Setup requirements (one-time, already done)
 
@@ -209,10 +218,25 @@ If the client makes a change in admin and Claude later edits the same section in
 
 ---
 
-## 9. Priorities when in doubt
+## 9. Smoke tests (MANDATORY before pushing UI changes)
+
+`cms-loader.js` reaches into the DOM via ~44 CSS selectors and ids.  When the HTML structure changes (renamed class, removed section, restructured markup) the corresponding selector silently stops matching anything and the patch becomes a no-op.  The user sees stale defaults from the static HTML and never gets a console error.  This has happened multiple times on this project.
+
+`scripts/check-cms-loader-selectors.py` catches that drift by parsing every literal selector out of `cms-loader.js` (covers `querySelector`, `querySelectorAll`, `getElementById`, and the local `setText()` helper) and asserting each one matches at least one element in `public/index.html`.  Dynamic selectors (built from variables) are listed separately so a human can eyeball them.
+
+Run before any push that touches index.html, scripts.js, or cms-loader.js:
+
+```bash
+python scripts/check-cms-loader-selectors.py
+```
+
+Exit code is 1 on any failure, suitable for CI gating.  The script found a real bug on first run (line 284 selector targeting a non-existent `<span>`), proving the value of the check.
+
+## 10. Priorities when in doubt
 
 1. **Do not break the Netlify preview** - the client is reviewing it.
 2. **Match the design system** - consistency over creativity.
 3. **Reuse** before rebuilding.
 4. **Ask** before merging to `master`.
 5. **Both stores in sync** - any CMS content edit must update code + Firestore together (see section 8).
+6. **Run the selector smoke test** after any HTML/CSS rename - section 9.

@@ -281,8 +281,16 @@
       if(ttLink) ttLink.href = d.tiktok;
     }
     if(d.tttext){
-      var ttEl = document.querySelector('.kitchens-tiktok-link span, .kitchens-gallery a[href*="tiktok"] span');
-      if(ttEl) ttEl.textContent = d.tttext;
+      /* The tiktok link contains an inline SVG followed by a bare text node
+         (no <span> wrapper).  Mirror the hero CTA pattern: keep the SVG,
+         replace the text node only. */
+      var ttBtn = document.querySelector('.kitchens-gallery a[href*="tiktok"]');
+      if(ttBtn){
+        var ttSvg = ttBtn.querySelector('svg');
+        ttBtn.textContent = '';
+        if(ttSvg) ttBtn.appendChild(ttSvg);
+        ttBtn.appendChild(document.createTextNode(' ' + d.tttext));
+      }
     }
     /* Kitchen images from CMS */
     if(d.items && d.items.length) applyGallery({ items: d.items });

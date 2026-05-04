@@ -350,6 +350,132 @@ python scripts/sync-defaults-to-firestore.py
 
 كذا التعديلات تظهر فوراً (Firestore) وتبقى في تاريخ الكود (Git). هذي القاعدة موثّقة في `CLAUDE.md` كبروتوكول إلزامي.
 
+### المسار 3: سحب تعديلات العميل من Firestore لـ الكود
+
+لما العميل يعدّل من admin.html، التعديل ينحفظ في Firestore فقط. الكود يبقى على القيم القديمة. لو AI assistant جا بعدها وعدّل نفس القسم بدون ما يعرف، التعديلات الجديدة من العميل تنضرب بـ overwrite.
+
+عشان نمنع هذا، قبل أي تعديل code-side على قسم محتوى، شغّلي:
+
+```bash
+# اسحب آخر القيم من Firestore واكتب public/cms-defaults.js
+python scripts/pull-firestore-to-defaults.py
+
+# أو dry-run يعرض المحتوى الجديد بدون كتابة
+python scripts/pull-firestore-to-defaults.py --dry-run
+```
+
+السكربت يقوم بـ:
+- يقرأ كل المستندات من `content/` collection
+- ينظّف الحقول الداخلية (`updatedAt`, `syncedFromCode`)
+- يعيد ترتيب الحقول بترتيب ثابت (لتقليل ضوضاء الـ diff)
+- يتحقق من النتيجة بعمل round-trip عبر Node
+- يحفظ نسخة احتياطية `cms-defaults.js.bak` قبل الكتابة
+
+بعد التشغيل، راجعي `git diff public/cms-defaults.js`، اعتمدي التغييرات لو زينة، وكمّلي تعديلاتك على نسخة أحدث.
+
+#### قاعدة ذهبية موسّعة (Pull → Edit → Sync → Push)
+
+```
+1. pull-firestore-to-defaults.py     ← اجلب آخر تعديلات العميل
+2. عدّل cms-defaults.js              ← أضف تعديلاتك على الأساس الجديد
+3. sync-defaults-to-firestore.py     ← انشر للـFirestore
+4. git commit + push                 ← الكود يطابق Firestore يطابق الموقع
+```
+
+---
+
+## فحص الـ Selectors (Smoke test)
+
+`cms-loader.js` يحتوي على ~44 CSS selector وid عشان يلصق المحتوى من Firestore على الـ DOM. لما يصير UI redesign وتنغيّر أسماء classes، الـ selector يصير ما يطابق شي في الصفحة ويفشل بصمت. النتيجة: تعديلات admin ما تظهر ولا في خطأ في الكونسول.
+
+`scripts/check-cms-loader-selectors.py` يفحص كل selector ضد `public/index.html` ويطلع تقرير. شغّليه قبل أي push على ملفات HTML أو cms-loader.js:
+
+```bash
+python scripts/check-cms-loader-selectors.py
+```
+
+النتيجة:
+- Exit code 0 = كل الـ selectors تشتغل
+- Exit code 1 = فيه selector فاشل (مع ذكر السطر بالضبط)
+
+السكربت اكتشف bug فعلي أول مرة شغّلناه (line 284 كان يبحث عن `<span>` غير موجود)، فالفائدة منه ثابتة.
+
+---
+
+## المزامنة التلقائية (GitHub Action)
+
+`.github/workflows/sync-cms-defaults.yml` يشغّل السكربت أوتوماتيكياً كل ما `public/cms-defaults.js` يتغيّر على فرع `preview` أو `master`. النتيجة: تعديلات الكود تنزل على الموقع بدون ما تشغّلين السكربت يدوياً.
+
+### الإعداد لمرة وحدة
+
+محتاج تضيفين Service Account JSON كـ GitHub Secret:
+
+1. افتحي https://github.com/hadeelqa/uwkitchen-website/settings/secrets/actions
+2. اضغطي **New repository secret**
+3. الاسم: `FIREBASE_ADMINSDK_JSON`
+   > **مهم:** هذا secret منفصل عن `FIREBASE_SERVICE_ACCOUNT_UWKITCHEN_C3279` الموجود (اللي خاص بـ Firebase Hosting deploy، service account ثاني ما يقدر يكتب على Firestore).
+4. القيمة: انسخي محتوى `.secrets/firebase-admin.json` كاملاً والصقيه
+5. **Add secret**
+
+### كيف يشتغل
+
+```
+push يلمس cms-defaults.js  →  GitHub Action تشتغل  →
+السكربت يشغّل --diff  →  Firestore يتحدّث  →  الموقع
+```
+
+تقدرين كمان تشغّلينها يدوياً من **Actions** tab → اختاري workflow → **Run workflow** مع section محدد لو حبيتي.
+
+### الأمان
+
+- `.secrets/firebase-admin.json` المحلي ما يندفع لـ GitHub (محظور في `.gitignore`)
+- المفتاح في GitHub Secrets مشفّر، ما يتوسّخ في الـ logs
+- بعد كل run، الـ workflow يمسح الملف المؤقت من الـ runner
+
+---
+
+## E2E tests (Playwright)
+
+اختبارات automated للـ admin panel تكشف لو فيه regression بصمت (الفورم مكسور، زر الحفظ ما يشتغل، الـ login flow تغيّر).
+
+### الإعداد لمرة وحدة
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+### التشغيل
+
+شغّلي السيرفر المحلي أول (port 8090)، ثم:
+
+```bash
+npm test                    # كل الاختبارات
+npm run test:ui             # وضع تفاعلي
+npm run test:headed         # يفتح المتصفح
+```
+
+اختبارات `tests/admin.spec.js` تتحقق:
+- الفورم يظهر بكل الحقول
+- البيانات الخاطئة ترفض الدخول
+- Firebase SDK يحمل بدون أخطاء كونسول
+- `window.CMS_DEFAULTS` يحتوي كل الأقسام المتوقعة
+
+> **خارج النطاق متعمد:** Login حقيقي + حفظ. ذاك يدخل Firestore الفعلي ويلوّث محتوى العميل. اختبريها يدوياً بعد كل تغيير على admin.html.
+
+---
+
+## Lighthouse CI
+
+`.github/workflows/lighthouse.yml` يشغّل Lighthouse على Netlify deploy preview لكل PR، ويرفع تقرير في PR comment. يفحص:
+
+- **Performance** ≥ 0.85 (تحذير)
+- **Accessibility** ≥ 0.90 (إجباري)
+- **Best Practices** ≥ 0.90 (تحذير)
+- **SEO** ≥ 0.95 (إجباري)
+
+العتبات في `lighthouserc.json`. الـ assertions الصارمة تكسر الـ CI لو السكور نزل تحتها.
+
 ---
 
 ## الهوية البصرية وقواعد التصميم

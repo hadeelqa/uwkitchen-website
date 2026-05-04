@@ -1,0 +1,91 @@
+# ─────────────────────────────────────────────────────────────────
+# Auto-sync cms-defaults.js to Firestore on push to preview/master
+# ─────────────────────────────────────────────────────────────────
+# Whenever public/cms-defaults.js changes on preview or master, this
+# workflow runs scripts/sync-defaults-to-firestore.py with a service
+# account stored in repo secrets.  The result: code-side content
+# edits land on the live site automatically without anyone having
+# to remember to run the sync script manually.
+#
+# Required secret:
+#   FIREBASE_ADMINSDK_JSON
+#     Contents of the firebase-admin.json key for the
+#     firebase-adminsdk-fbsvc@uwkitchen-c3279.iam.gserviceaccount.com
+#     service account (NOT the github-action Hosting deployer).
+#     Add at: github.com/hadeelqa/uwkitchen-website/settings/secrets/actions
+#     Get it from: Firebase Console > Project Settings > Service accounts
+#                  > Generate new private key (under "Firebase Admin SDK")
+#
+#     Naming: we use FIREBASE_ADMINSDK_JSON to keep this distinct from
+#     the existing FIREBASE_SERVICE_ACCOUNT_UWKITCHEN_C3279 secret which
+#     belongs to a different service account (Hosting deployer, no
+#     Firestore write permission).
+#
+# Triggered by:
+#   - push to preview or master that touches cms-defaults.js
+#   - manual run (workflow_dispatch)
+#
+# Why both branches:
+#   - preview: lets us test the sync flow before it hits production
+#   - master:  the production branch; live site reflects this
+#
+# Safety:
+#   The script is idempotent. Running it twice with the same code
+#   produces the same Firestore state.
+# ─────────────────────────────────────────────────────────────────
+name: sync cms-defaults to Firestore
+
+on:
+  push:
+    branches:
+      - preview
+      - master
+    paths:
+      - 'public/cms-defaults.js'
+      - 'scripts/sync-defaults-to-firestore.py'
+  workflow_dispatch:
+    inputs:
+      section:
+        description: 'Single section to sync (leave blank for all)'
+        required: false
+        default: ''
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node (script uses node to parse cms-defaults.js)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install firebase-admin
+        run: pip install firebase-admin
+
+      - name: Write service account key
+        env:
+          KEY_JSON: ${{ secrets.FIREBASE_ADMINSDK_JSON }}
+        run: |
+          mkdir -p .secrets
+          printf '%s' "$KEY_JSON" > .secrets/firebase-admin.json
+          test -s .secrets/firebase-admin.json || (echo "ERROR: secret is empty"; exit 1)
+
+      - name: Sync to Firestore (with field-level diff in logs)
+        run: |
+          if [ -n "${{ github.event.inputs.section }}" ]; then
+            python scripts/sync-defaults-to-firestore.py --section "${{ github.event.inputs.section }}" --diff
+          else
+            python scripts/sync-defaults-to-firestore.py --diff
+          fi
+
+      - name: Cleanup service account key
+        if: always()
+        run: rm -f .secrets/firebase-admin.json
