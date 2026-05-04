@@ -350,6 +350,38 @@ python scripts/sync-defaults-to-firestore.py
 
 كذا التعديلات تظهر فوراً (Firestore) وتبقى في تاريخ الكود (Git). هذي القاعدة موثّقة في `CLAUDE.md` كبروتوكول إلزامي.
 
+### المسار 3: سحب تعديلات العميل من Firestore لـ الكود
+
+لما العميل يعدّل من admin.html، التعديل ينحفظ في Firestore فقط. الكود يبقى على القيم القديمة. لو AI assistant جا بعدها وعدّل نفس القسم بدون ما يعرف، التعديلات الجديدة من العميل تنضرب بـ overwrite.
+
+عشان نمنع هذا، قبل أي تعديل code-side على قسم محتوى، شغّلي:
+
+```bash
+# اسحب آخر القيم من Firestore واكتب public/cms-defaults.js
+python scripts/pull-firestore-to-defaults.py
+
+# أو dry-run يعرض المحتوى الجديد بدون كتابة
+python scripts/pull-firestore-to-defaults.py --dry-run
+```
+
+السكربت يقوم بـ:
+- يقرأ كل المستندات من `content/` collection
+- ينظّف الحقول الداخلية (`updatedAt`, `syncedFromCode`)
+- يعيد ترتيب الحقول بترتيب ثابت (لتقليل ضوضاء الـ diff)
+- يتحقق من النتيجة بعمل round-trip عبر Node
+- يحفظ نسخة احتياطية `cms-defaults.js.bak` قبل الكتابة
+
+بعد التشغيل، راجعي `git diff public/cms-defaults.js`، اعتمدي التغييرات لو زينة، وكمّلي تعديلاتك على نسخة أحدث.
+
+#### قاعدة ذهبية موسّعة (Pull → Edit → Sync → Push)
+
+```
+1. pull-firestore-to-defaults.py     ← اجلب آخر تعديلات العميل
+2. عدّل cms-defaults.js              ← أضف تعديلاتك على الأساس الجديد
+3. sync-defaults-to-firestore.py     ← انشر للـFirestore
+4. git commit + push                 ← الكود يطابق Firestore يطابق الموقع
+```
+
 ---
 
 ## الهوية البصرية وقواعد التصميم
