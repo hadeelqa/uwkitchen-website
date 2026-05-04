@@ -20,3 +20,9 @@ _source/
 # Firebase
 firebase-debug.log
 .firebase/
+
+# Service account keys and other local secrets (NEVER commit these).
+# Holds firebase-admin.json used by scripts/sync-defaults-to-firestore.py
+.secrets/
+*-firebase-adminsdk-*.json
+serviceAccountKey.json

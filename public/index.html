@@ -30,10 +30,18 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>html{font-synthesis:style;-webkit-font-synthesis:none}</style>
-<link rel="stylesheet" href="styles.css?v=82">
+<link rel="stylesheet" href="styles.css?v=90">
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 <link rel="preload" as="video" href="https://res.cloudinary.com/dbj4aba8i/video/fetch/q_auto/https://uwkitchens.com/Videos/stats-bg.mp4" type="video/mp4" fetchpriority="high">
 <link rel="preload" as="video" href="https://res.cloudinary.com/dbj4aba8i/video/fetch/q_auto/https://uwkitchens.com/Videos/Live.mp4" type="video/mp4">
+<!-- Preload partner SVG logos so they're cached before scripts.js fetches them inline.
+     No crossorigin attr: must match the default same-origin fetch() in scripts.js. -->
+<link rel="preload" as="fetch" href="images/partners/Property 1=Roshn.svg" type="image/svg+xml">
+<link rel="preload" as="fetch" href="images/partners/Property 1=Cenomi.svg" type="image/svg+xml">
+<link rel="preload" as="fetch" href="images/partners/Property 1=Retal.svg" type="image/svg+xml">
+<link rel="preload" as="fetch" href="images/partners/Property 1=Somu.svg" type="image/svg+xml">
+<link rel="preload" as="fetch" href="images/partners/Property 1=Almajdiah.svg" type="image/svg+xml">
+<link rel="preload" as="fetch" href="images/partners/Property 1=Diriyah company 1.svg" type="image/svg+xml">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["LocalBusiness","HomeGoodsStore"],"@id":"https://uwkitchens.com/#business","name":"مطابخ الأبيض المتحدة","alternateName":["United White Kitchens","UW Kitchens"],"url":"https://uwkitchens.com/","logo":"https://uwkitchens.com/images/Logo-white.png","image":["https://uwkitchens.com/images/img_2.jpeg"],"telephone":"+966920031000","email":"info@uwkitchens.com","description":"ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة العربية السعودية. ضمان 15 سنة، تركيب في 20 يوم، أكثر من 17,500 مطبخ منفّذ.","foundingDate":"1997","address":{"@type":"PostalAddress","streetAddress":"طريق الإمام سعود بن عبدالعزيز، حي التعاون","addressLocality":"الرياض","addressRegion":"منطقة الرياض","addressCountry":"SA"},"areaServed":[{"@type":"Country","name":"Saudi Arabia"},{"@type":"City","name":"الرياض"}],"hasMap":"https://share.google/gZLn8CccdF4KwShQ1","sameAs":["https://www.instagram.com/uwkitchens_sa/","https://www.tiktok.com/@uwkitchens_sa","https://x.com/uwkitchens_sa","https://www.snapchat.com/@uwkitchens_sa"],"priceRange":"$$","knowsLanguage":["ar","en"],"slogan":"ثلاثة عقود من الخبرة في تصميم المطابخ"}
 </script>
@@ -79,8 +87,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="rgba(99,179,165,.15)" stroke="#63b3a5"/><polyline points="9 12 11 14 15 10" stroke="#63b3a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="hero-promise-text">
-            <span class="hero-promise-line1">تركيب 20 يوم أو تعويض</span>
-            <span class="hero-promise-line2">100 ر.س تعويض عن كل يوم تأخير - بالعقد</span>
+            <span class="hero-promise-line1">ضمان 15 سنة شامل</span>
+            <span class="hero-promise-line2">على كل قطعة من مطبخك بعقدٍ رسمي من مصانعنا</span>
           </div>
         </div>
       </div>
@@ -699,7 +707,7 @@ if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 </script>
 <!-- Single-source CMS defaults (must load before scripts.js and cms-loader.js) -->
 <script src="cms-defaults.js?v=1"></script>
-<script src="scripts.js?v=34"></script>
+<script src="scripts.js?v=35"></script>
 <script>
 // Stats background video - IO-triggered with fallback
 (function(){

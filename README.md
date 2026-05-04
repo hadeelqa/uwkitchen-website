@@ -287,6 +287,71 @@ uwkitchen-website/
 
 ---
 
+## مسارات تعديل المحتوى (Dual update workflow)
+
+في الموقع طبقتان للمحتوى لازم تظلون متطابقتين:
+
+| المصدر | المسار |
+|---|---|
+| **الكود** (canonical) | `public/cms-defaults.js` في الـrepo |
+| **قاعدة البيانات** (live) | Firestore `content/<section>` |
+
+`cms-loader.js` يقرأ من Firestore أولاً، فلو فيه قيمة محفوظة فيه → الكود يطنش. لذلك أي تعديل لازم ينعكس في الجانبين.
+
+### المسار 1: العميل يعدّل من الـAdmin
+
+```
+admin.html  →  Save  →  Firestore  →  live (refresh)
+```
+
+هذا المسار للعميل (هديل) لما تبي تعدّل بسرعة بدون مبرمج. ما يحدّث الكود.
+
+### المسار 2: الـAI assistant (أو مبرمج) يعدّل
+
+```
+edit cms-defaults.js  →  python scripts/sync-defaults-to-firestore.py
+                     →  git commit + push  →  Netlify rebuild
+                     ↓
+                Firestore + Code in sync
+```
+
+#### الإعداد لمرة واحدة (already done — موثّق هنا للمرجع)
+
+1. حمّلي Service Account JSON من Firebase Console:
+   - Project Settings → Service accounts → Generate new private key
+2. خزنيه في `.secrets/firebase-admin.json` (محظور في `.gitignore`)
+3. ركّبي SDK:
+   ```bash
+   pip install firebase-admin
+   ```
+
+#### الاستخدام
+
+```bash
+# اعرض الفروقات بين الكود وFirestore بدون كتابة
+python scripts/sync-defaults-to-firestore.py --section hero --diff
+
+# تشغيل dry-run يعرض الـpayload بدون اتصال بـFirestore
+python scripts/sync-defaults-to-firestore.py --section hero --dry-run
+
+# انشر قسم واحد لـFirestore
+python scripts/sync-defaults-to-firestore.py --section hero
+
+# انشر كل الأقسام (احذر: يستبدل اللي عدّله العميل من admin)
+python scripts/sync-defaults-to-firestore.py
+```
+
+#### قاعدة ذهبية
+
+الـAI assistant يجب يحدّث **الجانبين في نفس commit**:
+1. عدّل `cms-defaults.js`
+2. شغّل `python scripts/sync-defaults-to-firestore.py --section <name>`
+3. commit + push
+
+كذا التعديلات تظهر فوراً (Firestore) وتبقى في تاريخ الكود (Git). هذي القاعدة موثّقة في `CLAUDE.md` كبروتوكول إلزامي.
+
+---
+
 ## الهوية البصرية وقواعد التصميم
 
 ### الألوان

@@ -433,9 +433,40 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 @media(min-width:1024px){.partners-grid{animation-duration:35s}}
 @keyframes partnersScroll{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
 .partner-cell{display:flex;align-items:center;justify-content:center;padding:22px 32px;flex-shrink:0}
-.partner-logo{height:46px;width:auto;max-width:120px;object-fit:contain;opacity:.45;filter:brightness(0) invert(1);transition:opacity .4s,transform .3s}
-@media(min-width:768px){.partner-logo{height:52px}}
-@media(min-width:1024px){.partner-logo{height:58px}}
+.partner-logo{
+  height:46px;
+  width:auto;
+  max-width:120px;
+  object-fit:contain;
+  opacity:.45;
+  filter:brightness(0) invert(1);
+  transition:opacity .4s,transform .3s;
+}
+/* SVG logos are inlined as <span class="partner-logo--svg"><svg>...</svg></span>
+   so they stay as vectors at render time. fill="currentColor" inside the SVG
+   takes its color from the span, giving us white-on-dark without filter
+   rasterization. No CSS filter needed -> stays crisp at any DPR. */
+.partner-logo--svg{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  filter:none;
+}
+.partner-logo--svg svg{
+  height:46px;
+  width:auto;
+  max-width:120px;
+  display:block;
+}
+@media(min-width:768px){
+  .partner-logo{height:52px}
+  .partner-logo--svg svg{height:52px}
+}
+@media(min-width:1024px){
+  .partner-logo{height:58px}
+  .partner-logo--svg svg{height:58px}
+}
 .partner-logo:hover{opacity:.8;transform:scale(1.1)}
 
 /* ═══════════════════════════════════════════
