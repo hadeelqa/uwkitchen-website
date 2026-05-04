@@ -384,6 +384,24 @@ python scripts/pull-firestore-to-defaults.py --dry-run
 
 ---
 
+## فحص الـ Selectors (Smoke test)
+
+`cms-loader.js` يحتوي على ~44 CSS selector وid عشان يلصق المحتوى من Firestore على الـ DOM. لما يصير UI redesign وتنغيّر أسماء classes، الـ selector يصير ما يطابق شي في الصفحة ويفشل بصمت. النتيجة: تعديلات admin ما تظهر ولا في خطأ في الكونسول.
+
+`scripts/check-cms-loader-selectors.py` يفحص كل selector ضد `public/index.html` ويطلع تقرير. شغّليه قبل أي push على ملفات HTML أو cms-loader.js:
+
+```bash
+python scripts/check-cms-loader-selectors.py
+```
+
+النتيجة:
+- Exit code 0 = كل الـ selectors تشتغل
+- Exit code 1 = فيه selector فاشل (مع ذكر السطر بالضبط)
+
+السكربت اكتشف bug فعلي أول مرة شغّلناه (line 284 كان يبحث عن `<span>` غير موجود)، فالفائدة منه ثابتة.
+
+---
+
 ## الهوية البصرية وقواعد التصميم
 
 ### الألوان

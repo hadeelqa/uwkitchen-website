@@ -218,10 +218,25 @@ If the client makes a change in admin and Claude later edits the same section in
 
 ---
 
-## 9. Priorities when in doubt
+## 9. Smoke tests (MANDATORY before pushing UI changes)
+
+`cms-loader.js` reaches into the DOM via ~44 CSS selectors and ids.  When the HTML structure changes (renamed class, removed section, restructured markup) the corresponding selector silently stops matching anything and the patch becomes a no-op.  The user sees stale defaults from the static HTML and never gets a console error.  This has happened multiple times on this project.
+
+`scripts/check-cms-loader-selectors.py` catches that drift by parsing every literal selector out of `cms-loader.js` (covers `querySelector`, `querySelectorAll`, `getElementById`, and the local `setText()` helper) and asserting each one matches at least one element in `public/index.html`.  Dynamic selectors (built from variables) are listed separately so a human can eyeball them.
+
+Run before any push that touches index.html, scripts.js, or cms-loader.js:
+
+```bash
+python scripts/check-cms-loader-selectors.py
+```
+
+Exit code is 1 on any failure, suitable for CI gating.  The script found a real bug on first run (line 284 selector targeting a non-existent `<span>`), proving the value of the check.
+
+## 10. Priorities when in doubt
 
 1. **Do not break the Netlify preview** - the client is reviewing it.
 2. **Match the design system** - consistency over creativity.
 3. **Reuse** before rebuilding.
 4. **Ask** before merging to `master`.
 5. **Both stores in sync** - any CMS content edit must update code + Firestore together (see section 8).
+6. **Run the selector smoke test** after any HTML/CSS rename - section 9.
