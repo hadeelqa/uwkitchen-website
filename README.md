@@ -402,6 +402,81 @@ python scripts/check-cms-loader-selectors.py
 
 ---
 
+## المزامنة التلقائية (GitHub Action)
+
+`.github/workflows/sync-cms-defaults.yml` يشغّل السكربت أوتوماتيكياً كل ما `public/cms-defaults.js` يتغيّر على فرع `preview` أو `master`. النتيجة: تعديلات الكود تنزل على الموقع بدون ما تشغّلين السكربت يدوياً.
+
+### الإعداد لمرة وحدة
+
+محتاج تضيفين Service Account JSON كـ GitHub Secret:
+
+1. افتحي https://github.com/hadeelqa/uwkitchen-website/settings/secrets/actions
+2. اضغطي **New repository secret**
+3. الاسم: `FIREBASE_SERVICE_ACCOUNT_JSON`
+4. القيمة: انسخي محتوى `.secrets/firebase-admin.json` كاملاً والصقيه
+5. **Add secret**
+
+### كيف يشتغل
+
+```
+push يلمس cms-defaults.js  →  GitHub Action تشتغل  →
+السكربت يشغّل --diff  →  Firestore يتحدّث  →  الموقع
+```
+
+تقدرين كمان تشغّلينها يدوياً من **Actions** tab → اختاري workflow → **Run workflow** مع section محدد لو حبيتي.
+
+### الأمان
+
+- `.secrets/firebase-admin.json` المحلي ما يندفع لـ GitHub (محظور في `.gitignore`)
+- المفتاح في GitHub Secrets مشفّر، ما يتوسّخ في الـ logs
+- بعد كل run، الـ workflow يمسح الملف المؤقت من الـ runner
+
+---
+
+## E2E tests (Playwright)
+
+اختبارات automated للـ admin panel تكشف لو فيه regression بصمت (الفورم مكسور، زر الحفظ ما يشتغل، الـ login flow تغيّر).
+
+### الإعداد لمرة وحدة
+
+```bash
+npm install
+npx playwright install chromium
+```
+
+### التشغيل
+
+شغّلي السيرفر المحلي أول (port 8090)، ثم:
+
+```bash
+npm test                    # كل الاختبارات
+npm run test:ui             # وضع تفاعلي
+npm run test:headed         # يفتح المتصفح
+```
+
+اختبارات `tests/admin.spec.js` تتحقق:
+- الفورم يظهر بكل الحقول
+- البيانات الخاطئة ترفض الدخول
+- Firebase SDK يحمل بدون أخطاء كونسول
+- `window.CMS_DEFAULTS` يحتوي كل الأقسام المتوقعة
+
+> **خارج النطاق متعمد:** Login حقيقي + حفظ. ذاك يدخل Firestore الفعلي ويلوّث محتوى العميل. اختبريها يدوياً بعد كل تغيير على admin.html.
+
+---
+
+## Lighthouse CI
+
+`.github/workflows/lighthouse.yml` يشغّل Lighthouse على Netlify deploy preview لكل PR، ويرفع تقرير في PR comment. يفحص:
+
+- **Performance** ≥ 0.85 (تحذير)
+- **Accessibility** ≥ 0.90 (إجباري)
+- **Best Practices** ≥ 0.90 (تحذير)
+- **SEO** ≥ 0.95 (إجباري)
+
+العتبات في `lighthouserc.json`. الـ assertions الصارمة تكسر الـ CI لو السكور نزل تحتها.
+
+---
+
 ## الهوية البصرية وقواعد التصميم
 
 ### الألوان

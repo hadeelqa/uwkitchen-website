@@ -1,0 +1,18 @@
+{
+  "name": "uwkitchen-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static site for مطابخ الأبيض المتحدة. No build step. Tests via Playwright. Sync scripts in Python.",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "check:selectors": "python scripts/check-cms-loader-selectors.py",
+    "check:css": "python scripts/audit-unused-css.py --short",
+    "sync": "python scripts/sync-defaults-to-firestore.py",
+    "pull": "python scripts/pull-firestore-to-defaults.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}
