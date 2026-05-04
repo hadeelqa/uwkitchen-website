@@ -412,7 +412,8 @@ python scripts/check-cms-loader-selectors.py
 
 1. افتحي https://github.com/hadeelqa/uwkitchen-website/settings/secrets/actions
 2. اضغطي **New repository secret**
-3. الاسم: `FIREBASE_SERVICE_ACCOUNT_JSON`
+3. الاسم: `FIREBASE_ADMINSDK_JSON`
+   > **مهم:** هذا secret منفصل عن `FIREBASE_SERVICE_ACCOUNT_UWKITCHEN_C3279` الموجود (اللي خاص بـ Firebase Hosting deploy، service account ثاني ما يقدر يكتب على Firestore).
 4. القيمة: انسخي محتوى `.secrets/firebase-admin.json` كاملاً والصقيه
 5. **Add secret**
 

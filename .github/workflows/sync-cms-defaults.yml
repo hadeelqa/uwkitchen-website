@@ -8,11 +8,18 @@
 # to remember to run the sync script manually.
 #
 # Required secret:
-#   FIREBASE_SERVICE_ACCOUNT_JSON
-#     Contents of the firebase-admin.json key (full JSON).
+#   FIREBASE_ADMINSDK_JSON
+#     Contents of the firebase-admin.json key for the
+#     firebase-adminsdk-fbsvc@uwkitchen-c3279.iam.gserviceaccount.com
+#     service account (NOT the github-action Hosting deployer).
 #     Add at: github.com/hadeelqa/uwkitchen-website/settings/secrets/actions
 #     Get it from: Firebase Console > Project Settings > Service accounts
-#                  > Generate new private key
+#                  > Generate new private key (under "Firebase Admin SDK")
+#
+#     Naming: we use FIREBASE_ADMINSDK_JSON to keep this distinct from
+#     the existing FIREBASE_SERVICE_ACCOUNT_UWKITCHEN_C3279 secret which
+#     belongs to a different service account (Hosting deployer, no
+#     Firestore write permission).
 #
 # Triggered by:
 #   - push to preview or master that touches cms-defaults.js
@@ -65,7 +72,7 @@ jobs:
 
       - name: Write service account key
         env:
-          KEY_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          KEY_JSON: ${{ secrets.FIREBASE_ADMINSDK_JSON }}
         run: |
           mkdir -p .secrets
           printf '%s' "$KEY_JSON" > .secrets/firebase-admin.json
