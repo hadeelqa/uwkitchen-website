@@ -715,7 +715,10 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .cladding-color-card:hover .cladding-zoom-hint{opacity:1}
 .cladding-dots{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;justify-content:center;align-items:center;gap:8px;padding:6px 12px;border-radius:var(--radius-full);background:rgba(0,0,0,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:3}
 .cladding-dot{width:8px;height:8px;border-radius:50%;border:none;padding:0;background:rgba(255,255,255,.4);cursor:pointer;transition:all .3s var(--ease-out);position:relative}
-.cladding-dot::before{content:'';position:absolute;inset:-8px;border-radius:50%}
+/* Invisible 44x44 tap area for WCAG 2.5.5 (target size). The visible
+   dot is 8x8; this extends the clickable area to ~44x44 without
+   changing the visual. */
+.cladding-dot::before{content:'';position:absolute;inset:-18px;border-radius:50%}
 .cladding-dot:hover{background:rgba(212,136,74,.7);transform:scale(1.2)}
 .cladding-dot.is-active{background:var(--gold);width:22px;border-radius:4px}
 .cladding-dot:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
@@ -901,7 +904,6 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .scroll-top{transition:all .3s var(--ease-out)}
 .scroll-top:hover{transform:translateY(-1px);background:rgba(255,255,255,.14);box-shadow:none}
 .scroll-top:hover svg{animation:none}
-@keyframes bounceUp{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
 
 /* ── 16. Testimonial Card Hover Lift ── */
 .test-card{transition:border-color .3s var(--ease-out),box-shadow .3s,transform .3s var(--ease-out)}
@@ -1154,6 +1156,9 @@ html[dir="rtl"] .lightbox-next,body[dir="rtl"] .lightbox-next{right:auto;left:24
 
 /* ── File upload: delete button ── */
 .file-delete{display:none;position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:50%;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--red-error);cursor:pointer;align-items:center;justify-content:center;transition:background var(--duration-fast);z-index:2;padding:0}
+/* Invisible 44x44 tap area extension for WCAG 2.5.5. The visible
+   button stays at 26x26; this just makes it easier to tap on mobile. */
+.file-delete::before{content:'';position:absolute;inset:-9px;border-radius:50%}
 .file-delete:hover{background:rgba(239,68,68,.25)}
 .file-delete svg{width:14px;height:14px;stroke:currentColor;fill:none}
 .file-field.has-file .file-delete{display:flex}
