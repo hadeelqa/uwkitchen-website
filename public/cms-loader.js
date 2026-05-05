@@ -161,25 +161,46 @@
     }
   }
 
-  /* ═══════ BRANCHES ═══════ */
+  /* ═══════ BRANCHES ═══════
+     In-place update: preserves the static .branch-pair layout (which contains
+     the Google Maps iframe and 2-card design) and only patches the text/link
+     fields from Firestore. Older versions of this function called
+       grid.innerHTML = ''
+     to rebuild the section, which destroyed the embedded map. The current
+     HTML hand-rolls the .branch-pair pieces; admin only needs to edit copy
+     and contact info, not the visual structure. */
   function applyBranches(d) {
     if (!d.items || !d.items.length) return;
-    var grid = document.querySelector('.branches-grid');
-    if (!grid) return;
-    grid.innerHTML = '';
-    d.items.forEach(function (b) {
-      var card = document.createElement('div');
-      card.className = 'branch-card' + (b.badge ? ' branch-card--active' : '');
-      card.setAttribute('data-animate', 'fade-up');
-      card.innerHTML =
-        (b.badge ? '<div class="branch-badge">' + escHtml(b.badge) + '</div>' : '') +
-        '<h3 class="branch-city">' + escHtml(b.city) + '</h3>' +
-        '<p class="branch-address">' + escHtml(b.address) + '</p>' +
-        '<div class="branch-contacts">' +
-          (b.phone ? '<a href="tel:' + escHtml(b.phone) + '" class="branch-contact-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span dir="ltr">' + escHtml(b.phone) + '</span></a>' : '') +
-        '</div>' +
-        (b.mapUrl ? '<a href="' + escHtml(b.mapUrl) + '" target="_blank" rel="noopener" class="branch-directions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>احصل على الاتجاهات</a>' : '');
-      grid.appendChild(card);
+    var pairs = document.querySelectorAll('.branch-pair');
+    if (!pairs.length) return;
+    pairs.forEach(function (pair, i) {
+      var b = d.items[i];
+      if (!b) return;  /* No Firestore item for this slot - leave HTML as-is */
+      if (b.badge) {
+        var badge = pair.querySelector('.branch-badge');
+        if (badge) badge.textContent = b.badge;
+      }
+      if (b.city) {
+        var city = pair.querySelector('.branch-city');
+        if (city) city.textContent = b.city;
+      }
+      if (b.address) {
+        var addr = pair.querySelector('.branch-address');
+        if (addr) addr.textContent = b.address;
+      }
+      if (b.phone) {
+        var telLink = pair.querySelector('a[href^="tel:"]');
+        if (telLink) {
+          telLink.href = 'tel:' + b.phone;
+          var telSpan = telLink.querySelector('span');
+          if (telSpan) telSpan.textContent = b.phone;
+        }
+      }
+      if (b.mapUrl) {
+        /* The directions link is the maps.app.goo.gl one, not the wa.me one */
+        var dirLink = pair.querySelector('a[href*="maps.app"], a[href*="goo.gl/maps"]');
+        if (dirLink) dirLink.href = b.mapUrl;
+      }
     });
   }
 
