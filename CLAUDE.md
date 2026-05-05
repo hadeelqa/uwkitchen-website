@@ -291,7 +291,108 @@ Flags class names defined in `styles.css` but not referenced anywhere in HTML/JS
 
 ---
 
-## 11. Priorities when in doubt
+## 11. Working with the project owner (MANDATORY behavioral protocol)
+
+This section captures how Hadeel and Claude work together on this project. Any AI session (Claude Code, Cursor, ChatGPT, anything else) MUST follow this protocol so the experience stays consistent and safe.
+
+### Communication style
+- **Reply in Arabic** when she writes in Arabic. Use the same Saudi/Gulf register she uses ("شوفي / تبين / زين / ضروري"). Don't switch to formal MSA unless she does.
+- **Mixed script:** code, file paths, commands, and English technical terms (PR, deploy, commit, branch) stay in English. Arabic prose flows around them.
+- **No em dashes (—) ever.** Anywhere. Use `،` or `.` or parentheses. This is a hard brand rule.
+- **No Hindi digits (`١٢٣`).** Use Western Arabic numerals (123). Dates Gregorian only.
+- **Be transparent about risk.** When proposing a change that could break something, say so up front. Offer the rollback path in the same message.
+
+### The safe-merge pattern (always)
+For any user-visible change to the site:
+
+```
+1. Edit on `preview` branch locally
+2. Run: python scripts/check-cms-loader-selectors.py
+3. Commit + push to origin/preview
+4. gh pr create --base master --head preview ...
+5. Wait for Netlify deploy-preview-N to come up (~30-60s)
+6. Send the deploy-preview URL to the user
+7. WAIT for explicit confirmation ("زين" / "تمام" / "OK to merge")
+8. Tag master snapshot: git tag -a snapshot-pre-PRn-YYYY-MM-DD origin/master
+9. gh pr merge N --merge
+10. Confirm to user that master is updated
+```
+
+**Never skip step 7.** Even small fixes go through deploy-preview review. Small fixes are exactly when bugs slip in unnoticed.
+
+### One change at a time
+The user prefers to see audit fixes / refactors land **one at a time**, not all at once. After each fix:
+1. Show what changed and why
+2. Show the deploy-preview URL
+3. Wait for OK
+4. Merge
+5. Move to the next item
+
+Do NOT batch 5 fixes into one giant PR unless the user explicitly asks for it.
+
+### When in doubt, ask
+The user has said this directly: "خاف اشياء تخرب واندم". She would rather pause and verify than ship broken work. Lean toward asking before doing anything that:
+- Could change the visual layout in a way she didn't ask for
+- Could affect content the client edits via admin
+- Is irreversible without git surgery
+- Touches secrets, billing, or account ownership
+- Makes the repo public or transfers ownership
+
+### Smoke test before every push
+```bash
+python scripts/check-cms-loader-selectors.py
+```
+This script catches the single most common silent-failure mode on this project (cms-loader selector drift after HTML rename). Pre-push gating is non-negotiable.
+
+### Tag before merge to master
+```bash
+git tag -a snapshot-pre-PRn-YYYY-MM-DD origin/master -m "..."
+git push origin snapshot-pre-PRn-YYYY-MM-DD
+```
+Recovery is `git reset --hard <tag>` + force-push (with explicit consent).
+
+### Cache-bust both pages on every visual change
+`styles.css?v=NN` and `scripts.js?v=NN` must be bumped in BOTH `index.html` AND `maintenance-request.html` whenever the corresponding file changes. Returning visitors fetch the new file only when the version param differs.
+
+### The Pull → Edit → Sync → Push rule for content
+Section 8 covers this in detail. To repeat the headline: never edit `cms-defaults.js` without first running `pull-firestore-to-defaults.py` to absorb any client edits made via admin. Sync back after editing. Both stores must match before pushing.
+
+### Documentation must stay current
+If a refactor adds new tokens, scripts, conventions, or workflows, update the relevant doc in the SAME PR:
+- New token → mention it in this file's section 4
+- New script → list it in section 3 (file structure) and explain its purpose where used
+- New workflow → document in section 8 or 9 as appropriate
+- New conventions → CONVENTIONS.md
+- Anything client-facing → ADMIN-GUIDE.md
+
+A doc that lies (says master is stale when it isn't, names a cache version that doesn't exist) is worse than no doc at all because it makes a future session ship wrong code with confidence.
+
+### Recap: the shortlist of "always do this"
+
+Before any code change:
+- ☐ Read CLAUDE.md (this file). It's the operating manual.
+- ☐ Pull latest preview branch.
+- ☐ For CMS content: pull from Firestore first.
+
+Before any commit:
+- ☐ `python scripts/check-cms-loader-selectors.py` passes.
+
+Before any push:
+- ☐ Visual change → bump cache versions in both pages.
+- ☐ Commit message follows the project style (descriptive, multi-line, mentions /audit category if applicable).
+
+Before any merge to master:
+- ☐ Deploy-preview URL shared with the user.
+- ☐ User said "OK to merge" (or equivalent in Arabic).
+- ☐ Tagged master snapshot.
+
+After merge:
+- ☐ Confirm to user that master is updated.
+- ☐ Move to the next item on the todo list.
+
+---
+
+## 12. Priorities when in doubt
 
 1. **Do not break what's live.** Master is what visitors see.
 2. **Match the design system** - consistency over creativity (CONVENTIONS.md).
@@ -299,6 +400,7 @@ Flags class names defined in `styles.css` but not referenced anywhere in HTML/JS
 4. **Pull before editing CMS content** - section 8.
 5. **Both stores in sync** after any CMS content edit - section 8.
 6. **Run the selector smoke test** after any HTML/CSS rename - section 9.
-7. **Tag master** before merging risky PRs - section 6.
+7. **Tag master** before merging any PR - section 11.
 8. **Open a PR** for review; do not push directly to master.
-9. **Ask** before merging anything you're unsure about.
+9. **Ask** before merging anything the user hasn't explicitly approved.
+10. **Wait for "OK"** before merging - section 11 step 7.
