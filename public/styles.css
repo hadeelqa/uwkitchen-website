@@ -517,9 +517,11 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .contact-header{text-align:center;align-items:center}
 @media(min-width:1024px){.contact-header{text-align:right;align-items:flex-start}}
 @media(min-width:1024px){.contact-header .section-title{text-align:right}}
-.contact-checks{display:flex;flex-direction:column;gap:14px}
-.contact-check{display:flex;align-items:center;gap:12px;justify-content:center}
-@media(min-width:1024px){.contact-check{justify-content:flex-start}}
+/* The whole stack is shrink-to-fit (width = widest item) and centered
+   horizontally via margin auto. Each item keeps its natural width,
+   so all icons align on the start (right in RTL) edge of the stack. */
+.contact-checks{display:flex;flex-direction:column;gap:14px;width:fit-content;margin-inline:auto}
+.contact-check{display:flex;align-items:center;gap:12px;justify-content:flex-start}
 .contact-check-icon{width:24px;height:24px;border-radius:50%;background:rgba(228,147,93,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .contact-check-icon svg{width:14px;height:14px;color:var(--gold)}
 .contact-check span{font-weight:400;color:rgba(255,255,255,.9);font-size:clamp(14px,1.3vw,16px)}
