@@ -192,9 +192,19 @@
     </div>
     <div class="factory-intro-video" data-animate="scale-up" data-delay="1">
       <div class="video-loader" id="factoryLoader"><span class="video-loader-spin"></span></div>
-      <video autoplay muted loop playsinline preload="auto" oncanplay="this.previousElementSibling.hidden=true">
+      <video autoplay muted loop playsinline preload="metadata"
+             onloadeddata="this.previousElementSibling.hidden=true"
+             onplaying="this.previousElementSibling.hidden=true">
         <source src="Videos/factory-tour.mp4" type="video/mp4">
       </video>
+      <script>
+        /* Safety net: force-hide the loader after 4s even if neither
+           loadeddata nor playing fires (slow network, decoder hiccup). */
+        setTimeout(function(){
+          var l = document.getElementById('factoryLoader');
+          if(l) l.hidden = true;
+        }, 4000);
+      </script>
     </div>
   </div>
 </section>
