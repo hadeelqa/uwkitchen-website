@@ -14,16 +14,11 @@
 [build.processing]
   skip_processing = false
 
-# ─── CLOUDINARY IMAGE CDN ─────────────────────────
-# Auto-rewrites <img> tags so images are served from Cloudinary's global CDN
-# instead of Netlify, cutting bandwidth use and serving modern formats (WebP/AVIF).
-# Uses Cloudinary "fetch" mode — no upload needed, no API keys required.
-[[plugins]]
-  package = "netlify-plugin-cloudinary"
-
-  [plugins.inputs]
-  cloudName = "dbj4aba8i"
-  deliveryType = "fetch"
+# Cloudinary plugin removed 2026-05-10: site is on Netlify Pro (3000
+# credits/month, ~27% utilization) so we can absorb image+video bandwidth
+# directly. Cloudinary free tier (25 credits) had been overshooting at
+# 185% before this change. Videos referenced via direct relative paths
+# (Videos/X.mp4) instead of cloudinary fetch URLs - see index.html.
 
 # ─── REDIRECTS (301) ─────────────────────────────
 [[redirects]]
