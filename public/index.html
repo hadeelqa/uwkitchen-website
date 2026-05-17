@@ -413,9 +413,19 @@
     <div class="live-hero" data-animate="scale-up" data-delay="1">
       <div class="live-hero-visual">
         <div class="video-loader" id="liveLoader"><span class="video-loader-spin"></span></div>
-        <video autoplay muted loop playsinline preload="auto" poster="images/img_3.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:inherit" oncanplay="this.previousElementSibling.hidden=true">
+        <video autoplay muted loop playsinline preload="metadata" poster="images/img_3.jpeg" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"
+               onloadeddata="this.previousElementSibling.hidden=true"
+               onplaying="this.previousElementSibling.hidden=true">
           <source src="Videos/Live.mp4" type="video/mp4">
         </video>
+        <script>
+          /* Safety net: hide the live loader after 4s even if neither
+             loadeddata nor playing fires (same pattern as factory video). */
+          setTimeout(function(){
+            var l = document.getElementById('liveLoader');
+            if(l) l.hidden = true;
+          }, 4000);
+        </script>
         <div class="live-chip">
           <span class="live-chip-dot"></span>
           LIVE
@@ -722,7 +732,7 @@ if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 </script>
 <!-- Single-source CMS defaults (must load before scripts.js and cms-loader.js) -->
 <script src="cms-defaults.js?v=1"></script>
-<script src="scripts.js?v=36"></script>
+<script src="scripts.js?v=37"></script>
 <script>
 // Stats background video - IO-triggered with fallback
 (function(){

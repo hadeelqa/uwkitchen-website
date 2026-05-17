@@ -1,6 +1,6 @@
 /* ═══════ LAZY VIDEO PLAYBACK — play only when in view to avoid autoplay throttling ═══════ */
 (function(){
-  var vids = document.querySelectorAll('.warranty-side-vid, .warranty-mobile-vid, .factory-intro-video video');
+  var vids = document.querySelectorAll('.warranty-side-vid, .warranty-mobile-vid, .factory-intro-video video, .live-hero-visual video');
   if(!vids.length || !('IntersectionObserver' in window)) return;
   var io = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
