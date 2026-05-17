@@ -409,10 +409,15 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .partners-title{font-weight:400;color:var(--text-sub);font-size:18px;padding-inline:var(--content-pad)}
 @media(min-width:1232px){.partners-title{padding-inline:0}}
 .partners-marquee{width:100%;overflow:hidden}
-.partners-grid{display:flex;gap:0;width:max-content;animation:partnersScroll 60s linear infinite}
+/* Marquee tuned 2026-05-17: mobile was 60s which made each logo crawl
+   slower than the desktop pace - reversed feel. Now mobile is 30s
+   (twice as fast) so each logo passes in a natural ~3 seconds.
+   will-change keeps the GPU compositor in charge, avoiding jank when
+   other animations run on the same frame. */
+.partners-grid{display:flex;gap:0;width:max-content;animation:partnersScroll 30s linear infinite;will-change:transform}
 .partners-grid:hover{animation-play-state:paused}
-@media(min-width:768px){.partners-grid{animation-duration:45s}}
-@media(min-width:1024px){.partners-grid{animation-duration:35s}}
+@media(min-width:768px){.partners-grid{animation-duration:35s}}
+@media(min-width:1024px){.partners-grid{animation-duration:40s}}
 @keyframes partnersScroll{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
 .partner-cell{display:flex;align-items:center;justify-content:center;padding:22px 32px;flex-shrink:0}
 .partner-logo{
