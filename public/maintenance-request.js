@@ -196,11 +196,18 @@
     media: '\u0627\u0644\u0631\u062C\u0627\u0621 \u0631\u0641\u0639 \u0635\u0648\u0631\u0629 \u0623\u0648 \u0641\u064A\u062F\u064A\u0648'
   };
 
-  // FormSubmit regular endpoint (hash maps to info@uwkitchens.com).
-  // NOTE: must be the non-/ajax/ endpoint — the AJAX endpoint does not
-  // support file attachments. We POST with mode:'no-cors' so multipart
-  // /form-data goes through without a CORS preflight.
-  var FORMSUBMIT_URL = 'https://formsubmit.co/7e9f3fee2b5908c9cff14902a24a31f4';
+  // Netlify Forms endpoint - POST to root of the site. Netlify intercepts
+  // submissions and routes them to the form named in form-name field.
+  // Migrated from FormSubmit on 2026-05-17 after FormSubmit went down
+  // globally for 3+ days (90.4% 30-day uptime).
+  var NETLIFY_FORMS_URL = '/';
+  // Map data-form attribute (maintenance/complaint/suggestion) to the
+  // Netlify form name registered in the HTML.
+  var NETLIFY_FORM_NAMES = {
+    maintenance: 'maintenance-ticket',
+    complaint:   'complaint-ticket',
+    suggestion:  'suggestion-ticket'
+  };
   var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
 
   function showError(field, msg){
@@ -380,57 +387,51 @@
       var ticket = generateTicket(type);
       var attachments = getAttachments(form);
 
-      // Build FormData for FormSubmit regular endpoint.
-      // Text fields use Arabic labels so the email is readable.
-      // Small files are appended as real attachments; files over
-      // ATTACH_MAX_MB are sent as Cloudinary URLs instead so the email
-      // doesn't exceed FormSubmit's per-request limit (~25MB).
+      // Build FormData for Netlify Forms multipart POST.
+      // Netlify Forms supports file uploads natively. Small files attach to
+      // the email notification. Large files (>10MB) get uploaded to
+      // Cloudinary first and we just send the URL in the form payload.
       var ATTACH_MAX_MB = 10;
       var fd = new FormData();
-      var fieldLabels = {
-        firstName: 'الاسم الأول',
-        middleName: 'الاسم الأوسط',
-        lastName: 'اسم العائلة',
-        fullName: 'الاسم الكامل',
-        phone: 'رقم الجوال',
-        description: 'الوصف',
-        suggestion: 'الاقتراح'
-      };
+      // form-name MUST be present for Netlify to route the submission.
+      fd.append('form-name', NETLIFY_FORM_NAMES[type] || ('ticket-' + type));
+      fd.append('ticket', ticket);
+      fd.append('type', typeLabels[type]);
+      fd.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
+      // Re-append form fields with their original names (Netlify dashboard
+      // uses these as column headers).  Arabic labels live in the email
+      // template instead, configured per-form in the Netlify Forms settings.
       Array.prototype.forEach.call(form.elements, function(el){
         if(!el.name || el.type === 'file' || el.type === 'submit' || el.type === 'button') return;
-        var label = fieldLabels[el.name] || el.name;
-        fd.append(label, el.value);
+        if(el.name === 'bot-field' || el.name === 'form-name') return;
+        fd.append(el.name, el.value);
       });
-      fd.append('نوع الطلب', typeLabels[type]);
-      fd.append('رقم التذكرة', ticket);
-      fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-      // Size-based attachment strategy: small files → real attachment,
-      // large files → Cloudinary URL in the email body.
-      var fileLabels = { contract: 'العقد', media: 'الصورة / الفيديو' };
+      // Size-based attachment strategy: small files attach directly, large
+      // files get uploaded to Cloudinary and sent as URLs.
       form.querySelectorAll('input[type=file]').forEach(function(input){
         if(!input.files || !input.files[0]) return;
         var file = input.files[0];
-        var label = fileLabels[input.name] || input.name;
         if(file.size <= ATTACH_MAX_MB * 1024 * 1024){
-          fd.append(label, file, file.name);
+          fd.append(input.name, file, file.name);
         } else {
           var cloud = uploadResults[input.id];
           var url = cloud && cloud.url;
           if(url){
-            fd.append('رابط ' + label, url + ' (الملف كبير — افتح الرابط لمشاهدته)');
+            fd.append(input.name + '_url', url);
           }
         }
       });
-      fd.append('_subject', subjects[type] + ' - ' + ticket);
-      fd.append('_template', 'box');
-      fd.append('_captcha', 'false');
-      // no-cors: browser won't read response, but multipart POST still
-      // delivers to FormSubmit (avoids CORS preflight on the non-/ajax/ URL).
-      fetch(FORMSUBMIT_URL, {
+      // POST to root - Netlify intercepts when form-name matches a
+      // registered form on the site.  No mode:'no-cors' needed since
+      // it's same-origin.
+      fetch(NETLIFY_FORMS_URL, {
         method: 'POST',
-        mode: 'no-cors',
         body: fd
-      }).catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
+      }).then(function(r){
+        if(window.console) console.log('[Netlify Forms]', r.status, r.statusText);
+      }).catch(function(e){
+        if(window.console) console.error('[Netlify Forms error]', e);
+      });
 
       // Save to Firestore (files already uploaded to Cloudinary)
       saveTicket(type, ticket, form, attachments)
