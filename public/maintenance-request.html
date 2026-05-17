@@ -86,7 +86,9 @@
         <h2 class="cs-form-title">نموذج طلب الصيانة</h2>
         <p class="cs-form-note">الحقول المميّزة بـ (*) إلزامية</p>
       </div>
-      <form id="maintenanceForm" class="cs-form" novalidate data-form="maintenance" enctype="multipart/form-data">
+      <form id="maintenanceForm" class="cs-form" novalidate data-form="maintenance" name="maintenance-ticket" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="maintenance-ticket">
+        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="form-row">
           <div class="form-field"><input type="text" id="m_fn" name="firstName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="m_fn">الاسم الأول *</label><span class="form-error" aria-live="polite"></span></div>
           <div class="form-field"><input type="text" id="m_mn" name="middleName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="m_mn">الاسم الأوسط *</label><span class="form-error" aria-live="polite"></span></div>
@@ -135,7 +137,9 @@
         <h2 class="cs-form-title">نموذج تقديم شكوى</h2>
         <p class="cs-form-note">الحقول المميّزة بـ (*) إلزامية</p>
       </div>
-      <form id="complaintForm" class="cs-form" novalidate data-form="complaint" enctype="multipart/form-data">
+      <form id="complaintForm" class="cs-form" novalidate data-form="complaint" name="complaint-ticket" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="complaint-ticket">
+        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="form-row">
           <div class="form-field"><input type="text" id="c_fn" name="firstName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="c_fn">الاسم الأول *</label><span class="form-error" aria-live="polite"></span></div>
           <div class="form-field"><input type="text" id="c_mn" name="middleName" placeholder=" " required aria-required="true" minlength="2" maxlength="40"><label for="c_mn">الاسم الأوسط *</label><span class="form-error" aria-live="polite"></span></div>
@@ -183,7 +187,9 @@
         <h2 class="cs-form-title">نموذج الاقتراح</h2>
         <p class="cs-form-note">الحقول المميّزة بـ (*) إلزامية</p>
       </div>
-      <form id="suggestionForm" class="cs-form" novalidate data-form="suggestion" enctype="multipart/form-data">
+      <form id="suggestionForm" class="cs-form" novalidate data-form="suggestion" name="suggestion-ticket" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="suggestion-ticket">
+        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="form-field"><input type="text" id="s_name" name="fullName" placeholder=" " required aria-required="true" minlength="3" maxlength="80"><label for="s_name">الاسم الكامل *</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-field"><input type="tel" id="s_ph" name="phone" placeholder="05xxxxxxxx" required aria-required="true" pattern="05[0-9]{8}" maxlength="10" inputmode="numeric" dir="ltr"><label for="s_ph">رقم الجوال *</label><span class="form-error" aria-live="polite"></span></div>
         <div class="form-field"><textarea id="s_desc" name="suggestion" placeholder=" " required aria-required="true" minlength="10" maxlength="2000" rows="5"></textarea><label for="s_desc">شرح المقترح *</label><span class="form-error" aria-live="polite"></span></div>
@@ -309,7 +315,7 @@ var firebaseConfig = {
 };
 if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 </script>
-<script src="/scripts.js?v=32"></script>
-<script src="/maintenance-request.js?v=9"></script>
+<script src="/scripts.js?v=36"></script>
+<script src="/maintenance-request.js?v=10"></script>
 </body>
 </html>

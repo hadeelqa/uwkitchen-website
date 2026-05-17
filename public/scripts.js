@@ -664,18 +664,18 @@ document.addEventListener('click', function(e){
     var district = document.getElementById('district').value.trim();
     var ticket = 'INQ-' + new Date().getFullYear() + '-' + Math.floor(10000 + Math.random()*90000);
 
-    // Build FormData for FormSubmit AJAX endpoint (FormData avoids CORS preflight)
-    var fd = new FormData();
-    fd.append('الاسم', fullName);
-    fd.append('رقم الجوال', phone);
-    fd.append('المدينة', city);
-    fd.append('الحي', district);
-    fd.append('نوع الطلب', 'طلب زيارة قياس');
-    fd.append('رقم التذكرة', ticket);
-    fd.append('تاريخ الإرسال', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
-    fd.append('_subject', 'طلب زيارة قياس جديد - ' + ticket);
-    fd.append('_template', 'table');
-    fd.append('_captcha', 'false');
+    // Build payload for Netlify Forms (POST to "/" with the form-name field).
+    // Migrated from FormSubmit on 2026-05-17 after FormSubmit went down globally
+    // for 3+ days. Netlify Forms is built into the Pro plan, ~99.99% uptime,
+    // and emails are configured per-form in the Netlify dashboard.
+    var params = new URLSearchParams();
+    params.append('form-name', 'measurement-request');
+    params.append('name', fullName);
+    params.append('phone', phone);
+    params.append('city', city);
+    params.append('district', district);
+    params.append('ticket', ticket);
+    params.append('submitted_at', new Date().toLocaleString('en-GB', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}));
 
     function onDone(){
       form.reset();
@@ -686,12 +686,14 @@ document.addEventListener('click', function(e){
       setTimeout(function(){ if(successMsg) successMsg.hidden = true; }, 5000);
     }
 
-    // Send email via FormSubmit AJAX endpoint (hash = info@uwkitchens.com)
-    fetch('https://formsubmit.co/ajax/7e9f3fee2b5908c9cff14902a24a31f4', {
+    // POST to "/" (same origin) - Netlify intercepts form-encoded submissions
+    // and routes them to the form named in form-name.
+    fetch('/', {
       method: 'POST',
-      body: fd
-    }).then(function(r){ if(window.console) console.log('[FormSubmit]', r.status, r.statusText); })
-      .catch(function(e){ if(window.console) console.error('[FormSubmit error]', e); });
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: params.toString()
+    }).then(function(r){ if(window.console) console.log('[Netlify Forms]', r.status, r.statusText); })
+      .catch(function(e){ if(window.console) console.error('[Netlify Forms error]', e); });
 
     // Save ticket to Firestore (primary channel).
     var db = (typeof firebase !== 'undefined' && firebase.firestore) ? firebase.firestore() : null;
