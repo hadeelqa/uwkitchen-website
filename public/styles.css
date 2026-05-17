@@ -409,17 +409,22 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 .partners-title{font-weight:400;color:var(--text-sub);font-size:18px;padding-inline:var(--content-pad)}
 @media(min-width:1232px){.partners-title{padding-inline:0}}
 .partners-marquee{width:100%;overflow:hidden}
-/* Marquee tuned 2026-05-17: mobile was 60s which made each logo crawl
-   slower than the desktop pace - reversed feel. Now mobile is 30s
-   (twice as fast) so each logo passes in a natural ~3 seconds.
-   will-change keeps the GPU compositor in charge, avoiding jank when
-   other animations run on the same frame. */
-.partners-grid{display:flex;gap:0;width:max-content;animation:partnersScroll 30s linear infinite;will-change:transform}
+/* Marquee.  Removed will-change: it was forcing a GPU layer the
+   browser would have promoted anyway, and on lower-end mobile GPUs
+   the layer can compete with other compositor work.  The transform
+   alone is enough to hint the optimization. */
+.partners-grid{display:flex;gap:0;width:max-content;animation:partnersScroll 30s linear infinite}
 .partners-grid:hover{animation-play-state:paused}
 @media(min-width:768px){.partners-grid{animation-duration:35s}}
 @media(min-width:1024px){.partners-grid{animation-duration:40s}}
 @keyframes partnersScroll{0%{transform:translateX(0)}100%{transform:translateX(50%)}}
-.partner-cell{display:flex;align-items:center;justify-content:center;padding:22px 32px;flex-shrink:0}
+/* Reserve a stable cell width regardless of content state.  Previously
+   when an SVG was still loading, the empty placeholder collapsed to
+   ~0px, so the marquee's total width grew/shrunk as SVGs arrived and
+   the keyframe's 50% translation no longer matched - causing visible
+   stop-and-jump.  min-width keeps every cell predictable from the
+   first frame. */
+.partner-cell{display:flex;align-items:center;justify-content:center;padding:22px 32px;flex-shrink:0;min-width:184px}
 .partner-logo{
   height:46px;
   width:auto;
@@ -432,27 +437,34 @@ a[href],.btn,.process-card,.cladding-color-card,.test-card,.branch-pair,.cert-ca
 /* SVG logos are inlined as <span class="partner-logo--svg"><svg>...</svg></span>
    so they stay as vectors at render time. fill="currentColor" inside the SVG
    takes its color from the span, giving us white-on-dark without filter
-   rasterization. No CSS filter needed -> stays crisp at any DPR. */
+   rasterization. No CSS filter needed -> stays crisp at any DPR.
+   Explicit width:120px keeps the placeholder span the same size as a
+   loaded SVG so the marquee never reflows when SVGs arrive late. */
 .partner-logo--svg{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  width:120px;
+  height:46px;
   color:var(--text-on-dark);
   filter:none;
 }
 .partner-logo--svg svg{
-  height:46px;
+  max-height:100%;
+  max-width:100%;
   width:auto;
-  max-width:120px;
+  height:auto;
   display:block;
 }
 @media(min-width:768px){
+  .partner-cell{min-width:204px}
   .partner-logo{height:52px}
-  .partner-logo--svg svg{height:52px}
+  .partner-logo--svg{height:52px}
 }
 @media(min-width:1024px){
+  .partner-cell{min-width:220px}
   .partner-logo{height:58px}
-  .partner-logo--svg svg{height:58px}
+  .partner-logo--svg{height:58px}
 }
 .partner-logo:hover{opacity:.8;transform:scale(1.1)}
 

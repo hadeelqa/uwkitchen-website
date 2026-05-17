@@ -30,15 +30,24 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>html{font-synthesis:style;-webkit-font-synthesis:none}</style>
-<link rel="stylesheet" href="styles.css?v=97">
+<link rel="stylesheet" href="styles.css?v=98">
 <!-- Hero LCP image gets the only high-priority preload.  Anything else
      competing for bandwidth would push LCP later. -->
 <link rel="preload" as="image" href="images/img_2.jpeg" fetchpriority="high">
 <!-- Videos load when scrolled into view (IO observer in scripts.js).  No
      fetchpriority - they shouldn't compete with the LCP image for bandwidth. -->
-<!-- Partner SVGs removed from preload: they live in a section near the
-     bottom of the page, not above the fold.  scripts.js fetches them
-     when the page is interactive; preloading was hurting LCP. -->
+<!-- Partner SVGs use rel=prefetch (low priority).  Browser fetches them
+     when it has spare bandwidth, so they're in cache by the time
+     scripts.js renders the partners marquee.  Doesn't compete with LCP.
+     Tradeoff: was rel=preload (hurt LCP), then removed entirely (marquee
+     showed empty cells for too long on mobile), now rel=prefetch
+     (balanced - LCP wins the race, SVGs warm in cache for the marquee). -->
+<link rel="prefetch" as="fetch" href="images/partners/Property 1=Roshn.svg" type="image/svg+xml">
+<link rel="prefetch" as="fetch" href="images/partners/Property 1=Cenomi.svg" type="image/svg+xml">
+<link rel="prefetch" as="fetch" href="images/partners/Property 1=Retal.svg" type="image/svg+xml">
+<link rel="prefetch" as="fetch" href="images/partners/Property 1=Somu.svg" type="image/svg+xml">
+<link rel="prefetch" as="fetch" href="images/partners/Property 1=Almajdiah.svg" type="image/svg+xml">
+<link rel="prefetch" as="fetch" href="images/partners/Property 1=Diriyah company 1.svg" type="image/svg+xml">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["LocalBusiness","HomeGoodsStore"],"@id":"https://uwkitchens.com/#business","name":"مطابخ الأبيض المتحدة","alternateName":["United White Kitchens","UW Kitchens"],"url":"https://uwkitchens.com/","logo":"https://uwkitchens.com/images/Logo-white.png","image":["https://uwkitchens.com/images/img_2.jpeg"],"telephone":"+966920031000","email":"info@uwkitchens.com","description":"ثلاثة عقود من الخبرة في تصميم وتصنيع وتركيب المطابخ بالمملكة العربية السعودية. ضمان 15 سنة، تركيب في 20 يوم، أكثر من 17,500 مطبخ منفّذ.","foundingDate":"1997","address":{"@type":"PostalAddress","streetAddress":"طريق الإمام سعود بن عبدالعزيز، حي التعاون","addressLocality":"الرياض","addressRegion":"منطقة الرياض","addressCountry":"SA"},"areaServed":[{"@type":"Country","name":"Saudi Arabia"},{"@type":"City","name":"الرياض"}],"hasMap":"https://share.google/gZLn8CccdF4KwShQ1","sameAs":["https://www.instagram.com/uwkitchens_sa/","https://www.tiktok.com/@uwkitchens_sa","https://x.com/uwkitchens_sa","https://www.snapchat.com/@uwkitchens_sa"],"priceRange":"$$","knowsLanguage":["ar","en"],"slogan":"ثلاثة عقود من الخبرة في تصميم المطابخ","aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"17500","bestRating":"5","worstRating":"1"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday","Monday","Tuesday","Wednesday","Thursday"],"opens":"09:00","closes":"22:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Friday","opens":"16:00","closes":"22:00"}],"makesOffer":{"@type":"Offer","itemOffered":{"@type":"Service","name":"تصميم وتصنيع وتركيب المطابخ","description":"استشارة مجانية، تصميم 3D، تصنيع داخل المملكة، تركيب في 20 يوم، ضمان شامل 15 سنة","areaServed":{"@type":"Country","name":"Saudi Arabia"}}}}
